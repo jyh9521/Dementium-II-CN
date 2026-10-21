@@ -574,3 +574,6 @@ A mature project should make it possible for another developer to rebuild the lo
 - documented build commands
 
 The build process should not depend on the original author's memory or private local environment.
+
+## 全量排版门禁
+完整构建现在自动运行 audit_text_layout.py 和 audit_image_alignment.py，生成逐记录、逐图片/标签台账；任何越预算、错误短尾、保护码变化、非预期图片改动或居中漂移均停止构建。数值预算属于离线门禁，9条动态变量仍需实机展开复验。

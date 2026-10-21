@@ -97,9 +97,9 @@ def glyph_width(text, meta, spacing=1):
     return max(0, width - trailing_spacing)
 
 
-def wrap_text(text, meta, width, forbidden_start='', forbidden_end='', min_tail_width=0):
+def wrap_text(text, meta, width, forbidden_start='', forbidden_end='', min_tail_width=0, preserve_whitespace=False):
     """Wrap physical document lines only, without splitting protected atoms/Latin words."""
-    atom = re.compile(TOKEN.pattern + r'|[A-Za-z0-9]+(?:[\x27.-][A-Za-z0-9]+)*|[^\r\n]', re.S)
+    atom = re.compile(r'\x02[^\x01\r\n]*\x01|' + TOKEN.pattern + r'|[A-Za-z0-9]+(?:[\x27.-][A-Za-z0-9]+)*|[^\r\n]', re.S)
     output = []
     def visible(words):
         return [w for w in words if w.strip() and not (TOKEN.fullmatch(w) and not w.startswith('$'))]
@@ -108,7 +108,7 @@ def wrap_text(text, meta, width, forbidden_start='', forbidden_end='', min_tail_
         first,last = (indexes[0],indexes[-1]) if indexes else (len(words),-1)
         return [w for i,w in enumerate(words) if w != ' ' or first <= i <= last]
     for paragraph in text.replace('\r\n', '\n').replace('\r', '\n').split('\n'):
-        words = trim_spaces(atom.findall(paragraph))
+        words = atom.findall(paragraph) if preserve_whitespace else trim_spaces(atom.findall(paragraph))
         if not words:
             output.append('')
         while words:
@@ -117,7 +117,7 @@ def wrap_text(text, meta, width, forbidden_start='', forbidden_end='', min_tail_
                 end += 1
             def valid_boundary(index):
                 before, after = visible(words[:index]), visible(words[index:])
-                return (not before or before[-1][-1:] not in forbidden_end) and (not after or after[0][:1] not in forbidden_start)
+                return (not before or (TOKEN.sub('', before[-1]) or '\ufffc')[-1:] not in forbidden_end) and (not after or (TOKEN.sub('', after[0]) or '\ufffc')[:1] not in forbidden_start)
             chosen = end
             while chosen > 0 and not valid_boundary(chosen):
                 chosen -= 1
@@ -130,13 +130,14 @@ def wrap_text(text, meta, width, forbidden_start='', forbidden_end='', min_tail_
             # Rebalance only a paragraph's last short tail, preserving punctuation atoms.
             if chosen < len(words) and min_tail_width:
                 candidate = chosen
-                while candidate > 1 and glyph_width(''.join(words[candidate:]), meta) < min_tail_width:
+                while candidate > 1 and (glyph_width(''.join(words[candidate:]), meta) < min_tail_width or not valid_boundary(candidate)):
                     candidate -= 1
                 if (candidate > 0 and valid_boundary(candidate)
                         and glyph_width(''.join(words[candidate:]), meta) <= width):
                     chosen = candidate
-            output.append(''.join(words[:chosen]).strip(' '))
-            words = trim_spaces(words[chosen:])
+            line = ''.join(words[:chosen])
+            output.append(line if preserve_whitespace else line.strip(' '))
+            words = words[chosen:] if preserve_whitespace else trim_spaces(words[chosen:])
     return '\n'.join(output)
 
 
@@ -178,11 +179,12 @@ def layout_document(text, meta, profile, rule=None):
         if current:
             parts.append(current)
         text = '\n'.join(parts)
-    text = wrap_text(text, meta, width, profile['forbidden_start'], profile['forbidden_end'], rule.get('min_tail_width', 0))
+    text = wrap_text(text, meta, width, profile['forbidden_start'], profile['forbidden_end'], rule.get('min_tail_width', 0), rule.get('preserve_whitespace', False))
     if rule:
         lines = text.split('\n')
-        if len(lines) > rule.get('max_visible_lines', 1000):
-            raise ValueError('Document layout line budget exceeded: %d > %d' % (len(lines),rule['max_visible_lines']))
+        line_limit = rule.get('max_visible_lines')
+        if line_limit is not None and len(lines) > line_limit:
+            raise ValueError('Document layout line budget exceeded: %d > %d' % (len(lines),line_limit))
         if any(glyph_width(line, meta) > width for line in lines):
             raise ValueError('Document layout width budget exceeded')
         text = '\n' * rule.get('leading_lines', 0) + text
@@ -291,7 +293,8 @@ def build_mixed(zar, records, profile):
         logical = row['target'] or row['source']
         text = route_titles(logical, aliases, row['resource'] in profile['title_resources'])
         if row['target'] and '/EXAMINE.' in row['resource']:
-            rule = profile.get('document_layouts', {}).get(row['resource']) or profile.get('prose_layouts', {}).get(row['resource'])
+            specific = profile.get('document_layouts', {}).get(row['resource']) or profile.get('prose_layouts', {}).get(row['resource']) or {}
+            rule = {**profile.get('document_defaults', {}), **specific}
             text = layout_document(text, meta, profile, rule)
             if rule:
                 document_layouts.append(dict(id=row['id'], leading_lines=rule.get('leading_lines',0),

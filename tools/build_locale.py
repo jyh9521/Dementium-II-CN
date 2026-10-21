@@ -28,6 +28,14 @@ def main():
               ['tools/localize.py','build',str(game/'rom.zar'),str(out/'text.json'),str(out),'--profile','locales/zh-CN/font-profile.json','--identity','assets/supported-build.json']]
     for command in commands:
         subprocess.run([sys.executable,'-X','utf8',*command],cwd=root,check=True)
+    # Full-inventory gates, not screenshot-only spot checks. Failed audits stop
+    # release generation and retain their per-record/per-image diagnostics.
+    audits=[['tools/audit_text_layout.py','--archive',str(out/'rom.zar'),
+             '--logical',str(out/'text.json'),'--output',str(out/'text-layout-audit.json')],
+            ['tools/audit_image_alignment.py','--original',str(game/'rom.zar'),
+             '--archive',str(out/'rom.zar'),'--output',str(out/'image-layout-audit.json')]]
+    for command in audits:
+        subprocess.run([sys.executable,'-X','utf8',*command],cwd=root,check=True)
     recipe=json.loads((root/'locales/zh-CN/executable-text.json').read_text(encoding='utf-8'))
     original=(game/'Dementium II.exe').read_bytes()
     modified,delta=build_executable(original,recipe)

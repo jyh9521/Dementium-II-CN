@@ -75,7 +75,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.042": {
       "leading_lines": 0,
@@ -90,7 +91,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.043": {
       "leading_lines": 0,
@@ -105,7 +107,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.045": {
       "leading_lines": 0,
@@ -120,7 +123,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.046": {
       "leading_lines": 0,
@@ -135,7 +139,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.047": {
       "leading_lines": 0,
@@ -150,7 +155,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.048": {
       "leading_lines": 0,
@@ -165,7 +171,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.049": {
       "leading_lines": 0,
@@ -180,7 +187,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.050": {
       "leading_lines": 0,
@@ -195,7 +203,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.051": {
       "leading_lines": 0,
@@ -210,7 +219,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.052": {
       "leading_lines": 0,
@@ -225,7 +235,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     },
     "EN/EXAMINE.053": {
       "leading_lines": 0,
@@ -240,7 +251,8 @@
       ],
       "width": 228,
       "pane_height": 72,
-      "line_spacing": 0
+      "line_spacing": 0,
+      "min_tail_width": 52
     }
   },
   "extra_texts": [
@@ -341,6 +353,13 @@
       "soft_lines": true,
       "keep_first_line": true,
       "min_tail_width": 52
+    },
+    "EN/EXAMINE.530": {
+      "preserve_whitespace": true,
+      "min_tail_width": 52
     }
+  },
+  "document_defaults": {
+    "min_tail_width": 52
   }
 }

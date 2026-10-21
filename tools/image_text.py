@@ -72,6 +72,10 @@ def build_images(zar, config, fontpath):
         if recipe.get('art_delta'):
             from art_delta import apply,png
             result=apply(original,recipe['art_delta'])
+            from image_alignment import measure
+            alignment = [measure(result, rule) for rule in recipe.get('ink_alignments', [])]
+            if any(row['result'] != 'PASS' for row in alignment):
+                raise ValueError('Artwork alignment drift: '+name)
             encoded=png(result)
             replacements[name]=encoded
             report['labels']+=len(recipe['labels'])
@@ -104,13 +108,31 @@ def build_images(zar, config, fontpath):
             stroke = label.get("stroke", 0)
             width = max((b[2]-b[0] for b in boxes), default=0)
             height = len(lines) * size
-            if width + 2 * stroke > x1-x0 or height + 2 * stroke > y1-y0:
+            centered_ink = None
+            if label.get('ink_center'):
+                # Font advance/cell height includes blank bearings, not visible ink.
+                scratch = Image.new('L', (width+40, height+40))
+                pen = ImageDraw.Draw(scratch)
+                for i, (line, bbox) in enumerate(zip(lines, boxes)):
+                    pen.text((20-bbox[0], 20+i*size-bbox[1]), line, font=font,
+                             fill=255, stroke_width=stroke, stroke_fill=128 if stroke else 255)
+                bounds = scratch.getbbox()
+                if bounds is None:
+                    raise ValueError('Empty label raster: '+name)
+                centered_ink = scratch.crop(bounds)
+                width, height = centered_ink.size
+            padding = 0 if centered_ink is not None else 2 * stroke
+            if width + padding > x1-x0 or height + padding > y1-y0:
                 raise ValueError(f"Image label overflow: {name}: {label['target']}")
             tile = result.crop((x0,y0,x1,y1)) if label.get("keep_background") else Image.new("RGBA", (x1-x0, y1-y0), tuple(label.get("clear", [0,0,0,0])))
             mask = Image.new("L", tile.size)
             draw = ImageDraw.Draw(mask)
             top = (tile.height-height)//2
+            if centered_ink is not None:
+                mask.paste(centered_ink, ((tile.width-width)//2, top))
             for i, (line, bbox) in enumerate(zip(lines, boxes)):
+                if centered_ink is not None:
+                    break
                 left = (tile.width-(bbox[2]-bbox[0]))//2 - bbox[0]
                 draw.text((left, top+i*size-bbox[1]), line, font=font, fill=255,
                           stroke_width=stroke, stroke_fill=128 if stroke else 255)

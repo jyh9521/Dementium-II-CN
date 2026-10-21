@@ -707,3 +707,6 @@ Known limitations should be documented clearly rather than hidden.
 
 ## 2026-10-21 截图反馈修复
 空白省略号、长文短尾、纵轴提示遮挡、小地图透明度译名及长破折号已作离线修复；详见 SCREENSHOT_TEXT_FIX.md。修改后游戏内复验仍待进行。
+
+## 2026-10-21 全文/全图复查
+全部676条文本和988张PNG已做资源级审计，16条文本及21张图片修正。详见 FULL_TEXT_LAYOUT_AUDIT.md、FULL_IMAGE_LAYOUT_AUDIT.md。9条动态变量及改后游戏内显示仍待实机复验。
