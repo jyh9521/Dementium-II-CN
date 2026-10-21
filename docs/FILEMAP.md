@@ -7,6 +7,7 @@
 | tools/record_verification.py | 精确命令/输入/输出/退出码 | 源码 |
 | tools/install_patch.py | 明确执行的版本锁定安装/卸载；无启动功能 | 源码/实验包 |
 | tools/package_probe.py | 白名单确定性实验包 | 源码 |
+| tools/check_probe.py | 解包后在真实文件副本验证安装/恢复，不执行游戏 | 源码 |
 | tools/fetch_font.py | 固定官方字体下载/哈希 | 源码 |
 | tools/ROLLBACK.sh | 在 build/rollback-shell 恢复额外副本 | 源码，可执行 |
 | tests/test_*.py | 合成资源和安装器测试 | 源码；不含游戏资产 |

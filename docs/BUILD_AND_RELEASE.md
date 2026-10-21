@@ -11,12 +11,15 @@ python -X utf8 ./tools/localize.py build "C:/Program Files (x86)/Steam/steamapps
 python -X utf8 -m unittest discover -s ./tests -v
 python -X utf8 ./tools/record_verification.py --game "C:/Program Files (x86)/Steam/steamapps/common/Dementium II"
 python -X utf8 ./tools/package_probe.py
+python -X utf8 ./tools/check_probe.py --game "C:/Program Files (x86)/Steam/steamapps/common/Dementium II"
 ```
 
 这些命令没有游戏启动功能。build 输出不能选择原版目录。
 UTF-8 必须显式指定；不能依赖本机 CP932/CP936 默认编码。
 源数据、译文、字体、工具版本和支持版本固定后，产物应保持同一 SHA-256；测试记录见 build/。
 压缩包时间戳和成员顺序固定，使用当前固定工具版本重复构建验证哈希。
+干净源码检出重建已分别比较 rom.zar、patch.json 和 ZIP，三个文件均同哈希。
+安装测试解包 ZIP，在 build/package-test/game-copy 的真实文件副本运行安装/恢复脚本；不执行 EXE。
 
 ## 数据与分发
 
