@@ -12,6 +12,7 @@ def main():
            'LICENSE-translations.md':root/'LICENSE-translations.md',
            'Fusion-Pixel-OFL.txt':root/'assets/fonts/Fusion-Pixel-OFL.txt',
            'ChillBitmap-LICENSE.md':root/'assets/fonts/ChillBitmap-LICENSE.md'}
+    files.update({'licenses/'+p.name:p for p in (root/'installer/licenses').glob('*.txt')})
     data={name:(p.read_bytes() if p.suffix=='.exe' else p.read_text(encoding='utf-8').encode('utf-8')) for name,p in files.items()}
     hashes={name:hashlib.sha256(raw).hexdigest() for name,raw in data.items()}
     data['SHA256.json']=(json.dumps(hashes,ensure_ascii=False,indent=2)+'\n').encode('utf-8')

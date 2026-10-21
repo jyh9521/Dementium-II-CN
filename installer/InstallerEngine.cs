@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web.Script.Serialization;
+using System.Text.Json;
 
 namespace LocalizationInstaller {
     public sealed class PatchRun { public long offset; public string old; public string @new; }
@@ -32,8 +32,7 @@ namespace LocalizationInstaller {
                 using(var memory=new MemoryStream()) {
                     if(compressed) { using(var gz=new GZipStream(raw,CompressionMode.Decompress)) CopyBounded(gz,memory); }
                     else CopyBounded(raw,memory);
-                    var serializer=new JavaScriptSerializer { MaxJsonLength=64*1024*1024 };
-                    return serializer.Deserialize<T>(Encoding.UTF8.GetString(memory.ToArray()).TrimStart('\uFEFF'));
+                    return JsonSerializer.Deserialize<T>(Encoding.UTF8.GetString(memory.ToArray()).TrimStart('\uFEFF'),new JsonSerializerOptions { IncludeFields=true });
                 }
             }
         }

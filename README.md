@@ -17,7 +17,7 @@ Steam AppID **5342930**，当前分析 build **26091059**，不适用于 2013 HD
 
 ## 入口
 
-- **图形安装器**：本地`dist/Dementium-II-zh-CN-Setup.exe`，选择自己的`rom.zar`，验证后安装或恢复；不打包完整游戏、不要求Python。详见[安装器说明](docs/GUI_INSTALLER.md)。
+- **图形安装器**：本地`dist/Dementium-II-zh-CN-Setup.exe`，自动检测Steam库或选择自己的`rom.zar`，验证后固定同时处理同目录EXE；Material Design 3含动画、自包含运行时，不打包完整游戏、不要求另装.NET/Python。详见[安装器说明](docs/GUI_INSTALLER.md)。
 - 安装器使用用户确认的41张精修工作图，26张不可辨/未核实图保持原版；英文LOGO和公司名不改。
 
 - [技术报告](docs/TECHNICAL_ANALYSIS.md)、[进度](docs/PROGRESS.md)。

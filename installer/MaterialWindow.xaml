@@ -1,0 +1,48 @@
+<Window x:Class="LocalizationInstaller.MaterialWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+ Title="《病房2》简体中文汉化补丁" Width="780" Height="710" MinWidth="680" MinHeight="640" WindowStartupLocation="CenterScreen" Icon="branding/app.ico" Background="#FFFBFE" FontFamily="Microsoft YaHei UI" FontSize="14" UseLayoutRounding="True" TextOptions.TextFormattingMode="Display">
+ <Window.Resources>
+  <ResourceDictionary><ResourceDictionary.MergedDictionaries>
+   <md:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="DeepPurple" />
+   <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+  <Style x:Key="MaterialDesignFilledTonalButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}"><Setter Property="md:ButtonAssist.CornerRadius" Value="22"/><Setter Property="Background" Value="#E8DEF8"/><Setter Property="Foreground" Value="#4A3867"/></Style>
+  <Style x:Key="MaterialDesignFilledButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}"><Setter Property="md:ButtonAssist.CornerRadius" Value="22"/></Style>
+  <Style x:Key="MaterialDesignTextButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}"><Setter Property="md:ButtonAssist.CornerRadius" Value="22"/></Style>
+  <Style x:Key="RoundedOutlined" TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}"><Setter Property="md:ButtonAssist.CornerRadius" Value="22"/></Style>
+  <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBodyMediumTextBlock}"><Setter Property="Foreground" Value="#49454F" /></Style>
+  </ResourceDictionary>
+ </Window.Resources>
+ <md:DialogHost x:Name="Dialogs" CloseOnClickAway="False" Background="#FFFBFE">
+ <Grid x:Name="ContentRoot" Margin="28,16,28,18" Opacity="0">
+  <Grid.RenderTransform><TranslateTransform Y="12" /></Grid.RenderTransform>
+  <Grid.RowDefinitions><RowDefinition Height="176"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <Image x:Name="Logo" Source="branding/logo.png" Height="168" MaxWidth="440" HorizontalAlignment="Center" Stretch="Uniform" AutomationProperties.Name="病房 II 中文标志" />
+  <md:Card Grid.Row="1" Padding="20,16" UniformCornerRadius="20" Background="White" md:ElevationAssist.Elevation="Dp1">
+   <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <TextBlock Text="请选择游戏根目录的 rom.zar：" Margin="0,0,0,14" FontSize="15" />
+    <Grid Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+     <TextBox x:Name="ArchivePath" VerticalAlignment="Center" Margin="0,0,12,0" Style="{StaticResource MaterialDesignOutlinedTextBox}" md:HintAssist.Hint="rom.zar 文件路径" FontSize="12" AutomationProperties.Name="rom.zar 文件路径" />
+     <Button x:Name="Detect" Grid.Column="1" Content="自动检测" Margin="0,0,8,0" Padding="14,0" Style="{StaticResource RoundedOutlined}" Click="Detect_Click" />
+     <Button x:Name="Browse" Grid.Column="2" Content="浏览…" Padding="20,0" Style="{StaticResource MaterialDesignFilledTonalButton}" Click="Browse_Click" />
+    </Grid>
+   </Grid>
+  </md:Card>
+  <Grid Grid.Row="2" Margin="0,20,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+   <Button x:Name="Verify" Content="验证文件" Height="44" Margin="0,0,12,0" Style="{StaticResource RoundedOutlined}" Click="Verify_Click" />
+   <Button x:Name="Install" Grid.Column="1" Content="安装汉化" Height="44" Margin="0,0,12,0" Style="{StaticResource MaterialDesignFilledButton}" IsEnabled="False" Click="Install_Click" />
+   <Button x:Name="Restore" Grid.Column="2" Content="恢复原版" Height="44" Style="{StaticResource MaterialDesignFilledTonalButton}" IsEnabled="False" Click="Restore_Click" />
+  </Grid>
+  <TextBlock x:Name="Status" Grid.Row="3" Margin="4,14,4,12" Text="正在检测 Steam 安装位置…" TextWrapping="Wrap" MinHeight="24" />
+  <md:Card Grid.Row="4" Padding="20,16" UniformCornerRadius="20" Background="White" md:ElevationAssist.Elevation="Dp1">
+   <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+    <TextBlock Text="操作日志" FontSize="15" Margin="0,0,0,10" />
+    <TextBox x:Name="Log" Grid.Row="1" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderThickness="0" Background="Transparent" FontSize="12" Style="{x:Null}" AutomationProperties.Name="操作日志" />
+   </Grid>
+  </md:Card>
+  <Grid Grid.Row="5" Margin="0,14,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+   <TextBlock VerticalAlignment="Center" FontSize="12"><Run Text="支持 "/><Hyperlink NavigateUri="https://store.steampowered.com/app/5342930/Dementium_II/" RequestNavigate="Link_Click">Steam</Hyperlink><Run Text=" 2026 build 26091059"/></TextBlock>
+   <TextBlock Grid.Column="1" VerticalAlignment="Center"><Hyperlink NavigateUri="https://blog.blfy.cc/" RequestNavigate="Link_Click">伯翎飞云</Hyperlink></TextBlock>
+  </Grid>
+ </Grid>
+ </md:DialogHost>
+</Window>

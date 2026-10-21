@@ -54,7 +54,25 @@ static class InstallerTests {
         Case("wrong expected bytes rejected",delegate {var d=Fixture();var p=Data();p.Archive.runs[0].old="00";Reject(()=>new Engine(p).Operate(Path.Combine(d,"rom.zar"),true,false));Original(d);});
         Case("backup path traversal rejected",delegate {var p=Data();p.Settings.backup_folder="../outside";Reject(()=>new Engine(p));});
         Case("operation lock respected",delegate {var d=Fixture();var cache=Path.Combine(d,".dementium-locale");Directory.CreateDirectory(cache);using(var f=new FileStream(Path.Combine(cache,"operation.lock"),FileMode.OpenOrCreate,FileAccess.ReadWrite,FileShare.None))Reject(()=>new Engine(Data()).Operate(Path.Combine(d,"rom.zar"),true,false));Original(d);});
+        Case("VDF comments escapes BOM and nested objects",delegate {var n=SteamLocator.Parse("\uFEFF// comment\n\"root\" { \"path\" \"D:\\\\Steam Library\" \"nested\" { \"x\" \"quoted\\\"text\" }}").Children[0];Assert(n.Get("path")==@"D:\Steam Library","Escape parse");Assert(n.Children[1].Get("x")=="quoted\"text","Quote parse");});
+        Case("malformed VDF rejected",delegate {Reject(()=>SteamLocator.Parse("root { value \"oops"));});
+        Case("modern Steam library on another drive folder",delegate {SteamFixture(false,false,false,false);});
+        Case("legacy Steam library entries",delegate {SteamFixture(true,false,false,false);});
+        Case("wrong app manifest rejected",delegate {SteamFixture(false,true,false,false);});
+        Case("manifest traversal rejected",delegate {SteamFixture(false,false,true,false);});
+        Case("missing required game executable not detected",delegate {SteamFixture(false,false,false,true);});
+        Case("stale library ignored",delegate {Assert(SteamLocator.Discover(new[]{Path.Combine(root,Guid.NewGuid().ToString())}).Count==0,"Stale found");});
         Console.WriteLine("INSTALLER_UNIT tests="+count+" result=PASS");
+    }
+    static void SteamFixture(bool legacy,bool wrong,bool traversal,bool missing) {
+        string install=Path.Combine(root,Guid.NewGuid().ToString()),library=Path.Combine(root,"中文 Steam Library "+Guid.NewGuid().ToString());
+        Directory.CreateDirectory(Path.Combine(install,"steamapps"));Directory.CreateDirectory(Path.Combine(library,"steamapps","common","Custom Game Folder"));
+        string encoded=library.Replace("\\","\\\\");
+        File.WriteAllText(Path.Combine(install,"steamapps/libraryfolders.vdf"),"\"libraryfolders\" { \"1\" "+(legacy?"\""+encoded+"\"":"{ \"path\" \""+encoded+"\" }")+" }");
+        File.WriteAllText(Path.Combine(library,"steamapps/appmanifest_5342930.acf"),"\"AppState\" { \"appid\" \""+(wrong?"123":"5342930")+"\" \"installdir\" \""+(traversal?"../outside":"Custom Game Folder")+"\" }");
+        string game=Path.Combine(library,"steamapps/common/Custom Game Folder");File.WriteAllText(Path.Combine(game,"rom.zar"),"test");if(!missing)File.WriteAllText(Path.Combine(game,"Dementium II.exe"),"test");
+        var found=SteamLocator.Discover(new[]{install,install});Assert(found.Count==(wrong||traversal||missing?0:1),"Library detection count");
+        if(found.Count>0)Assert(Path.GetFullPath(found[0])==Path.GetFullPath(Path.Combine(game,"rom.zar")),"Wrong install directory");
     }
     static void Real(string source,string target) {
         var p=Payload.Load();var e=new Engine(p,delegate(string m,int n){Console.WriteLine(n+"% "+m);});
@@ -71,7 +89,8 @@ static class InstallerTests {
         Console.WriteLine("ROLLBACK files=2 restored=BYTE_IDENTICAL backup=RETAINED game_launch=NEVER result=PASS");
     }
     public static int Main(string[] args) {
-        try {if(args.Length==3 && args[0]=="--real"){Real(args[1],args[2]);return 0;}
+        try {if(args.Length==1 && args[0]=="--detect"){foreach(var p in SteamLocator.Installed())Console.WriteLine("STEAM_DETECTED="+p);return 0;}
+            if(args.Length==3 && args[0]=="--real"){Real(args[1],args[2]);return 0;}
             root=Path.GetFullPath(args.Length==1?args[0]:"build/installer-unit-tests");Directory.CreateDirectory(root);Unit();return 0;
         }catch(Exception ex){Console.Error.WriteLine(ex);return 1;}
     }

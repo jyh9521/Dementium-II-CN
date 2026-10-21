@@ -1,6 +1,6 @@
 # 当前构建入口
 
-图形安装器：`python -X utf8 tools/build_installer.py`；发行包：`python -X utf8 tools/package_installer.py`。先构建差分，使用Windows自带.NET Framework编译器，玩家不需要Python。详见[图形安装器](docs/GUI_INSTALLER.md)。
+图形安装器（开发端.NET 10 SDK；品牌输入及设置见docs/GUI_INSTALLER.md）：`python -X utf8 tools/build_installer.py`；发行包：`python -X utf8 tools/package_installer.py`。先构建差分，开发端使用.NET 10 SDK发布自包含WPF单文件，玩家不需要另装.NET/Python。详见[图形安装器](docs/GUI_INSTALLER.md)。
 
 实际版本、已安装字体身份、依赖和完整命令见 [构建说明](docs/BUILD_AND_RELEASE.md)。
 Python3.11+，所有输出在 build/、dist/；工具不自动启动游戏，不写入 Steam 原件。

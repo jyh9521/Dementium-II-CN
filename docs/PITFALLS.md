@@ -529,3 +529,14 @@ This file should make it possible for a future contributor to answer:
 - how to avoid repeating previous research
 
 Negative knowledge should be preserved as carefully as successful implementation details.
+
+
+## 2026-10-21 Material安装器迁移（已验证）
+
+- 旧WinForms依赖系统.NET Framework，不满足无需另装运行依赖。新WPF使用自包含发布并嵌入原生运行库；代价是EXE约74MiB。
+- MaterialDesignThemes 5.3.2 的MaterialDesign3.Defaults仍使用MaterialDesignRaisedButton / FlatMidBgButton等样式名；不存在FilledTonalButton键，需建立基于真实样式的别名，不能凭名称猜测。
+- 同目录两个csproj需不同MSBuildProjectExtensionsPath和锁文件，否则Tests恢复会覆盖安装器NuGet资源/锁文件。使用提前导入的Directory.Build.props分离中间目录。
+- 不给整个项目设置RuntimeFrameworkVersion来锁.NET版本：Windows SDK引用也会误用10.0.13并恢复失败；记录SDK10.0.402和运行时资源实际身份、锁定工具包输入。
+- Steam库路径比较必须规范化分隔符；安装目录来自ACF的installdir，不来自写死的common/Dementium II。
+- Material按钮内部含默认不可见的进度控件，UI检查应检查可见实例，而非把内部模板当作用户线性进度条。
+- RenderTargetBitmap拍子树时不继承Window背景，需在预览绘制中先填充与Window一致的底色，避免透明区域预览成黑色；该修复不修改品牌PNG。

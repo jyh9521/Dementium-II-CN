@@ -4,6 +4,6 @@
   "archive_file": "rom.zar",
   "executable_file": "Dementium II.exe",
   "backup_folder": ".dementium-locale",
-  "notice": "请选择你自己的 rom.zar。验证通过后，在本地应用小体积差分，无需下载完整游戏资源。",
-  "footer": "自动备份原文件 · 不修改注册表、设置或存档 · 不自动启动游戏\n支持 Steam 2026 build 26091059；原版 LOGO 与 Atooi LLC 公司名保留"
+  "notice": "请选择游戏根目录的 rom.zar：",
+  "footer": "支持 Steam 2026 build 26091059"
 }

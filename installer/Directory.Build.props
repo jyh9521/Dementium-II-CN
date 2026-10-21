@@ -1,0 +1,4 @@
+<Project><PropertyGroup>
+ <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)../build/installer/$(MSBuildProjectName)-obj/</BaseIntermediateOutputPath>
+ <MSBuildProjectExtensionsPath>$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+</PropertyGroup></Project>
