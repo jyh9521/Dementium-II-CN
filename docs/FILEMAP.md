@@ -1,5 +1,18 @@
 # 文件地图
 
+## 当前全文入口（2026-10-21）
+
+- `tools/build_locale.py`：完整副本构建，不启动游戏。
+- `locales/zh-CN/{tables,narrative,interaction}.map.json`：676条结构化记录。
+- `locales/zh-CN/image-text.json`、`executable-text.json`：41张图片187标签、5个固定槽标签配方。
+- `tools/lint_locale.py`：分文本类型的句末标点检查。
+- `tools/package_locale.py`、`tools/check_probe.py`：确定性差分包及真实副本安装/恢复检查。
+- `tools/ROLLBACK_FULL.sh`：双组件独立恢复；`build/full-zh-CN/VERIFICATION.txt`：精确三向证据。
+- `docs/FULL_VERIFICATION.md`：全文交付验证摘要。
+- `build/full-zh-CN`、`dist/Dementium-II-zh-CN-preview.zip`：当前本地验收副本与差分包，均不跟踪。
+
+下表为最小实验阶段的历史入口，不是当前全文默认产物。
+
 | 路径 | 用途 | 跟踪/分发 |
 |---|---|---|
 | tools/localize.py | ZAR1、提取、校验、字体、重建、差分 | 源码 |

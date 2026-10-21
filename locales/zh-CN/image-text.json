@@ -1,0 +1,3135 @@
+{
+  "schema": 1,
+  "locale": "zh-CN",
+  "font": "Fusion Pixel 12px proportional zh_hans",
+  "policy": "Only approved rectangles may change; button identifiers and original dimensions preserved. Punctuation-free UI labels.",
+  "images": [
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_KEYBOARD_BACK.PNG",
+      "source_sha256": "07c24e17bdec8b320df4525effd4a3190d8c0cf47868957df8290f80449d674a",
+      "size": [
+        48,
+        20
+      ],
+      "labels": [
+        {
+          "source": "Back",
+          "target": "返回",
+          "box": [
+            24,
+            0,
+            48,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_KEYBOARD_CONFIRM.PNG",
+      "source_sha256": "05e4d64e925800c82936ef5b3a0d577106c7a60391370361e4a2aa4dcb285e51",
+      "size": [
+        65,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Confirm",
+          "target": "确认",
+          "box": [
+            25,
+            0,
+            65,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_KEYBOARD_EQUIP.PNG",
+      "source_sha256": "420d2c944e252823516e0b9a86385e1d368fa5b759146629cd0def950bdeca08",
+      "size": [
+        65,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Equip",
+          "target": "装备",
+          "box": [
+            25,
+            0,
+            65,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_KEYBOARD_PRESS.PNG",
+      "source_sha256": "a15805fa93693d3d6d95c8389681231adf3a44dfb7b3b0281ed62f83e40da105",
+      "size": [
+        65,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Press",
+          "target": "按下",
+          "box": [
+            25,
+            0,
+            65,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_NX_BACK.PNG",
+      "source_sha256": "ab35edf0834e8959a14e2ab87405de802d0b082cc80abcbe022cee307ecb7621",
+      "size": [
+        48,
+        20
+      ],
+      "labels": [
+        {
+          "source": "Back",
+          "target": "返回",
+          "box": [
+            24,
+            0,
+            48,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_NX_CONFIRM.PNG",
+      "source_sha256": "b7b58d36cde5a5f9e3260cefc4c025bfa80f0bbae4911eccc50e2f7d9ca6572f",
+      "size": [
+        65,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Confirm",
+          "target": "确认",
+          "box": [
+            19,
+            0,
+            65,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_NX_EQUIP.PNG",
+      "source_sha256": "f0e793247010a119c17d1a0ad2eb05ddc998332e055f8f5384acdc105fd529e5",
+      "size": [
+        55,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Equip",
+          "target": "装备",
+          "box": [
+            19,
+            0,
+            55,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_NX_PRESS.PNG",
+      "source_sha256": "e56dbfab7b7073199457eba560190024176741e1f6ef20cd652b17b88f95d904",
+      "size": [
+        54,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Press",
+          "target": "按下",
+          "box": [
+            19,
+            0,
+            54,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_PS4_BACK.PNG",
+      "source_sha256": "27b445f87876c8389c2960549cbb84e60a46f7819e5bb893cd2b6b47010abb87",
+      "size": [
+        48,
+        20
+      ],
+      "labels": [
+        {
+          "source": "Back",
+          "target": "返回",
+          "box": [
+            24,
+            0,
+            48,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_PS4_BACK_ASIABUTTONS.PNG",
+      "source_sha256": "d25254793a21b473064afbddfb587dacd4a1f44b537ab502ccf5f825cb3adbad",
+      "size": [
+        48,
+        20
+      ],
+      "labels": [
+        {
+          "source": "Back",
+          "target": "返回",
+          "box": [
+            24,
+            0,
+            48,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_PS4_CONFIRM.PNG",
+      "source_sha256": "1b46aa2c680e28dc85173679086a35ff7c8cbfae32f9352b7f7fb839f10b959f",
+      "size": [
+        65,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Confirm",
+          "target": "确认",
+          "box": [
+            19,
+            0,
+            65,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_PS4_CONFIRM_ASIABUTTONS.PNG",
+      "source_sha256": "f57219643383dfe14f1d3e124f240be6b8553adf318ac8d3b976644c81fe70b4",
+      "size": [
+        65,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Confirm",
+          "target": "确认",
+          "box": [
+            19,
+            0,
+            65,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_PS4_EQUIP.PNG",
+      "source_sha256": "9ccd29f7ebbd363cd31345f44f4de066d7a127f3028b090a9c209a5f298c226f",
+      "size": [
+        55,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Equip",
+          "target": "装备",
+          "box": [
+            19,
+            0,
+            55,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_PS4_EQUIP_ASIABUTTONS.PNG",
+      "source_sha256": "2cc7250f4dc73d8d7ec0a7d44c904a270ee0bf0a93ac883a8ad01a98c4a14261",
+      "size": [
+        55,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Equip",
+          "target": "装备",
+          "box": [
+            19,
+            0,
+            55,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_PS4_PRESS.PNG",
+      "source_sha256": "1665c9d1a0eb80490f2051f0eca577c0e1834f791d7c7c60f0159ddbfdf8893a",
+      "size": [
+        54,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Press",
+          "target": "按下",
+          "box": [
+            19,
+            0,
+            54,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/GENERAL/EN/LEGEND_PS4_PRESS_ASIABUTTONS.PNG",
+      "source_sha256": "f814f58554b6e5b5621ee237ea08d1487cee480f406c03d453a54b37f8149f70",
+      "size": [
+        54,
+        22
+      ],
+      "labels": [
+        {
+          "source": "Press",
+          "target": "按下",
+          "box": [
+            19,
+            0,
+            54,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_KEYBOARD_TYPE1.PNG",
+      "source_sha256": "c04cc692b5efb26603b85c7a5ee8212527096e0520bb9c45215352043ec29cd5",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Weapon Select",
+          "target": "选择武器",
+          "box": [
+            111,
+            17,
+            194,
+            30
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            14,
+            69,
+            59,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            62,
+            69,
+            107,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            110,
+            69,
+            155,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Reload",
+          "target": "装填",
+          "box": [
+            158,
+            69,
+            203,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            206,
+            69,
+            251,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Jump",
+          "target": "跳跃",
+          "box": [
+            24,
+            134,
+            72,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            78,
+            134,
+            128,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Crouch",
+          "target": "蹲下",
+          "box": [
+            137,
+            134,
+            178,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            183,
+            134,
+            236,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            43,
+            169,
+            80,
+            184
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Weapon Cycle",
+          "target": "切换\n武器",
+          "box": [
+            173,
+            169,
+            220,
+            196
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        }
+      ],
+      "clear_regions": [
+        {
+          "box": [
+            10,
+            68,
+            247,
+            84
+          ],
+          "color": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "box": [
+            11,
+            133,
+            247,
+            150
+          ],
+          "color": [
+            0,
+            0,
+            0,
+            67
+          ]
+        }
+      ],
+      "background_evidence": {
+        "rgba": [
+          0,
+          0,
+          0,
+          67
+        ],
+        "observed_samples": [
+          [
+            20,
+            68
+          ],
+          [
+            15,
+            80
+          ],
+          [
+            50,
+            80
+          ]
+        ],
+        "reason": "Original panel background sampled away from letters/keys; alpha 67 preserved instead of introducing alpha255 strips"
+      }
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_PC_TYPE1.PNG",
+      "source_sha256": "eca47b49d7f8b2cfffac787408bb833758b037bd626b2df479c89b4215022600",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            37,
+            74,
+            68,
+            88
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            196,
+            74,
+            242,
+            89
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Options",
+          "target": "设置",
+          "box": [
+            111,
+            60,
+            151,
+            75
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            217,
+            113,
+            243,
+            129
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Jump",
+          "target": "跳跃",
+          "box": [
+            206,
+            185,
+            238,
+            200
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            49,
+            176,
+            118,
+            190
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            61,
+            189,
+            109,
+            205
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            68,
+            38,
+            110,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            160,
+            38,
+            202,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            21,
+            118,
+            49,
+            133
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            141,
+            187,
+            168,
+            201
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Crouch",
+          "target": "蹲下",
+          "box": [
+            214,
+            151,
+            251,
+            166
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Equip Last",
+          "target": "上次武器",
+          "box": [
+            58,
+            164,
+            109,
+            178
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload",
+          "target": "装填",
+          "box": [
+            175,
+            198,
+            209,
+            213
+          ],
+          "stroke": 0
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_NX_TYPE1.PNG",
+      "source_sha256": "929013c21b5ba5ab71f797725dbf2e8589ccfddb9cd6d59ae4dd4f3356b4b966",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            37,
+            74,
+            68,
+            88
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            196,
+            74,
+            242,
+            89
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Options",
+          "target": "设置",
+          "box": [
+            111,
+            60,
+            151,
+            75
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            217,
+            113,
+            243,
+            129
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            68,
+            38,
+            110,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            160,
+            38,
+            202,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            21,
+            118,
+            49,
+            133
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            141,
+            187,
+            168,
+            201
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/\n上次武器",
+          "box": [
+            202,
+            145,
+            255,
+            171
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            45,
+            169,
+            131,
+            185
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            50,
+            184,
+            122,
+            198
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            62,
+            197,
+            110,
+            211
+          ],
+          "stroke": 0
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_PS4_TYPE1.PNG",
+      "source_sha256": "fceb94cf86f83a4db98ff12019e5acc72c49eee28b663dbcb34f0c00d564d51a",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            121,
+            18,
+            208,
+            32
+          ]
+        },
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            121,
+            36,
+            208,
+            50
+          ]
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            121,
+            54,
+            208,
+            68
+          ]
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            121,
+            72,
+            208,
+            86
+          ]
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            121,
+            90,
+            208,
+            104
+          ]
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            121,
+            108,
+            208,
+            122
+          ]
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            121,
+            126,
+            208,
+            140
+          ]
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            121,
+            144,
+            208,
+            158
+          ]
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            121,
+            162,
+            208,
+            176
+          ]
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            121,
+            178,
+            208,
+            192
+          ]
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            121,
+            194,
+            208,
+            208
+          ]
+        }
+      ],
+      "clear_regions": [
+        {
+          "box": [
+            121,
+            17,
+            208,
+            211
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_KEYBOARD_TYPE2.PNG",
+      "source_sha256": "2fa15c1ac9869e5abb29a7d5b50c4a04743a57614f8a630c9a954b0c41003aef",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Weapon Select",
+          "target": "选择武器",
+          "box": [
+            111,
+            17,
+            194,
+            30
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            14,
+            69,
+            59,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Reload",
+          "target": "装填",
+          "box": [
+            62,
+            69,
+            107,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            110,
+            69,
+            155,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            158,
+            69,
+            203,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            206,
+            69,
+            251,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            24,
+            134,
+            72,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Crouch",
+          "target": "蹲下",
+          "box": [
+            78,
+            134,
+            128,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            137,
+            134,
+            178,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Jump",
+          "target": "跳跃",
+          "box": [
+            183,
+            134,
+            236,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Weapon Cycle",
+          "target": "切换\n武器",
+          "box": [
+            52,
+            169,
+            90,
+            196
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            185,
+            169,
+            225,
+            184
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        }
+      ],
+      "clear_regions": [
+        {
+          "box": [
+            10,
+            68,
+            247,
+            84
+          ],
+          "color": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "box": [
+            11,
+            133,
+            247,
+            150
+          ],
+          "color": [
+            0,
+            0,
+            0,
+            67
+          ]
+        }
+      ],
+      "background_evidence": {
+        "rgba": [
+          0,
+          0,
+          0,
+          67
+        ],
+        "observed_samples": [
+          [
+            20,
+            68
+          ],
+          [
+            15,
+            80
+          ],
+          [
+            50,
+            80
+          ]
+        ],
+        "reason": "Original panel background sampled away from letters/keys; alpha 67 preserved instead of introducing alpha255 strips"
+      }
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_PC_TYPE2.PNG",
+      "source_sha256": "336f720ccd30e5d8f76aa02bc031cf63173bd1245768bed2af0f1dbe03f790ed",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            37,
+            74,
+            68,
+            88
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            196,
+            74,
+            242,
+            89
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Options",
+          "target": "设置",
+          "box": [
+            111,
+            60,
+            151,
+            75
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            217,
+            113,
+            243,
+            129
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Jump",
+          "target": "跳跃",
+          "box": [
+            206,
+            185,
+            238,
+            200
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            49,
+            176,
+            118,
+            190
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            61,
+            189,
+            109,
+            205
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            68,
+            38,
+            110,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            160,
+            38,
+            202,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            21,
+            118,
+            49,
+            133
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            141,
+            187,
+            168,
+            201
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Crouch",
+          "target": "蹲下",
+          "box": [
+            214,
+            151,
+            251,
+            166
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Equip Last",
+          "target": "上次武器",
+          "box": [
+            58,
+            164,
+            109,
+            178
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload",
+          "target": "装填",
+          "box": [
+            175,
+            198,
+            209,
+            213
+          ],
+          "stroke": 0
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_NX_TYPE2.PNG",
+      "source_sha256": "0a44ab4585950cda2c5aa279fb4f0c2e83daf7519ad4c4e4e7597ff6df3b61a4",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            37,
+            74,
+            68,
+            88
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            196,
+            74,
+            242,
+            89
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Options",
+          "target": "设置",
+          "box": [
+            111,
+            60,
+            151,
+            75
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            217,
+            113,
+            243,
+            129
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            68,
+            38,
+            110,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            160,
+            38,
+            202,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            21,
+            118,
+            49,
+            133
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            141,
+            187,
+            168,
+            201
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/\n上次武器",
+          "box": [
+            202,
+            145,
+            255,
+            171
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            45,
+            169,
+            131,
+            185
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            50,
+            184,
+            122,
+            198
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            62,
+            197,
+            110,
+            211
+          ],
+          "stroke": 0
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_PS4_TYPE2.PNG",
+      "source_sha256": "0a44c69461db6e90babe437651809d715fdbf76b2e94b4a74d857e0e8b2f68dc",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            121,
+            18,
+            208,
+            32
+          ]
+        },
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            121,
+            36,
+            208,
+            50
+          ]
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            121,
+            54,
+            208,
+            68
+          ]
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            121,
+            72,
+            208,
+            86
+          ]
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            121,
+            90,
+            208,
+            104
+          ]
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            121,
+            108,
+            208,
+            122
+          ]
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            121,
+            126,
+            208,
+            140
+          ]
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            121,
+            144,
+            208,
+            158
+          ]
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            121,
+            162,
+            208,
+            176
+          ]
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            121,
+            178,
+            208,
+            192
+          ]
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            121,
+            194,
+            208,
+            208
+          ]
+        }
+      ],
+      "clear_regions": [
+        {
+          "box": [
+            121,
+            17,
+            208,
+            211
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_KEYBOARD_TYPE3.PNG",
+      "source_sha256": "f3c5a3521b10465dfca16e87fdd39792bfb0dfe66896395bb025eab534957b8a",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Weapon Select",
+          "target": "选择武器",
+          "box": [
+            111,
+            17,
+            194,
+            30
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            14,
+            69,
+            59,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            62,
+            69,
+            107,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            110,
+            69,
+            155,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Reload",
+          "target": "装填",
+          "box": [
+            158,
+            69,
+            203,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            206,
+            69,
+            251,
+            83
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Jump",
+          "target": "跳跃",
+          "box": [
+            24,
+            134,
+            72,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            78,
+            134,
+            128,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Crouch",
+          "target": "蹲下",
+          "box": [
+            137,
+            134,
+            178,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            183,
+            134,
+            236,
+            148
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            43,
+            169,
+            80,
+            184
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "source": "Weapon Cycle",
+          "target": "切换\n武器",
+          "box": [
+            173,
+            169,
+            220,
+            196
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            67
+          ]
+        }
+      ],
+      "clear_regions": [
+        {
+          "box": [
+            10,
+            68,
+            247,
+            84
+          ],
+          "color": [
+            0,
+            0,
+            0,
+            67
+          ]
+        },
+        {
+          "box": [
+            11,
+            133,
+            247,
+            150
+          ],
+          "color": [
+            0,
+            0,
+            0,
+            67
+          ]
+        }
+      ],
+      "background_evidence": {
+        "rgba": [
+          0,
+          0,
+          0,
+          67
+        ],
+        "observed_samples": [
+          [
+            20,
+            68
+          ],
+          [
+            15,
+            80
+          ],
+          [
+            50,
+            80
+          ]
+        ],
+        "reason": "Original panel background sampled away from letters/keys; alpha 67 preserved instead of introducing alpha255 strips"
+      }
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_PC_TYPE3.PNG",
+      "source_sha256": "a41f0e3f7c875b77100c9a36c500574df0ce04435bae826e6c831c04deae7f26",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            37,
+            74,
+            68,
+            88
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            196,
+            74,
+            242,
+            89
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Options",
+          "target": "设置",
+          "box": [
+            111,
+            60,
+            151,
+            75
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            217,
+            113,
+            243,
+            129
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Jump",
+          "target": "跳跃",
+          "box": [
+            206,
+            185,
+            238,
+            200
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            49,
+            176,
+            118,
+            190
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            61,
+            189,
+            109,
+            205
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            68,
+            38,
+            110,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            160,
+            38,
+            202,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            21,
+            118,
+            49,
+            133
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            141,
+            187,
+            168,
+            201
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Crouch",
+          "target": "蹲下",
+          "box": [
+            214,
+            151,
+            251,
+            166
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Equip Last",
+          "target": "上次武器",
+          "box": [
+            58,
+            164,
+            109,
+            178
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload",
+          "target": "装填",
+          "box": [
+            175,
+            198,
+            209,
+            213
+          ],
+          "stroke": 0
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_NX_TYPE3.PNG",
+      "source_sha256": "44aafe727969594472554a991f515efc47e873d088031732f377e86712a6ac8f",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            37,
+            74,
+            68,
+            88
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            196,
+            74,
+            242,
+            89
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Options",
+          "target": "设置",
+          "box": [
+            111,
+            60,
+            151,
+            75
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            217,
+            113,
+            243,
+            129
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            68,
+            38,
+            110,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            160,
+            38,
+            202,
+            52
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            21,
+            118,
+            49,
+            133
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            141,
+            187,
+            168,
+            201
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/\n上次武器",
+          "box": [
+            202,
+            145,
+            255,
+            171
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            45,
+            169,
+            131,
+            185
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            50,
+            184,
+            122,
+            198
+          ],
+          "stroke": 0
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            62,
+            197,
+            110,
+            211
+          ],
+          "stroke": 0
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/CONTROLS_PS4_TYPE3.PNG",
+      "source_sha256": "f7ca899ba2322a20a8192d29ecd6e553d494d4f29e910aff1bf878de3a19cbd4",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Attack",
+          "target": "攻击",
+          "box": [
+            121,
+            18,
+            208,
+            32
+          ]
+        },
+        {
+          "source": "Items",
+          "target": "物品",
+          "box": [
+            121,
+            36,
+            208,
+            50
+          ]
+        },
+        {
+          "source": "Interact",
+          "target": "交互",
+          "box": [
+            121,
+            54,
+            208,
+            68
+          ]
+        },
+        {
+          "source": "Weapons",
+          "target": "武器",
+          "box": [
+            121,
+            72,
+            208,
+            86
+          ]
+        },
+        {
+          "source": "Map",
+          "target": "地图",
+          "box": [
+            121,
+            90,
+            208,
+            104
+          ]
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            121,
+            108,
+            208,
+            122
+          ]
+        },
+        {
+          "source": "Aim",
+          "target": "瞄准",
+          "box": [
+            121,
+            126,
+            208,
+            140
+          ]
+        },
+        {
+          "source": "Move",
+          "target": "移动",
+          "box": [
+            121,
+            144,
+            208,
+            158
+          ]
+        },
+        {
+          "source": "Reload / Equip Last",
+          "target": "装填/上次武器",
+          "box": [
+            121,
+            162,
+            208,
+            176
+          ]
+        },
+        {
+          "source": "Cycle Weapons",
+          "target": "切换武器",
+          "box": [
+            121,
+            178,
+            208,
+            192
+          ]
+        },
+        {
+          "source": "Flashlight",
+          "target": "手电筒",
+          "box": [
+            121,
+            194,
+            208,
+            208
+          ]
+        }
+      ],
+      "clear_regions": [
+        {
+          "box": [
+            121,
+            17,
+            208,
+            211
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/LEGEND_KEYBOARD_YAXIS.PNG",
+      "source_sha256": "5debcd658ea9d3a94db4357bf266bc8c1d61d65b817d0e6b5f47101794d26ba1",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Flip",
+          "target": "反转",
+          "box": [
+            348,
+            218,
+            379,
+            234
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/LEGEND_NX_YAXIS.PNG",
+      "source_sha256": "2a5d534f9bdc536b316cb2e723cdb16c2fc6d87907b39c0b2c667d6b9eafa5e8",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Flip",
+          "target": "反转",
+          "box": [
+            348,
+            218,
+            379,
+            234
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/LEGEND_PC_YAXIS.PNG",
+      "source_sha256": "abae74848d57b2ed12b3695f887e0255527f4e2860b7d9012a200f29ebb01eeb",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Flip",
+          "target": "反转",
+          "box": [
+            348,
+            218,
+            379,
+            234
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/OPTIONS/EN/LEGEND_PS4_YAXIS.PNG",
+      "source_sha256": "6fb8da6490caa6c9e0449e08978a01112b51afe21db98517eb8e64a803825057",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "Flip",
+          "target": "反转",
+          "box": [
+            348,
+            218,
+            379,
+            234
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/HUD/THATWASYOURLASTBREATH.PNG",
+      "source_sha256": "0b55c8c6f7e188fb14a117263a90050ef8441c5e3ac5b9740d8d77b691f7a7a0",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "That Was Your Last Breath",
+          "target": "你已呼出最后一口气",
+          "box": [
+            80,
+            83,
+            348,
+            146
+          ],
+          "font_size": 24,
+          "color": [
+            235,
+            220,
+            205,
+            255
+          ],
+          "keep_background": true
+        }
+      ],
+      "erase_regions": [
+        {
+          "box": [
+            136,
+            82,
+            290,
+            101
+          ],
+          "ink": "red",
+          "threshold": {
+            "min_red": 90
+          }
+        },
+        {
+          "box": [
+            92,
+            109,
+            333,
+            138
+          ],
+          "ink": "light",
+          "threshold": {
+            "min_green": 38
+          }
+        }
+      ]
+    },
+    {
+      "resource": "TEXTURES/HUD/THATWASYOURLASTBREATH2.PNG",
+      "source_sha256": "a04f980776805561fa3de5a570c923b611c55cb5f248c20be312ce20a911ad7e",
+      "size": [
+        428,
+        240
+      ],
+      "labels": [
+        {
+          "source": "That Was Your Last Breath",
+          "target": "你已呼出最后一口气",
+          "box": [
+            80,
+            83,
+            348,
+            146
+          ],
+          "font_size": 24,
+          "color": [
+            235,
+            220,
+            205,
+            255
+          ],
+          "keep_background": true
+        }
+      ],
+      "erase_regions": [
+        {
+          "box": [
+            136,
+            82,
+            290,
+            101
+          ],
+          "ink": "red",
+          "threshold": {
+            "min_red": 90
+          }
+        },
+        {
+          "box": [
+            92,
+            109,
+            333,
+            138
+          ],
+          "ink": "light",
+          "threshold": {
+            "min_green": 38
+          }
+        }
+      ]
+    },
+    {
+      "resource": "TEX/EN/SIGN_01.PNG",
+      "source_sha256": "9eebe24372b89221c3f7a3ffdaa4711a6e930eba9a4bb6fdd6f8cd55a7691c1e",
+      "size": [
+        128,
+        128
+      ],
+      "labels": [
+        {
+          "source": "WEST CELLBLOCK",
+          "target": "西侧牢区",
+          "box": [
+            3,
+            6,
+            125,
+            30
+          ],
+          "clear": [
+            42,
+            61,
+            78,
+            255
+          ],
+          "color": [
+            207,
+            214,
+            210,
+            255
+          ]
+        },
+        {
+          "source": "1ST",
+          "target": "一层",
+          "box": [
+            3,
+            38,
+            49,
+            59
+          ],
+          "clear": [
+            42,
+            61,
+            78,
+            255
+          ],
+          "color": [
+            207,
+            214,
+            210,
+            255
+          ]
+        },
+        {
+          "source": "2ND",
+          "target": "二层",
+          "box": [
+            54,
+            38,
+            87,
+            59
+          ],
+          "clear": [
+            42,
+            61,
+            78,
+            255
+          ],
+          "color": [
+            207,
+            214,
+            210,
+            255
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEX/EN/SIGN_02.PNG",
+      "source_sha256": "3c58bb8f922e00a9e3d69237acaaa6e0204f671c37ff941e62adfca3e1298a9a",
+      "size": [
+        128,
+        128
+      ],
+      "labels": [
+        {
+          "source": "OFFICE",
+          "target": "办公室",
+          "box": [
+            5,
+            6,
+            124,
+            30
+          ],
+          "clear": [
+            42,
+            61,
+            78,
+            255
+          ],
+          "color": [
+            207,
+            214,
+            210,
+            255
+          ]
+        },
+        {
+          "source": "SHOP",
+          "target": "商店",
+          "box": [
+            5,
+            38,
+            124,
+            59
+          ],
+          "clear": [
+            42,
+            61,
+            78,
+            255
+          ],
+          "color": [
+            207,
+            214,
+            210,
+            255
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEX/EN/SIGN_03.PNG",
+      "source_sha256": "26468188c6de987de669c26a098578f39610f5f4baea4de8d14aded673aeecc2",
+      "size": [
+        128,
+        128
+      ],
+      "labels": [
+        {
+          "source": "N.E. WING",
+          "target": "东北翼",
+          "box": [
+            3,
+            6,
+            125,
+            30
+          ],
+          "clear": [
+            42,
+            61,
+            78,
+            255
+          ],
+          "color": [
+            207,
+            214,
+            210,
+            255
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEX/SIGNS011.PNG",
+      "source_sha256": "bac57106a1ed60263f331bfbaee01a4302916ae89423535e24429974c856a2f1",
+      "size": [
+        128,
+        64
+      ],
+      "labels": [
+        {
+          "source": "ST JAMES WARD",
+          "target": "圣詹姆斯病区",
+          "box": [
+            0,
+            0,
+            128,
+            64
+          ],
+          "clear": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "color": [
+            170,
+            162,
+            139,
+            255
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEX/EN/SIGNS010.PNG",
+      "source_sha256": "3449c448cae3939e66c1b60a91dec0e29c14e4b77bf6bc643133ca78f448b3bf",
+      "size": [
+        128,
+        128
+      ],
+      "labels": [
+        {
+          "source": "GENERAL STORE",
+          "target": "杂货店",
+          "box": [
+            4,
+            18,
+            124,
+            30
+          ],
+          "clear": [
+            80,
+            65,
+            49,
+            255
+          ]
+        },
+        {
+          "source": "KEEP OUT",
+          "target": "禁止入内",
+          "box": [
+            1,
+            36,
+            127,
+            62
+          ],
+          "clear": [
+            98,
+            68,
+            52,
+            255
+          ],
+          "color": [
+            60,
+            20,
+            12,
+            255
+          ]
+        },
+        {
+          "source": "SALVAGE",
+          "target": "废品回收",
+          "box": [
+            38,
+            66,
+            127,
+            94
+          ],
+          "clear": [
+            150,
+            139,
+            117,
+            255
+          ],
+          "color": [
+            57,
+            45,
+            34,
+            255
+          ]
+        },
+        {
+          "source": "Imports - Exports Ltd.",
+          "target": "进出口有限公司",
+          "box": [
+            4,
+            113,
+            125,
+            128
+          ],
+          "font_size": 12,
+          "clear": [
+            89,
+            58,
+            48,
+            255
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEX/EN/SIGNS012.PNG",
+      "source_sha256": "664e027770c993dab55f94bbe7f9151bbf54a1fbea38b0f3dfea44811f5e572c",
+      "size": [
+        128,
+        128
+      ],
+      "labels": [
+        {
+          "source": "SINCE 1872",
+          "target": "始于\n1872年",
+          "box": [
+            64,
+            3,
+            126,
+            29
+          ],
+          "font_size": 12,
+          "clear": [
+            78,
+            72,
+            53,
+            255
+          ]
+        },
+        {
+          "source": "ROOMS FOR RENT",
+          "target": "客房出租",
+          "box": [
+            4,
+            33,
+            125,
+            63
+          ],
+          "clear": [
+            95,
+            69,
+            56,
+            255
+          ]
+        },
+        {
+          "source": "INN",
+          "target": "旅馆",
+          "box": [
+            3,
+            68,
+            125,
+            93
+          ],
+          "clear": [
+            110,
+            65,
+            50,
+            255
+          ]
+        },
+        {
+          "source": "GREAT LAKE INN",
+          "target": "大湖旅馆",
+          "box": [
+            3,
+            102,
+            125,
+            126
+          ],
+          "clear": [
+            64,
+            69,
+            56,
+            255
+          ]
+        }
+      ]
+    },
+    {
+      "resource": "TEX/EN/SIGNS013.PNG",
+      "source_sha256": "73c0710911bb3179d57923b801eb9d9aabdd6e81501c8c47baaebd981a89da53",
+      "size": [
+        128,
+        128
+      ],
+      "labels": [
+        {
+          "source": "Pelf",
+          "target": "佩尔夫",
+          "box": [
+            8,
+            8,
+            125,
+            75
+          ],
+          "font_size": 24,
+          "clear": [
+            60,
+            88,
+            105,
+            255
+          ],
+          "color": [
+            192,
+            193,
+            163,
+            255
+          ]
+        },
+        {
+          "source": "A GREAT LAKES TOWN",
+          "target": "大湖区小镇",
+          "box": [
+            3,
+            77,
+            125,
+            92
+          ],
+          "font_size": 12,
+          "clear": [
+            80,
+            89,
+            80,
+            255
+          ]
+        },
+        {
+          "source": "FOOD FUEL LODGINGS",
+          "target": "餐饮 燃料 住宿",
+          "box": [
+            3,
+            96,
+            125,
+            124
+          ],
+          "font_size": 12,
+          "clear": [
+            61,
+            85,
+            95,
+            255
+          ]
+        }
+      ]
+    }
+  ],
+  "audit_dispositions": {
+    "TEX/BOOKS01.PNG": {
+      "disposition": "preserve-proper-title",
+      "reason": "Readable book title INFERNO, identity of depicted book, not a gameplay instruction"
+    },
+    "TEX/BOOKS05.PNG": {
+      "disposition": "preserve-brand",
+      "reason": "Readable Dementium logo, game brand identity"
+    },
+    "TEX/AMMO_SG1.PNG": {
+      "disposition": "preserve-brand-and-unreadable-microtext",
+      "reason": "Readable stylized BLAST EM ammunition brand; remaining microprint not reliably transcribable"
+    },
+    "TEX/AMMO_REV.PNG": {
+      "disposition": "preserve-brand-and-unreadable-microtext",
+      "reason": "Ammunition cartridge packaging logo and unreadable microprint"
+    },
+    "TEX/AMMO_NG.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "64px package microprint not reliably transcribable"
+    },
+    "TEX/BIBLE.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "64px book pages lack reliably transcribable sentences"
+    },
+    "TEX/BOOKS04.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Book-spine microprint not reliably transcribable"
+    },
+    "TEX/BOXES_01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Shipping carton microprint not reliably transcribable"
+    },
+    "TEX/BROCHURE.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Decorative brochure microprint not reliably transcribable; readable examine text is separate EN resource"
+    },
+    "TEX/BULLETIN.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Decorative pinned paper microprint not reliably transcribable"
+    },
+    "TEX/MEMO01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "64px memo microprint not reliably transcribable; readable examine text is separate EN resource"
+    },
+    "TEX/NOTES01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Decorative paper microprint not reliably transcribable"
+    },
+    "TEX/PAGE01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Decorative torn-paper microprint not reliably transcribable"
+    },
+    "TEX/PAPER002.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Decorative newspaper microprint not reliably transcribable"
+    },
+    "TEX/PAPER_01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Decorative scattered paper microprint not reliably transcribable"
+    },
+    "TEX/PIC_02.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "64px framed certificate microprint not reliably transcribable"
+    },
+    "TEX/PLETTER.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "32px pink note microprint not reliably transcribable; readable examine text is separate EN resource"
+    },
+    "TEX/HEALTH01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "64px health container package microprint not reliably transcribable"
+    },
+    "TEX/P_HLTH01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "64px health container package microprint not reliably transcribable"
+    },
+    "TEX/P_HLTH02.PNG": {
+      "disposition": "preserve-symbol-and-microtext",
+      "reason": "Medical cross and package microprint not reliably transcribable"
+    },
+    "TEX/PILLS.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Package microprint not reliably transcribable"
+    },
+    "TEX/TOETAG01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "Tag microprint not reliably transcribable"
+    },
+    "TEX/WBOARD01.PNG": {
+      "disposition": "unreadable-native-microtext",
+      "reason": "64px board handwriting cannot be reliably transcribed; no invented replacement"
+    },
+    "TEX/SODA01.PNG": {
+      "disposition": "preserve-brand",
+      "reason": "Soda machine product advertising/logo, art brand identity"
+    },
+    "TEX/W_TNT.PNG": {
+      "disposition": "preserve-symbol-and-microtext",
+      "reason": "Explosive package markings/symbols and illegible microprint"
+    },
+    "TEX/EYECHRT1.PNG": {
+      "disposition": "preserve-letter-chart",
+      "reason": "Eye chart uses letters as test symbols, not linguistic prose"
+    },
+    "TEX/BLOCKS01.PNG": {
+      "disposition": "preserve-puzzle-symbols",
+      "reason": "Alphabet puzzle blocks; A-Z identities required by puzzle"
+    },
+    "SPRITES/SPR-ALPHABET.PNG": {
+      "disposition": "preserve-puzzle-symbols",
+      "reason": "Alphabet puzzle glyph sprites; identities required by puzzle"
+    },
+    "TEXTURES/OPTIONS/EN/PAGERIGHT_PCMOUSE.PNG": {
+      "disposition": "preserve-keycap",
+      "reason": "X keycap plus arrow, no linguistic text"
+    }
+  },
+  "audit_method": {
+    "image_review": "836 PNGs excluding 152 alternate DE/FR/IT/SP localized assets reviewed in 9 contact sheets; text-like candidates zoomed at integer scale",
+    "video_review": "21 IVF videos decoded offline, 323 frames at 1fps viewed in 6 contact sheets; no burned-in dialogue subtitles detected in sampled frames; not exhaustive per-frame OCR",
+    "limitations": "Artwork proper names and non-transcribable original microprint retained explicitly; no claim of voice dubbing, exhaustive runtime coverage, or Steam platform overlay translation"
+  }
+}

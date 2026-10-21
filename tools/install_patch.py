@@ -66,20 +66,84 @@ def operate(game, identity, patch, action):
     return 'INSTALLED' if action == 'install' else 'RESTORED'
 
 
+def operate_bundle(game, identity, patch, executable_patch, action):
+    """Install/restore archive and guarded literal data as one recoverable bundle.
+
+    Recognize original/installed states per component, including interrupted
+    transactions. Unknown content is rejected before backup or file writes.
+    """
+    from executable_text import apply_executable_patch
+    game = game.resolve(strict=True)
+    if identity['appid'] != 5342930:
+        raise ValueError('Unsupported AppID')
+    if (patch['original_sha256'],patch['original_size']) != (identity['rom_sha256'],identity['rom_size']):
+        raise ValueError('Archive patch identity mismatch')
+    if (executable_patch['original_sha256'],executable_patch['original_size']) != (identity['exe_sha256'],identity['exe_size']):
+        raise ValueError('Executable patch identity mismatch')
+    components = [('rom.zar','original.zar',patch,apply_delta),
+                  ('Dementium II.exe','original.exe',executable_patch,apply_executable_patch)]
+    plans = []
+    for name,backup_name,delta,apply in components:
+        path = game/name
+        before = path.read_bytes()
+        current = digest(before)
+        if current not in (delta['original_sha256'],delta['modified_sha256']):
+            raise ValueError('Unknown component state: '+name)
+        desired = delta['modified_sha256'] if action=='install' else delta['original_sha256']
+        backup = game/'.dementium-locale'/backup_name
+        if backup.exists() and filehash(backup)!=delta['original_sha256']:
+            raise ValueError('Recovery backup mismatch: '+name)
+        if current==delta['modified_sha256'] and not backup.exists():
+            raise ValueError('Modified component lacks verified backup: '+name)
+        after = before if current==desired else apply(before,delta,action=='uninstall')
+        if digest(after)!=desired:
+            raise ValueError('Component result mismatch: '+name)
+        plans.append(dict(path=path,backup=backup,before=before,after=after,current=current,desired=desired))
+    if all(p['current']==p['desired'] for p in plans):
+        return 'ALREADY_INSTALLED' if action=='install' else 'ALREADY_RESTORED'
+    if action=='install':
+        for p in plans:
+            if not p['backup'].exists():
+                p['backup'].parent.mkdir(parents=True,exist_ok=True)
+                with p['backup'].open('xb') as stream:
+                    stream.write(p['before'])
+                if filehash(p['backup'])!=p['current']:
+                    raise ValueError('Backup write mismatch')
+    if any(filehash(p['path'])!=p['current'] for p in plans):
+        raise ValueError('Component changed during operation')
+    written = []
+    try:
+        for p in plans:
+            if p['current']!=p['desired']:
+                atomic_write(p['path'],p['after'])
+                written.append(p)
+            if filehash(p['path'])!=p['desired']:
+                raise ValueError('Written component mismatch')
+    except Exception:
+        # Preserve the prior mixed/original state rather than leave half an install.
+        for p in reversed(written):
+            atomic_write(p['path'],p['before'])
+        raise
+    return 'INSTALLED' if action=='install' else 'RESTORED'
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['install', 'uninstall'])
     parser.add_argument('--game', required=True, type=Path)
     parser.add_argument('--identity', type=Path, default=Path(__file__).resolve().parent / 'supported-build.json')
     parser.add_argument('--patch', type=Path, default=Path(__file__).resolve().parent / 'patch.json')
+    parser.add_argument('--exe-patch', type=Path, default=Path(__file__).resolve().parent / 'exe-patch.json')
     parser.add_argument('--allow-experimental', action='store_true')
     args = parser.parse_args()
     if not args.allow_experimental:
         parser.error('Experimental build: explicit --allow-experimental is required')
     identity = json.loads(args.identity.read_text(encoding='utf-8'))
     patch = json.loads(args.patch.read_text(encoding='utf-8'))
-    result = operate(args.game, identity, patch, args.action)
-    print(result + ' sha256=' + filehash(args.game / 'rom.zar') + ' game_launch=NEVER')
+    executable_patch = json.loads(args.exe_patch.read_text(encoding='utf-8')) if args.exe_patch.is_file() else None
+    result = operate_bundle(args.game,identity,patch,executable_patch,args.action) if executable_patch else operate(args.game, identity, patch, args.action)
+    print(result + ' sha256=' + filehash(args.game / 'rom.zar') +
+          (' exe_sha256='+filehash(args.game/'Dementium II.exe') if executable_patch else '') + ' game_launch=NEVER')
 
 
 if __name__ == '__main__':

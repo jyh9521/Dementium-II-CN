@@ -33,12 +33,17 @@ def main():
             raise ValueError('Empty translation: ' + row['id'])
         row.update(entry)
     validate(rows, extract(Zar(raw)))
+    from lint_locale import lint
+    violations = lint(rows)
+    if violations:
+        raise ValueError('Locale style violations: ' + json.dumps(violations,ensure_ascii=False))
     write_json(args.output, rows)
     translated = sum(r['source'] != r['target'] for r in rows)
     report = dict(total=len(rows), translated=translated, preserved=len(rows)-translated,
                   untranslated=sum(not r['target'] for r in rows), status_counts=dict(Counter(r['status'] for r in rows)),
                   review=[dict(id=r['id'],source=r['source'],target=r['target'],notes=r.get('notes','')) for r in rows if 'context' in r['status']],
-                  scope='169 recognized English text resources, not every visible string in the executable or images')
+                  text_types=dict(Counter(r['text_type'] for r in rows)), resources=len({r['resource'] for r in rows}),
+                  scope='All inventoried source-locale textual resources; executable and image text are audited separately')
     write_json(args.output.with_name('translation-report.json'), report)
     print('LOCALE records=%d translated=%d preserved=%d empty=0 tokens=PASS' % (len(rows),translated,len(rows)-translated))
 

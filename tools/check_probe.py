@@ -12,10 +12,12 @@ from localize import filehash, write_json
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--game', type=Path, required=True)
+    parser.add_argument('--package',type=Path)
+    parser.add_argument('--output',type=Path)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    package = root / 'dist/Dementium-II-zh-CN-technical-probe.zip'
-    test = root / 'build/package-test'
+    package = args.package or root / 'dist/Dementium-II-zh-CN-technical-probe.zip'
+    test = (args.output or root / 'build/package-test').resolve()
     bundle = test / 'bundle'
     target = test / 'game-copy'
     bundle.mkdir(parents=True, exist_ok=True)
@@ -38,6 +40,7 @@ def main():
             write_json(test / 'results.json', results)
             raise RuntimeError('Packaged installer test failed')
     assert filehash(target / 'rom.zar') == filehash(args.game / 'rom.zar')
+    assert filehash(target / 'Dementium II.exe') == filehash(args.game / 'Dementium II.exe')
     assert filehash(target / '.dementium-locale/original.zar') == identity['rom_sha256']
     write_json(test / 'results.json', results)
     print('PACKAGE_TEST install=PASS idempotence=PASS uninstall=PASS restore=BYTE_IDENTICAL game_launch=NEVER result=PASS')

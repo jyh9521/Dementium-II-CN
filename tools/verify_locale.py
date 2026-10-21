@@ -24,8 +24,8 @@ def main():
         rows = extract(source)
         # Actually run the no-translation import and full resource-preserving rebuild.
         assert source.rebuild(import_text(source, rows)) == original
-        assert len(rows)==666
-        print('BASELINE records=666 archive=BYTE_IDENTICAL sha256='+digest(original)+' result=PASS')
+        assert len(rows)==676
+        print('BASELINE records=676 archive=BYTE_IDENTICAL sha256='+digest(original)+' result=PASS')
         return
     modified = (args.build/'rom.zar').read_bytes()
     patch = json.loads((args.build/'patch.json').read_text(encoding='utf-8'))
@@ -46,12 +46,19 @@ def main():
     profile = json.loads((root/'locales/zh-CN/font-profile.json').read_text(encoding='utf-8'))
     validate(records,extract(source))
     fonts, expected, info = build_mixed(source,records,profile)
+    image_changes = {}
+    if profile.get('image_config'):
+        from image_text import build_images
+        from font_pipeline import resolve_fonts
+        config=json.loads((root/'locales/zh-CN'/profile['image_config']).read_text(encoding='utf-8'))
+        image_changes,_=build_images(source,config,resolve_fonts(profile)['body'])
     assert compiled == expected
     after = Zar(modified)
     extracted = {r['id']:r['source'] for r in extract(after)}
     assert all(extracted[r['id']]==r['target'] for r in compiled)
     assert all(TOKEN.findall(a['source'])==TOKEN.findall(b['target']) for a,b in zip(records,compiled))
     assert all(after.read(n)==value for n,value in fonts.items())
+    assert all(after.read(n)==value for n,value in image_changes.items())
     assert apply_delta(original,patch)==modified
     _,mismatches,decoded = check(after)
     assert not mismatches and decoded=='PASS'
@@ -71,10 +78,20 @@ def main():
         assert 0<=glyph['tx']<glyph['tx']+glyph['w']<=atlas.width
         assert 0<=glyph['ty']<glyph['ty']+glyph['h']<=atlas.height
     for name in source.entries:
-        if not (name.startswith('EN/') or name in fonts or name=='~INDEX'):
+        if not (name.startswith('EN/') or name in fonts or name in image_changes or name=='~INDEX'):
             assert source.read(name)==after.read(name)
-    print('MODIFIED records=666 translated=%d glyphs=%d fallback=%d title_rows=5 replaced_latin=%d preserved=%d vfs=PASS reextract=PASS delta=PASS sha256=%s result=PASS' %
-          (sum(r['target']!=r['source'] for r in records),info['added_glyphs'],len(info['body_fallback_codes']),len(replaced),info['original_glyphs_preserved'],digest(modified)))
+    executable_labels=0
+    if (args.build/'exe-patch.json').exists():
+        from executable_text import build_executable,apply_executable_patch
+        recipe=json.loads((root/'locales/zh-CN/executable-text.json').read_text(encoding='utf-8'))
+        original_exe=(args.game/'Dementium II.exe').read_bytes()
+        expected_exe,exe_patch=build_executable(original_exe,recipe)
+        assert expected_exe==(args.build/'Dementium II.exe').read_bytes()
+        assert exe_patch==json.loads((args.build/'exe-patch.json').read_text(encoding='utf-8'))
+        assert apply_executable_patch(expected_exe,exe_patch,True)==original_exe
+        executable_labels=len(recipe['entries'])
+    print('MODIFIED records=676 translated=%d glyphs=%d fallback=%d title_rows=5 replaced_latin=%d preserved=%d images=%d exe_labels=%d vfs=PASS reextract=PASS delta=PASS sha256=%s result=PASS' %
+          (sum(r['target']!=r['source'] for r in records),info['added_glyphs'],len(info['body_fallback_codes']),len(replaced),info['original_glyphs_preserved'],len(image_changes),executable_labels,digest(modified)))
 
 
 if __name__ == '__main__':

@@ -188,7 +188,7 @@ def build_mixed(zar, records, profile):
     replaced_codes = sorted(int(c) for c in original_glyphs
                             if any(start <= int(c) <= end for start, end in replace_ranges))
     previews = profile['previews']
-    all_text = ''.join(r['target'] or r['source'] for r in records) + ''.join(''.join(v) for v in previews.values())
+    all_text = ''.join(r['target'] or r['source'] for r in records) + ''.join(''.join(v) for v in previews.values()) + ''.join(profile.get('extra_texts', []))
     required = sorted(printable(all_text) | set(replaced_codes))
     if any(c > 65535 or 0xE000 <= c <= 0xF8FF for c in required):
         raise ValueError('Unsupported supplementary/private-use source character')

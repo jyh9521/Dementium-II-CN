@@ -27,7 +27,8 @@ def main():
     paths=dict(MODIFIED_FILE=build/'rom.zar',DIFF_FILE=build/'patch.json',VERIFICATION=build/'VERIFICATION.txt',ROLLBACK=(args.rollback_script or root/'tools/ROLLBACK_LOCALE.sh').resolve())
     lines=['Changed fields: EN text resources; FONTS/D2FONT_12X15.JSON glyphs/linefeed; PNG appended glyph areas; ~INDEX size fields.',
            'Changed font field: 168 Latin/digit/punctuation glyph definitions now reference Fusion Pixel 12px, including Latin-1 accents.',
-           'Preserved: original atlas pixels and 28 other glyph definitions, DEBUG08, EXE, Steam original files.',
+           'Changed full-build fields: 41 image resources / 187 labels; 5 fixed UTF-8 EXE literal slots; executable code and layout unchanged.',
+           'Preserved: original atlas pixels and 28 other glyph definitions, DEBUG08, all Steam original files.',
            'Runtime status: Latin replacement NOT_TESTED in-game; this script does not start the game.',
            'Postcard fields: 12 EXAMINE resources use bounded reflow, 4 lines, 228px width, 72px pane; no blank padding or font shrink.',
            'Restored status: original archive byte-identical and menu New Game; modified output retained.',

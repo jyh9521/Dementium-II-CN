@@ -242,5 +242,13 @@
       "pane_height": 72,
       "line_spacing": 0
     }
-  }
+  },
+  "extra_texts": [
+    "命中率",
+    "高清CRT",
+    "复古",
+    "复古CRT",
+    "高清"
+  ],
+  "image_config": "image-text.json"
 }

@@ -1,35 +1,30 @@
-# 可复现构建与发行门禁
+# 全文汉化构建与交付
 
-Python 3.11+。核心封包/差分使用标准库；扫描需要 pefile；字体生成需要 Pillow、fonttools。
+支持Steam2026版AppID5342930、build26091059。输入哈希见 assets/supported-build.json。
+依赖版本固定于 requirements.txt；字体由系统/用户Fonts目录与字体注册表自动发现，按SHA锁定，不下载/安装字体。
 
 ```powershell
 python -m pip install -r ./requirements.txt
-python -X utf8 ./tools/fetch_font.py
-python -X utf8 ./tools/localize.py scan "C:/Program Files (x86)/Steam/steamapps/common/Dementium II" ./build/inventory
-python -X utf8 ./tools/localize.py extract "C:/Program Files (x86)/Steam/steamapps/common/Dementium II/rom.zar" ./build/source.en.json
-python -X utf8 ./tools/localize.py build "C:/Program Files (x86)/Steam/steamapps/common/Dementium II/rom.zar" ./locales/zh-CN/smoke.json ./build/smoke --font ./assets/fonts/NotoSansCJKsc-Regular.otf --identity ./assets/supported-build.json
-python -X utf8 -m unittest discover -s ./tests -v
-python -X utf8 ./tools/record_verification.py --game "C:/Program Files (x86)/Steam/steamapps/common/Dementium II"
-python -X utf8 ./tools/package_probe.py
-python -X utf8 ./tools/check_probe.py --game "C:/Program Files (x86)/Steam/steamapps/common/Dementium II"
+python -X utf8 ./tools/font_pipeline.py
+python -X utf8 ./tools/build_locale.py --game "C:/Program Files (x86)/Steam/steamapps/common/Dementium II"
+python -X utf8 -m unittest discover -s ./tests -q
+python -X utf8 ./tools/verify_locale.py baseline --game "C:/Program Files (x86)/Steam/steamapps/common/Dementium II" --build ./build/full-zh-CN
+python -X utf8 ./tools/verify_locale.py modified --game "C:/Program Files (x86)/Steam/steamapps/common/Dementium II" --build ./build/full-zh-CN
+python -X utf8 ./tools/rollback_locale.py ./build/full-zh-CN ./build/full-zh-CN/rollback-test
+python -X utf8 ./tools/package_locale.py
+python -X utf8 ./tools/check_probe.py --game "C:/Program Files (x86)/Steam/steamapps/common/Dementium II" --package ./dist/Dementium-II-zh-CN-preview.zip --output ./build/full-package-test
 ```
 
-这些命令没有游戏启动功能。build 输出不能选择原版目录。
-UTF-8 必须显式指定；不能依赖本机 CP932/CP936 默认编码。
-源数据、译文、字体、工具版本和支持版本固定后，产物应保持同一 SHA-256；测试记录见 build/。
-压缩包时间戳和成员顺序固定，使用当前固定工具版本重复构建验证哈希。
-干净源码检出重建已分别比较 rom.zar、patch.json 和 ZIP，三个文件均同哈希。
-安装测试解包 ZIP，在 build/package-test/game-copy 的真实文件副本运行安装/恢复脚本；不执行 EXE。
+生成目录 build/full-zh-CN 是完整可运行副本，包含本地重建的EXE/rom及原始依赖；工具从不执行其中EXE。
+生成 dist/Dementium-II-zh-CN-preview.zip 仅含差分、安装器、版本身份、说明和许可证。
+安装/卸载详见 PLAYER_README.md。未知版本、缺字体/字形、标点违规、越界、控制码变化均拒绝构建。
 
-## 数据与分发
+## 数据与复现
 
-smoke.json 是 666 条英文记录的完整映射，仅一个目标字段非空。
-重复原文不自动合并。保留源文本、字节位置、资源哈希和状态。
-全量翻译须等中文显示验收通过，不将 `capacity_bytes=null` 解读为运行时无限容量。
-ZAR 变长成功只证明外层重定位，未证明内部菜单缓冲区可容纳任意长度。
-
-dist 技术实验包只能包含脚本、版本身份、差分、许可证与说明。
-打包使用固定白名单，不递归收集 build，不携带完整资源包、可执行文件、存档、日志或内部规范。
-完整字体从固定官方提交下载；发行包只携带补字差分及字体许可证。
-运行时验收和全流程 QA 完成前不得晋升为正式发行版。
-GitHub Release 始终等待用户明确授权。
+- 三个 *.map.json 保存所有已识别文本，image-text.json 保存图形标签，executable-text.json 保存固定槽标签。
+- merge_locale.py 从原包全量提取并核对每个ID，OPEN/UNLOCK与EXAMINE同为UTF-8独立文本资源；TBL/SUB维持物理行。
+- 源树指纹按文本输入的LF规范化内容计算；ZIP成员顺序/时间戳固定，避免Windows检出换行影响输出。
+- 字体 atlas/元数据、文本二次提取、图形允许区域外不变、原EXE固定槽守卫、安装幂等和双组件恢复均有测试。
+- 以干净源码副本重建并比较 rom.zar、patch.json、EXE、exe-patch.json及ZIP，不复制旧构建中间件。
+- 历史最小实验仍保留，旧ZIP/旧脚本不是默认全文构建入口。
+- 不上传AGENTS.md、内部LOCALIZATION_STANDARD.md或游戏完整文件；GitHub Release须单独授权。

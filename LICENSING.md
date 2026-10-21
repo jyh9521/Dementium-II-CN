@@ -1,11 +1,14 @@
-# 当前项目许可记录
+# 当前项目许可
 
-项目工具：根 LICENSE（MIT）；原创译文：LICENSE-translations.md（CC BY-SA 4.0）。
-字体：Noto Sans CJK SC Regular，notofonts/noto-cjk，提交 f8d157532fbfaeda587e826d4cd5b21a49186f7c，SIL OFL 1.1。
-原始 OTF 缓存忽略；来源和许可证保留，发行差分附字体许可证。
-游戏 EXE、DLL、完整资源、媒体、存档和反编译正文不作为完整文件分发。
-实验包仅含稀疏差分、工具和必要说明；原游戏内容的权利不变。
-下方保留原有许可边界标准。
+工具：MIT（LICENSE）；原创译文：CC BY-SA4.0（LICENSE-translations.md）。
+当前字体：Fusion Pixel12px，TakWolf，版本2026.10.16；ChillBitmap16px，版本1.000。
+两套字体的本地SHA和名字见 font-profile.json；许可证与版权记录附于 assets/fonts/Fusion-Pixel-OFL.txt、ChillBitmap-LICENSE.md。
+ChillBitmap编译字体的OFL分支用于当前字形重建，完整上游许可文本保留；工具不宣称字体原创。
+旧Noto仅用于历史最小实验，不是当前全文构建字体。完整TTF/OTF缓存不提交。
+Git仅提交配方、翻译、工具及文档；不提交游戏EXE/DLL/ZAR/完整PNG、存档或反编译正文。
+本地玩家测试包只包含稀疏差分、固定槽补丁、工具及许可证；没有创建GitHub Release。
+下方保留通用许可边界标准。
+
 
 ---
 

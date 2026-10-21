@@ -144,8 +144,12 @@ class Zar:
 
 def text_members(zar, source='EN'):
     for name in zar.entries:
-        if name.startswith(source.upper() + '/') and (name.endswith(('.TBL', '.SUB')) or '/EXAMINE.' in name):
+        if name.startswith(source.upper() + '/') and (name.endswith(('.TBL', '.SUB')) or is_document(name)):
             yield name
+
+
+def is_document(name):
+    return re.search(r'/(?:EXAMINE|OPEN|UNLOCK)\.\d+$', name) is not None
 
 
 def extract(zar, source='EN'):
@@ -155,10 +159,10 @@ def extract(zar, source='EN'):
         bom = 3 if raw.startswith(b'\xef\xbb\xbf') else 0
         raw[bom:].decode('utf-8', errors='strict')
         offset = bom
-        pieces = [raw[bom:]] if '/EXAMINE.' in name else raw[bom:].splitlines(keepends=True)
+        pieces = [raw[bom:]] if is_document(name) else raw[bom:].splitlines(keepends=True)
         # bytes.splitlines only recognizes CR/LF; control bytes 01/02/03 remain content.
         for line, piece in enumerate(pieces):
-            end = b'' if '/EXAMINE.' in name else (b'\r\n' if piece.endswith(b'\r\n') else b'\n' if piece.endswith(b'\n') else b'\r' if piece.endswith(b'\r') else b'')
+            end = b'' if is_document(name) else (b'\r\n' if piece.endswith(b'\r\n') else b'\n' if piece.endswith(b'\n') else b'\r' if piece.endswith(b'\r') else b'')
             body = piece[:-len(end)] if end else piece
             prefix = b''
             if name.endswith('.SUB') and body:
@@ -173,7 +177,7 @@ def extract(zar, source='EN'):
                                 'source_file': 'rom.zar', 'resource': name, 'line': line,
                                 'offset': offset + len(prefix), 'archive_offset': zar.entries[name].offset + offset + len(prefix),
                                 'source_bytes': len(body), 'resource_sha256': digest(raw),
-                                'context': 'subtitle' if name.endswith('.SUB') else 'document' if '/EXAMINE.' in name else 'table row',
+                                'context': 'subtitle' if name.endswith('.SUB') else 'document' if '/EXAMINE.' in name else 'interaction' if is_document(name) else 'table row',
                                 'prefix': prefix.decode('ascii'), 'capacity_bytes': None,
                                 'duplicate_group': digest(body)[:16], 'status': 'untranslated'})
             offset += len(piece)
@@ -201,7 +205,7 @@ def validate(records, originals):
         target.encode('utf-8', errors='strict')
         if '\0' in target or '\ufeff' in target:
             raise ValueError('Illegal character: ' + key)
-        if not '/EXAMINE.' in row['resource'] and ('\n' in target or '\r' in target):
+        if not is_document(row['resource']) and ('\n' in target or '\r' in target):
             raise ValueError('Table/subtitle row count change: ' + key)
         if TOKEN.findall(row['source']) != TOKEN.findall(target):
             raise ValueError('Protected token mismatch: ' + key)
@@ -371,6 +375,12 @@ def main():
         if args.profile:
             changes.update(mixed_fonts)
             info = mixed_info
+            if profile.get('image_config'):
+                from image_text import build_images
+                from font_pipeline import resolve_fonts
+                image_config = json.loads((args.profile.parent / profile['image_config']).read_text(encoding='utf-8'))
+                image_changes, image_report = build_images(zar, image_config, resolve_fonts(profile)['body'])
+                changes.update(image_changes)
         elif args.font:
             fonts, info = build_font(zar, records, args.font)
             changes.update(fonts)
@@ -396,6 +406,8 @@ def main():
             render_previews(Zar(out), args.output, profile, info)
             write_json(args.output / 'runtime-text.json', records)
             write_json(args.output / 'font-report.json', info)
+            if profile.get('image_config'):
+                write_json(args.output / 'image-report.json', image_report)
         parsed_output = Zar(out)
         actual_changes = [name for name in zar.entries if zar.read(name) != parsed_output.read(name)]
         count = sum(bool(r['target']) and r['target'] != r['source'] for r in logical_records)
