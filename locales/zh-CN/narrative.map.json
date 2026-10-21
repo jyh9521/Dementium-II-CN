@@ -1,0 +1,819 @@
+{
+  "EN/DAGGER2.SUB:0000": {
+    "target": "29.970",
+    "status": "exempt",
+    "notes": "字幕帧率头数据，保持29.970原值，不属于可见对白。"
+  },
+  "EN/DAGGER2.SUB:0001": {
+    "target": "我们的孩子在哪儿？",
+    "status": "draft"
+  },
+  "EN/DAGGER2.SUB:0002": {
+    "target": "阿曼达在哪儿？",
+    "status": "draft"
+  },
+  "EN/DIALOG10.SUB:0000": {
+    "target": "全体安保及医护人员请注意，|病人威廉·雷德穆尔|现列为黄色警报。",
+    "status": "draft"
+  },
+  "EN/DIALOG11.SUB:0000": {
+    "target": "|各位听众，|我刚收到一则消息。",
+    "status": "draft"
+  },
+  "EN/DIALOG11.SUB:0001": {
+    "target": "这是一则面向佩尔夫及周边地区的|紧急广播，呃……|看起来并不是演习。",
+    "status": "draft"
+  },
+  "EN/DIALOG11.SUB:0002": {
+    "target": "市长已宣布进入紧急状态，|命令当地全体执法人员|及应急人员",
+    "status": "draft"
+  },
+  "EN/DIALOG11.SUB:0003": {
+    "target": "|前往一号紧急集合区|集合。",
+    "status": "draft"
+  },
+  "EN/DIALOG11.SUB:0004": {
+    "target": "如需了解更多信息，请切换至|二频道收听应急通讯，|并将接收机调至（杂音）。",
+    "status": "draft"
+  },
+  "EN/DIALOG13.SUB:0000": {
+    "target": "||你进入了未经授权的区域。",
+    "status": "draft"
+  },
+  "EN/DIALOG14.SUB:0000": {
+    "target": "||囚犯，跪下。",
+    "status": "draft"
+  },
+  "EN/DIALOG15.SUB:0000": {
+    "target": "||双手抱头。",
+    "status": "draft"
+  },
+  "EN/DIALOG16.SUB:0000": {
+    "target": "||别动。",
+    "status": "draft"
+  },
+  "EN/DIALOG17.SUB:0000": {
+    "target": "||放下武器。",
+    "status": "draft"
+  },
+  "EN/DIALOG18.SUB:0000": {
+    "target": "||趴下。",
+    "status": "draft"
+  },
+  "EN/DIALOG19.SUB:0000": {
+    "target": "||回你的牢房去。",
+    "status": "draft"
+  },
+  "EN/DIALOG20.SUB:0000": {
+    "target": "|趴在地上，|趴在地上！",
+    "status": "draft"
+  },
+  "EN/DIALOG21.SUB:0000": {
+    "target": "||站住，别动。",
+    "status": "draft"
+  },
+  "EN/DIALOG22.SUB:0000": {
+    "target": "||喂，你！站住。",
+    "status": "draft"
+  },
+  "EN/DIALOG28.SUB:0000": {
+    "target": "|威廉，你到底知不知道|自己要去哪儿？",
+    "status": "draft"
+  },
+  "EN/DIALOG28.SUB:0001": {
+    "target": "|你就像只困在迷宫里的老鼠，|到处寻找奶酪。",
+    "status": "draft"
+  },
+  "EN/DIALOG28.SUB:0002": {
+    "target": "|可你猜怎么着，威廉？|奶酪早就没了。",
+    "status": "draft"
+  },
+  "EN/DIALOG29.SUB:0000": {
+    "target": "|你躲不过我的，威廉……|这栋楼如今已是我的一部分。",
+    "status": "draft"
+  },
+  "EN/DIALOG30.SUB:0000": {
+    "target": "||你太让我失望了，威廉。",
+    "status": "draft"
+  },
+  "EN/DIALOG30.SUB:0001": {
+    "target": "|我曾看中你巨大的潜力。|我以为我们会是完美的搭档。",
+    "status": "draft"
+  },
+  "EN/DIALOG31.SUB:0000": {
+    "target": "||我不会伤害你的，威廉。",
+    "status": "draft"
+  },
+  "EN/DIALOG31.SUB:0001": {
+    "target": "|我只是要把你的灵魂|从躯体里撕出来，再一口吞掉。",
+    "status": "draft"
+  },
+  "EN/DIALOG31.SUB:0002": {
+    "target": "|你可能会感到|片刻不适。",
+    "status": "draft"
+  },
+  "EN/DIALOG32.SUB:0000": {
+    "target": "|你以为一切尽在掌握，|威廉，可惜并非如此。",
+    "status": "draft"
+  },
+  "EN/DIALOG32.SUB:0001": {
+    "target": "|你不过是一具|血肉做成的傀儡。",
+    "status": "draft"
+  },
+  "EN/DIALOG33.SUB:0000": {
+    "target": "|我们之间有着特殊的联系，|威廉。",
+    "status": "draft"
+  },
+  "EN/DIALOG33.SUB:0001": {
+    "target": "毕竟，有几个人能说|自己真的碰过|你的脑子呢？",
+    "status": "draft"
+  },
+  "EN/DIALOG34.SUB:0000": {
+    "target": "|你以为自己在反抗我，|威廉，",
+    "status": "draft"
+  },
+  "EN/DIALOG34.SUB:0001": {
+    "target": "|可你所做的一切，|都只会让我离目标更近。",
+    "status": "draft"
+  },
+  "EN/DIALOG35.SUB:0000": {
+    "target": "|这是一则紧急广播，|威廉。",
+    "status": "draft"
+  },
+  "EN/DIALOG35.SUB:0001": {
+    "target": "|而你如今也该明白了，|这永远都是一场测试。",
+    "status": "draft"
+  },
+  "EN/DIALOG36.SUB:0000": {
+    "target": "|我们就像硬币的两面，|威廉。",
+    "status": "draft"
+  },
+  "EN/DIALOG36.SUB:0001": {
+    "target": "|我们之中无论是谁，|都只有毁掉对方才能成功。",
+    "status": "draft"
+  },
+  "EN/DIALOG37.SUB:0000": {
+    "target": "|你知道我犯过最大的错误|是什么吗，威廉？",
+    "status": "draft"
+  },
+  "EN/DIALOG37.SUB:0001": {
+    "target": "|就是有机会的时候，|没有砍下你的脑袋。",
+    "status": "draft"
+  },
+  "EN/DIALOG38.SUB:0000": {
+    "target": "|很快，苦痛位面就会|冲破屏障，涌入我们的世界。",
+    "status": "draft"
+  },
+  "EN/DIALOG38.SUB:0001": {
+    "target": "太阳将变得漆黑，鲜血|将如雨般落下，空气中|将回荡痛苦的乐章。",
+    "status": "draft"
+  },
+  "EN/DIALOG38.SUB:0002": {
+    "target": "|你一定不想错过，|对吧？",
+    "status": "draft"
+  },
+  "EN/DIALOG39.SUB:0000": {
+    "target": "|你真的准备好赴死了吗，|威廉？",
+    "status": "draft"
+  },
+  "EN/DIALOG39.SUB:0001": {
+    "target": "|这世界到底给过你什么，|值得你做出这样的牺牲？",
+    "status": "draft"
+  },
+  "EN/DIALOG39.SUB:0002": {
+    "target": "它夺走了你的妻女，|夺走了你的理智，又把你|丢进这人性的深渊。",
+    "status": "draft"
+  },
+  "EN/DIALOG40.SUB:0000": {
+    "target": "你感觉到了吗，威廉？|它压在你身上，|仿佛整个世界的重量。",
+    "status": "draft"
+  },
+  "EN/DIALOG40.SUB:0001": {
+    "target": "||一点一点，碾碎你的灵魂。",
+    "status": "draft"
+  },
+  "EN/DIALOG44.SUB:0000": {
+    "target": "||威廉，求你帮帮我。",
+    "status": "draft"
+  },
+  "EN/DIALOG47.SUB:0000": {
+    "target": "||你真不听话，威廉。",
+    "status": "draft"
+  },
+  "EN/DIALOG48.SUB:0000": {
+    "target": "||对，就是这样！我喜欢！",
+    "status": "draft"
+  },
+  "EN/DIALOG9.SUB:0000": {
+    "target": "|全体安保及医护人员，|立即赶往C医务室！",
+    "status": "draft"
+  },
+  "EN/EXAMINE.000:0000": {
+    "target": "\r\n这是一把\u0002自制短刀\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.001:0000": {
+    "target": "\r\n这是一把\u0002左轮手枪\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.002:0000": {
+    "target": "\r\n这是一把\u0002大锤\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.003:0000": {
+    "target": "\r\n这是一把双管\u0002霰弹枪\u0001。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.004:0000": {
+    "target": "\r\n这是一把\u0002突击步枪\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.005:0000": {
+    "target": "\r\n这是\u0002喷雾罐和打火机\u0001。\r\n把它们搭配起来，应该能做个不错的火焰喷射器！\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.006:0000": {
+    "target": "\r\n这是\u0002炸药\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.007:0000": {
+    "target": "\r\n这是一件模样古怪的\u0002遗物\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.008:0000": {
+    "target": "\r\n这是一把\u0002射钉枪\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.009:0000": {
+    "target": "\r\n这是一把\u0002电锯\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.010:0000": {
+    "target": "\r\n这是一支\u0002手电筒\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.041:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“看在上帝的分上，趁还来得及，赶快逃出去。\r\n——威廉。”\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.042:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“你只是个开始。他已经启动了第二阶段。\r\n情况只会变得更糟。\r\n——威廉。”",
+    "status": "draft"
+  },
+  "EN/EXAMINE.043:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“它正在像癌症一样扩散。快！\r\n——威廉。”\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.045:0000": {
+    "target": "天堂寄来的明信片，上面写着：\n\n“逃走已太迟。回监狱阻止他！这个能帮你：$Dagger,0$\n——威廉。”",
+    "status": "draft"
+  },
+  "EN/EXAMINE.046:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“他始终在看着你。始终如此。\r\n——威廉。”\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.047:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“即使是恶人的尸骨，也有安息的权利。\r\n——威廉。”",
+    "status": "draft"
+  },
+  "EN/EXAMINE.048:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“医生只是宿主。它在利用他，\r\n试图冲破屏障。绝不能让它得逞。\r\n——威廉。”",
+    "status": "draft"
+  },
+  "EN/EXAMINE.049:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“开机，调频，脱离。\r\n——威廉。”\r\n",
+    "status": "context-needed",
+    "notes": "Turn on, tune in, drop out同为文化引语和可能的收音机提示；保留直译三段结构，待场景审校。"
+  },
+  "EN/EXAMINE.050:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“遗物能开启通路，不只是灯塔里的那条。\r\n还记得瞭望塔吗？\r\n——威廉。”",
+    "status": "draft"
+  },
+  "EN/EXAMINE.051:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“找出藏起来的东西……解开锁住的东西。\r\n——威廉。”\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.052:0000": {
+    "target": "天堂寄来的明信片，上面写着：\r\n\r\n“你妻子很想念你。她至今仍未安息。\r\n——威廉。”",
+    "status": "draft"
+  },
+  "EN/EXAMINE.053:0000": {
+    "target": "天堂寄来的明信片，上面写着：\n\n“如今你根本不可能打败他。\n对不起，我不该让你抱有希望。\n——威廉。”",
+    "status": "draft"
+  },
+  "EN/EXAMINE.073:0000": {
+    "target": "\r\n这是一张\u0002门禁卡\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.074:0000": {
+    "target": "这件遗物看上去年代久远。\r\n\r\n上面刻着一只\u0002蜘蛛\u0001。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.075:0000": {
+    "target": "又一块古老的遗物碎片。\r\n\r\n上面刻着一只\u0002蝙蝠\u0001。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.076:0000": {
+    "target": "又一块古老的遗物碎片。\r\n\r\n上面刻着一只\u0002蝎子\u0001。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.077:0000": {
+    "target": "\n这是302号房间的\u0002钥匙\u0001。\n\n\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.078:0000": {
+    "target": "威廉，我想见你，可他们百般阻挠。\r\n我们的藏身处就在这里的西边，还记得吗？\r\n我给你准备了一个惊喜。来那里见我。\r\n我改了密码，现在是$Lock,1$。\r\n你一定要快。伊丽莎白。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.079:0000": {
+    "target": "\n这是一把\u0002万能钥匙\u0001。\n\n\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.080:0000": {
+    "target": "\n这是一把\u0002铲子\u0001。\n\n\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.081:0000": {
+    "target": "\n这是一把\u0002仪式匕首\u0001。\n\n\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.082:0000": {
+    "target": "\n这是一个\u0002小孩的玩偶\u0001。\n\n\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.083:0000": {
+    "target": "\r\n这是人类的\u0002骨骸\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.084:0000": {
+    "target": "\r\n这是一台\u0002熏蒸器\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.085:0000": {
+    "target": "\r\n这是一本\u0002红色书籍\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.086:0000": {
+    "target": "\r\n这是\u0002酸性中和剂\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.087:0000": {
+    "target": "\r\n这是一把带航海风格钥匙扣的\u0002钥匙\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.088:0000": {
+    "target": "\r\n这是一块大型\u0002电池\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.089:0000": {
+    "target": "\r\n这是一把\u0002钥匙\u0001。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.090:0000": {
+    "target": "威廉，我的爱人。你终于回来找我了。\r\n亲爱的威廉，我无时无刻不在想你。\r\n往南走，到码头去。那是我最喜欢的地方。\r\n我会在那里与你相见。请快些来。\r\n爱你的伊丽莎白，亲亲，抱抱，再亲亲。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.091:0000": {
+    "target": "亲爱的威廉，这对我很难。对不起。\r\n自从上次见面，一切都变了许多。\r\n请设法进入村子的东北部。\r\n我会在旅馆等你。请快点来。\r\n爱你的伊丽莎白，吻你。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.092:0000": {
+    "target": "他们先到了。他们带走了阿曼达。\r\n我要去教堂。拿上钥匙。\r\n到那里见我。他们会来的。\r\n这一切会结束的。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.093:0000": {
+    "target": "往南走。找到阿曼达。把她带到我这里。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.100:0000": {
+    "target": "\r\n\u0002治疗药片\u0001\r\n\r\n使用治疗药片恢复生命值。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.101:0000": {
+    "target": "\r\n\u0002医疗包\u0001\r\n\r\n使用医疗包恢复生命值。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.102:0000": {
+    "target": "\r\n\u0002解毒剂\u0001\r\n\r\n使用解毒剂解除中毒。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.103:0000": {
+    "target": "\r\n\u0002肾上腺素注射器\u0001\r\n\r\n使用肾上腺素注射器，\r\n可暂时增强运动能力。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.104:0000": {
+    "target": "这里的土看上去很松软。\r\n要是有东西能把它挖开就好了。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.500:0000": {
+    "target": "这里的土看上去很松软。\r\n要是有东西能把它挖开就好了。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.501:0000": {
+    "target": "曙光治疗中心\r\n“黎明前的黑暗最深！”\r\n\r\n曙光治疗中心致力于开创全新的护理方式，\r\n是北美治疗严重精神障碍的顶尖机构之一。\r\n本中心员工训练有素，熟知精神科护理领域\r\n的最新技术。所有申请入院者都必须接受\r\n严格的资格筛查，以确定其是否适合\r\n本中心最前沿的治疗方案。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.502:0000": {
+    "target": "医护人员备忘录\r\n\r\n护工请注意：为保障您本人及他人的安全，\r\n请确保所有第二阶段病人在任何时候\r\n都被妥善束缚在床架上。\r\n这是必须执行的规程，不是参考建议！\r\n谢谢配合。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.503:0000": {
+    "target": "病人编号：47329［雷德穆尔，威廉］\r\n入院日期：10-31-07\r\n转入机构：考林州立刑事精神病院。\r\n病史：据称曾杀害妻子，并出现精神崩溃。\r\n表现为低功能水平及高自杀风险（GAF 13），\r\n可能患有分裂型障碍，但正式诊断为\r\n未分类的精神疾病（F99）。\r\n治疗方案：第一阶段。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.504:0000": {
+    "target": "我们都得留下\r\n别人肯定纳闷，我挖了逃生地道，为啥不用。\r\n那地方有诅咒！我在锅炉房做夜工，\r\n花了三个月才挖出来。整晚锁在里面，\r\n只有我一个人。看看仪表……拖拖地……挖。\r\n每天早上再把洞口盖好。挖了十英尺，\r\n我挖通了一个天然洞穴。可那洞里有东西！\r\n我用木板封住洞口，再也没回去。\r\n我宁可死在这间牢房里，也不愿再进那条地道。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.505:0000": {
+    "target": "《上半岛情报报》——1968年8月8日\r\n佩尔夫电——一家州立精神病院日前关闭。\r\n就在数周前，底特律一家新闻台曝光了\r\n该院许多病人令人震惊的生活状况。\r\n记者卡洛斯·弗鲁尔以护工身份卧底三个月，\r\n期间一直秘密拍摄其他员工疏于照护\r\n以及虐待病人的行为。多项虐待指控\r\n集中于院方未对大楼进行改造，\r\n以提供适当照护。该楼前身为一座州立监狱。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.506:0000": {
+    "target": "丹尼斯·格雷格·哈格罗夫\r\n\r\n1967 - 2010\r\n\r\n深爱家人的丈夫，\r\n社区的中流砥柱。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.507:0000": {
+    "target": "罗伯特·伊恩·艾夫斯\r\n\r\n1972 - 2010\r\n\r\n鲍勃长眠于此：\r\n他终究没听从自己明智的判断。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.508:0000": {
+    "target": "朱利安·克里斯托弗·沃特沙姆\r\n\r\n1974 - 2010\r\n\r\n深爱家人的丈夫与父亲。\r\n带来欢乐的人！\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.509:0000": {
+    "target": "诺亚·李\r\n\r\n1978 - 2010\r\n\r\n被高贵食人者吞食。\r\n\r\n\r\n\r\n",
+    "status": "context-needed",
+    "notes": "Noble Cannibal暂译高贵食人者；是否为敌人正式名称待场景确认。"
+  },
+  "EN/EXAMINE.510:0000": {
+    "target": "奇普·帕特森\r\n\r\n1966 - 2010\r\n\r\n此人长眠于此，头发粘着口香糖，\r\n若不是这张糖纸，他还不会躺在这地方。\r\n\r\n\r\n",
+    "status": "context-needed",
+    "notes": "墓志铭口香糖与wrapper双关待画面确认；现按糖纸直译。"
+  },
+  "EN/EXAMINE.511:0000": {
+    "target": "安德鲁·布朗\r\n\r\n1981 - 2010\r\n\r\n白天是程序员，\r\n夜里是情场高手！\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.512:0000": {
+    "target": "杜普雷老先生\r\n\r\n1910 - 2010\r\n\r\n也该到时候了！\r\n\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.513:0000": {
+    "target": "约翰·F.凯泽三世\r\n\r\n1977 - 2010\r\n\r\n伟人世家的\r\n第三代传人！\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.514:0000": {
+    "target": "阿曼达\r\n\r\n威廉与伊丽莎白的女儿。\r\n\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.515:0000": {
+    "target": "内特，要说有谁能活着回来，我知道一定是你。\r\n看样子不会有人来救我们了，我要拼一把逃出去。\r\n继续战斗吧，兄弟。\r\n\r\n咱们来生再见。——迪恩\r\n\r\n附言：看看我最得意的猎物！\r\n你觉得能超过我的战绩吗？\r\n想试试的话，就跟着NEWS走。\r\n",
+    "status": "context-needed",
+    "notes": "NEWS保留大写谜题线索，可能兼指方位首字母；不增译方向答案。"
+  },
+  "EN/EXAMINE.516:0000": {
+    "target": "手臂上系着一张标签。\r\n\r\n上面写着数字“$Keypad,0,0,1$”。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.517:0000": {
+    "target": "手臂上系着一张标签。\r\n\r\n上面写着数字“$Keypad,0,1,1$”。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.518:0000": {
+    "target": "手臂上系着一张标签。\r\n\r\n上面写着数字“$Keypad,0,2,1$”。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.519:0000": {
+    "target": "手臂上系着一张标签。\r\n\r\n上面写着数字“$Keypad,0,3,1$”。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.520:0000": {
+    "target": "这是一个密码键盘。不知道\u0002密码\u0001是什么？",
+    "status": "draft"
+  },
+  "EN/EXAMINE.521:0000": {
+    "target": "这是一座敞开的坟墓。里面躺着一具人类骨架。\r\n\r\n有几块骨头不见了。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.522:0000": {
+    "target": "欲召孤独之兵\r\n只需三者之力\r\n如此宏大的救赎\r\n将使自由者沦为奴隶\r\n\r\n其一已入你手\r\n其二须令白骨安息\r\n重返此地\r\n最后的道路将召唤你\r\n",
+    "status": "context-needed",
+    "notes": "谜题诗按原文意象译出；三者指代与道路触发顺序待场景验证。"
+  },
+  "EN/EXAMINE.523:0000": {
+    "target": "这是一部电梯。\r\n\r\n好像缺了什么东西。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.524:0000": {
+    "target": "这是一个书架。\r\n\r\n好像少了一本书。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.525:0000": {
+    "target": "骨头补全了这副骨架。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.526:0000": {
+    "target": "电池接好了。\r\n\r\n或许电梯现在能用了。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.527:0000": {
+    "target": "这本书正好能放进去。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.528:0000": {
+    "target": "这个水池里装的好像是……酸液！\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.529:0000": {
+    "target": "酸性中和剂消除了酸液。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.530:0000": {
+    "target": "   不准让他安息   把骨头拿远点\r\n\r\n不准让他     安息   把骨头    拿远点\r\n\r\n    不准    让他安息  把   骨头   拿远点\r\n\r\n 不   准  让     他       安    息\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.531:0000": {
+    "target": "我手上的温度似乎能让这种物质退开。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.532:0000": {
+    "target": "这是一个密码锁。不知道\u0002密码\u0001是什么？",
+    "status": "draft"
+  },
+  "EN/EXAMINE.533:0000": {
+    "target": "这把锁模样古怪，上面有个可以插入\u0002匕首\u0001的槽。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.534:0000": {
+    "target": "这些拼块看起来可以移动。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.535:0000": {
+    "target": "love\r\nholy\r\neden\r\nenvy\r\nlust\r\n$Alpha,0$\r\n\r\n",
+    "status": "exempt",
+    "notes": "字母谜题线索保留原文love/holy/eden/envy/lust及$Alpha,0$，不替换为汉字。"
+  },
+  "EN/EXAMINE.536:0000": {
+    "target": "不知道能不能找到一个电台？",
+    "status": "draft"
+  },
+  "EN/EXAMINE.537:0000": {
+    "target": "这是一个使用字母的密码锁。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.538:0000": {
+    "target": "这好像是一个古怪的密码锁。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.539:0000": {
+    "target": "温迪戈女巫传说\r\n据说，她女儿的遇害引发了一切。\r\n她吞食了另一个人的血肉，\r\n此后便化作了温迪戈女巫。\r\n她力量强大，却永远饥肠辘辘，\r\n游荡于各个位面，渴求更多人肉……\r\n\r\n［书页被撕破了］\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.540:0000": {
+    "target": "员工备忘录\r\n\r\n即日起，北侧瞭望塔通往主院区的门已封闭。\r\n此举旨在保障所有人的安全。\r\n请勿试图打开已封闭的门。\r\n谢谢配合。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.541:0000": {
+    "target": "《意外奇闻实录》                    第47页\r\n\r\n……1897年，密歇根州的佩尔夫州立监狱\r\n也曾发生类似惨剧。一天清晨，一团浓雾\r\n掠过东南侧的活动场地，所经之处只留下\r\n一具具尸体——囚犯和狱警无一幸免。\r\n瞭望塔上的守卫后来描述，浓雾中传来的\r\n声响“毫无疑问是野兽发出的”。\r\n官方将该事件定性为囚犯暴动，\r\n院中的几座坟墓纪念着那悲惨的一天。\r\n虽然鲜有案例……",
+    "status": "draft"
+  },
+  "EN/EXAMINE.542:0000": {
+    "target": "第二阶段病人褥疮处理规程：\r\n\r\n每日更换床单，并为所有病人翻身，\r\n尽量减少肘部、骶部及臀部的压疮。\r\n第二阶段病人出现开放性溃疡很常见，\r\n即使创面很大也属常见情况。\r\n若创面周围组织呈深紫色，或有骨头穿出皮肤，\r\n应立即开始蛆虫清创，以去除坏死组织。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.543:0000": {
+    "target": "员工事件报告 第2618号\r\n\r\n针对第2618号员工事件报告的调查现已结束。\r\n据称，一名电休克治疗护士目睹本机构医生\r\n将电极接在自己头上，自行实施电休克治疗。\r\n该医生否认了这一指控，且尚无其他证人。\r\n调查人员认定，现有证据不足以支持\r\n该护士的说法。无需采取进一步措施。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.544:0000": {
+    "target": "苦痛传说                         第816页\r\n\r\n……马拉泰斯塔：一条被困在苦痛位面\r\n最底层的古老巨蛇。在那位面里度过的\r\n漫长岁月，将它扭曲成了一头疯狂、\r\n暴怒且力量无比强大的野兽。\r\n只有在苦痛的最深处，才能伤到马拉泰斯塔。\r\n一旦它挣脱这个领域的束缚，\r\n便会变得无可匹敌……\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.545:0000": {
+    "target": "马拉泰斯塔伸入现实世界\r\n精神质喷发——感染宿主\r\n我\r\n试图撕开两个位面间的通路\r\n死者将统治生者\r\n必须阻止\r\n阻止不了\r\n必须打开通路\r\n",
+    "status": "context-needed",
+    "notes": "psychoplasmic暂译精神质，须结合剧情或画面复核。"
+  },
+  "EN/EXAMINE.546:0000": {
+    "target": "《上半岛情报报》——1940年4月2日\r\n\r\n佩尔夫电——佩尔夫角灯塔看守人\r\n失踪仅两周后，美国海岸警卫队\r\n便为该灯塔安装了自动灯标控制系统。\r\n失踪者名叫欧文·赖斯，\r\n失踪前在此任职尚不足一个月。\r\n当局强调，赖斯并非本地人，\r\n可能只是擅自离职。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.547:0000": {
+    "target": "通知\r\n\r\n针对第7332号囚犯投诉的调查现已结束。\r\n调查人员未发现证据支持以下指控：\r\n厨房制作的鸡肉不适合人类食用。\r\n目前也未能证实其与近期沙门氏菌暴发\r\n及随后B区牢房多人患病一事存在关联。\r\n无需采取进一步措施。\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.548:0000": {
+    "target": "——全体厨房员工——\r\n\r\n为减少食材变质，请务必在投放食材之前，\r\n检查所有大缸中是否有老鼠及其粪便。\r\n谢谢配合。\r\n\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.554:0000": {
+    "target": "嘿，奈杰尔——你绝对猜不到，\r\n我刚听到一个安保主管在谈什么。\r\n据说他们要空运来一大批俄国死囚，\r\n下周二就到。他说这批人便宜得很，\r\n而且不用担心留下任何书面记录。\r\n你敢信？也不知道是真的，还是开玩笑，\r\n不过他们干得出这种事。抠门的混蛋！\r\n总之，等我从威斯康星州回来，\r\n咱们过几个星期见。兄弟，赶紧学点俄语吧！\r\n——基思。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.555:0000": {
+    "target": "\r\n一个古怪的\u0002蜘蛛\u0001雕纹。\r\n好像缺了一块。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.556:0000": {
+    "target": "\r\n又是一把古怪的锁。\r\n这把锁上有\u0002三个\u0001不同的插槽。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.557:0000": {
+    "target": "\r\n又是一把古怪的锁。\r\n这把锁上有\u0002三个\u0001不同的插槽。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.558:0000": {
+    "target": "\u0002蜘蛛\u0001遗物正好能放进去。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.559:0000": {
+    "target": "\u0002遗物武器\u0001正好能放进去。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.560:0000": {
+    "target": "\u0002遗物武器\u0001正好能放进去。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.561:0000": {
+    "target": "\u0002门禁卡\u0001打开了门锁。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.562:0000": {
+    "target": "\u0002钥匙\u0001打开了门锁。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.563:0000": {
+    "target": "万能\u0002钥匙\u0001打开了门锁。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.564:0000": {
+    "target": "航海\u0002钥匙\u0001打开了门锁。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.565:0000": {
+    "target": "牧师的\u0002钥匙\u0001打开了门锁。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.566:0000": {
+    "target": "——教堂祭坛——",
+    "status": "draft"
+  },
+  "EN/EXAMINE.567:0000": {
+    "target": "——灵魂容器——",
+    "status": "draft"
+  },
+  "EN/EXAMINE.568:0000": {
+    "target": "［书页被撕破了］\r\n\r\n……她那骇人的骷髅形体和半透明皮肤，\r\n无法诱惑她渴求的年轻男性。\r\n据传，女巫能变回从前的美貌，\r\n借此引诱猎物。\r\n她真正渴望的，是他们的心脏。\r\n\r\n",
+    "status": "draft"
+  },
+  "EN/EXAMINE.569:0000": {
+    "target": "别靠近！\r\n这里被诅咒了。我不想让任何人看到\r\n我所见过的东西。我会确保没人看到。\r\n这部电梯通向某个违背常理的地方，\r\n一个邪恶的地方。别靠近。\r\n\r\n我不知道出了什么事，也不打算留下来弄明白。\r\n如果你在找电池，那可真不走运。\r\n我已经带走了它。我要坐自己的船离开，\r\n永远也不回来。我劝你也赶紧走！\r\n——欧文·赖斯",
+    "status": "draft"
+  },
+  "EN/EXAMINE.570:0000": {
+    "target": "这是一个装满丙烷的储罐。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.571:0000": {
+    "target": "我可以给火焰喷射器补充燃料。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.572:0000": {
+    "target": "雷德穆尔先生：\r\n我一生都在为这一天做准备。\r\n可眼前发生的一切，仍令我措手不及。\r\n我太愚蠢了，没有料到他的力量。\r\n他的意图纯粹出于邪恶。你只是他的一枚棋子。\r\n你绝不能再往前走了。这间办公室里的\r\n暗门已经上锁。你绝不能进入那个房间。\r\n一旦跨入苦痛位面，他的计划就会完成。\r\n趁现在还来得及，立刻离开。\r\n——肯尼迪牧师。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.573:0000": {
+    "target": "匕首与锁融为了一体。",
+    "status": "draft"
+  },
+  "EN/EXAMINE.574:0000": {
+    "target": "这是一座敞开的坟墓。里面躺着一具人类骨架。\n",
+    "status": "draft"
+  },
+  "EN/GNAWDEATH.SUB:0000": {
+    "target": "29.970",
+    "status": "exempt",
+    "notes": "字幕帧率头数据，保持29.970原值，不属于可见对白。"
+  },
+  "EN/GNAWDEATH.SUB:0001": {
+    "target": "那不过是我真正力量的|冰山一角。",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0000": {
+    "target": "29.970",
+    "status": "exempt",
+    "notes": "字幕帧率头数据，保持29.970原值，不属于可见对白。"
+  },
+  "EN/GNAWREVEAL.SUB:0001": {
+    "target": "这些事情，它们……",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0002": {
+    "target": "……它们全都是在|你的手术之后开始的。",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0003": {
+    "target": "你脑子里不管|有什么不对劲的东西……",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0004": {
+    "target": "……我们……我们把它放出来了！",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0005": {
+    "target": "愿上帝救救我们！",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0006": {
+    "target": "请别理会我那|比较清醒的一半，威廉……",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0007": {
+    "target": "……他有点……悔不当初。",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0008": {
+    "target": "我嘛，倒是想|和你分享点东西。",
+    "status": "draft"
+  },
+  "EN/GNAWREVEAL.SUB:0009": {
+    "target": "永别了，威廉。",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0000": {
+    "target": "29.970",
+    "status": "exempt",
+    "notes": "字幕帧率头数据，保持29.970原值，不属于可见对白。"
+  },
+  "EN/INTRO.SUB:0001": {
+    "target": "欢迎回来。",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0002": {
+    "target": "看起来不错。|你知道自己叫什么吗？",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0003": {
+    "target": "是威廉……威廉·雷德穆尔？",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0004": {
+    "target": "你接受了脑部手术。",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0005": {
+    "target": "你已经昏迷快五个星期了。",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0006": {
+    "target": "你现在好多了。|一切都会好起来的。",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0007": {
+    "target": "现在……真不想催你走，|你还有点迷迷糊糊的……",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0008": {
+    "target": "……可这里实在腾不出床位了。",
+    "status": "draft"
+  },
+  "EN/INTRO.SUB:0009": {
+    "target": "警卫会帮你|回到牢房。",
+    "status": "draft"
+  },
+  "EN/MREVEAL.SUB:0000": {
+    "target": "29.970",
+    "status": "exempt",
+    "notes": "字幕帧率头数据，保持29.970原值，不属于可见对白。"
+  },
+  "EN/MREVEAL.SUB:0001": {
+    "target": "马拉泰斯塔……",
+    "status": "draft"
+  },
+  "EN/MREVEAL.SUB:0002": {
+    "target": "我为你带来了祭品，",
+    "status": "draft"
+  },
+  "EN/MREVEAL.SUB:0003": {
+    "target": "任凭你处置！",
+    "status": "draft"
+  },
+  "EN/TUTORIALCROUCH.SUB:0000": {
+    "target": "按\u0002$K\u0001蹲下。",
+    "status": "draft"
+  },
+  "EN/TUTORIALJUMP.SUB:0000": {
+    "target": "按\u0002$K\u0001跳跃。",
+    "status": "draft"
+  },
+  "EN/WENDIGODEATH.SUB:0000": {
+    "target": "29.970",
+    "status": "exempt",
+    "notes": "字幕帧率头数据，保持29.970原值，不属于可见对白。"
+  },
+  "EN/WENDIGODEATH.SUB:0001": {
+    "target": "威廉，我的爱人。",
+    "status": "draft"
+  }
+}

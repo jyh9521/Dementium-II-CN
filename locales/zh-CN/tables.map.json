@@ -1,0 +1,2034 @@
+{
+  "EN/ALPHA.TBL:0001": {
+    "target": "HATE",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA.TBL:0002": {
+    "target": "FEAR",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA.TBL:0003": {
+    "target": "LOST",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA.TBL:0004": {
+    "target": "FATE",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA.TBL:0005": {
+    "target": "DEAD",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA.TBL:0006": {
+    "target": "LOVE",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA2.TBL:0001": {
+    "target": "AULA",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA2.TBL:0002": {
+    "target": "HREX",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA2.TBL:0003": {
+    "target": "ERKC",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA2.TBL:0004": {
+    "target": "JVKS",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/ALPHA2.TBL:0005": {
+    "target": "PRSQ",
+    "status": "preserved",
+    "notes": "字母谜题内容，保留原文，避免破坏解谜规则。"
+  },
+  "EN/CHAPTERS.TBL:0000": {
+    "target": "\u0003第一章|\u0002欢迎回来",
+    "status": "draft"
+  },
+  "EN/CHAPTERS.TBL:0001": {
+    "target": "\u0003第二章|\u0002蔓延",
+    "status": "needs-context",
+    "notes": "代词 it 的具体对象待剧情场景核对，译名采用中性表达。"
+  },
+  "EN/CHAPTERS.TBL:0002": {
+    "target": "\u0003第三章|\u0002逃无可逃",
+    "status": "draft"
+  },
+  "EN/CHAPTERS.TBL:0003": {
+    "target": "\u0003第四章|\u0002巨像",
+    "status": "needs-context",
+    "notes": "Colossus 暂译巨像，待核对首领造型及剧情称谓。"
+  },
+  "EN/CHAPTERS.TBL:0004": {
+    "target": "\u0003第五章|\u0002最后的通道",
+    "status": "needs-context",
+    "notes": "passage 的空间/终结双关待场景审校。"
+  },
+  "EN/CONTROLS.TBL:0000": {
+    "target": "右手操作",
+    "status": "draft"
+  },
+  "EN/CONTROLS.TBL:0001": {
+    "target": "左手操作",
+    "status": "draft"
+  },
+  "EN/CONTROLS.TBL:0002": {
+    "target": "攻击",
+    "status": "draft"
+  },
+  "EN/CONTROLS.TBL:0003": {
+    "target": "移动",
+    "status": "draft"
+  },
+  "EN/CONTROLS.TBL:0004": {
+    "target": "触控笔观察 / 瞄准",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0000": {
+    "target": "\u0002DEMENTIUM II\u0001",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0002": {
+    "target": "\u0002- 原版开发人员 -\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0004": {
+    "target": "由 RENEGADE KID 制作",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0006": {
+    "target": "\u0002游戏总监兼制作人\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0007": {
+    "target": "JOOLS WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0009": {
+    "target": "\u0002美术总监\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0010": {
+    "target": "GREGG HARGROVE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0012": {
+    "target": "\u0002技术总监\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0013": {
+    "target": "BOB IVES",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0015": {
+    "target": "\u0002设计\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0016": {
+    "target": "JOOLS WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0017": {
+    "target": "STEPHEN DUPREE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0019": {
+    "target": "\u0002美术\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0020": {
+    "target": "GREGG HARGROVE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0021": {
+    "target": "NOAH LI",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0022": {
+    "target": "CHIP PATTERSON",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0024": {
+    "target": "\u0002程序\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0025": {
+    "target": "BOB IVES",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0026": {
+    "target": "ANDREW BROWN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0028": {
+    "target": "\u0002编剧\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0029": {
+    "target": "GREG WILSON",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0030": {
+    "target": "JOOLS WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0031": {
+    "target": "GREGG HARGROVE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0033": {
+    "target": "\u0002音乐\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0034": {
+    "target": "GARETH VILDAY",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0035": {
+    "target": "JOOLS WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0037": {
+    "target": "\u0002音效\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0038": {
+    "target": "JOOLS WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0040": {
+    "target": "\u0002配音\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0041": {
+    "target": "JOOLS WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0042": {
+    "target": "GREGG HARGOVE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0043": {
+    "target": "SUZANNA WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0044": {
+    "target": "PAT HARGROVE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0045": {
+    "target": "CHRIS BROWER",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0047": {
+    "target": "\u0002美术协力\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0048": {
+    "target": "JOOLS WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0049": {
+    "target": "STEPHEN DUPREE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0050": {
+    "target": "ERIK MCKENNEY",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0051": {
+    "target": "ADAM SCHUMAN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0053": {
+    "target": "\u0002特别鸣谢\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0054": {
+    "target": "SUZANNA, SAMMY & SPENCER",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0055": {
+    "target": "PAT HARGROVE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0056": {
+    "target": "ARANCHA MOYA",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0057": {
+    "target": "ABBY BROWN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0058": {
+    "target": "MICHAEL VERONI",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0060": {
+    "target": "\u0002特别致谢\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0061": {
+    "target": "《病房》系列的玩家们（就是你们！）",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0064": {
+    "target": "-: SOUTHPEAK GAMES 美国分部 :-",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0066": {
+    "target": "\u0002首席执行官\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0067": {
+    "target": "MELANIE MROZ",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0069": {
+    "target": "\u0002首席会计官\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0070": {
+    "target": "REBA McDERMOTT",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0072": {
+    "target": "\u0002秘书\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0073": {
+    "target": "GREG PHILLIPS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0076": {
+    "target": "-: 商务拓展 :-",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0078": {
+    "target": "\u0002商务拓展副总裁\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0079": {
+    "target": "CHRIS LAX",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0081": {
+    "target": "\u0002企业发展总监\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0082": {
+    "target": "SCOTT SILVERMAN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0084": {
+    "target": "\u0002运营副总裁\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0085": {
+    "target": "PATRICE STRACHAN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0087": {
+    "target": "\u0002运营总监\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0088": {
+    "target": "ERIC BRADFORD",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0091": {
+    "target": "-: 产品开发 :-",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0093": {
+    "target": "\u0002执行制作人\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0094": {
+    "target": "DAVID DIENSTBIER",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0096": {
+    "target": "\u0002高级制作人\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0097": {
+    "target": "HOWARD PERLMAN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0099": {
+    "target": "\u0002制作人\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0100": {
+    "target": "JOHN F. KAISER III",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0103": {
+    "target": "-: 质量保证 :-",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0105": {
+    "target": "\u0002质量保证经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0106": {
+    "target": "JASON DICKSON",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0108": {
+    "target": "\u0002制作管理经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0109": {
+    "target": "KEITH WEBER",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0111": {
+    "target": "\u0002客户支持\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0112": {
+    "target": "AARON WILLIS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0114": {
+    "target": "\u0002测试组长\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0115": {
+    "target": "JORDAN SINDELAR",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0116": {
+    "target": "BRIAN COPE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0117": {
+    "target": "BOBBI FLUHART",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0118": {
+    "target": "CHRIS WATKINS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0120": {
+    "target": "\u0002测试人员\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0121": {
+    "target": "NICK DURANT",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0122": {
+    "target": "BRIAN STEELE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0123": {
+    "target": "JOSH WHITE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0124": {
+    "target": "ANTHONY KING",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0125": {
+    "target": "MARC PORTO",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0126": {
+    "target": "TIMOTHY HARTGRAVE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0127": {
+    "target": "PATRICK BARRETT",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0128": {
+    "target": "JON SMALLWOOD",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0129": {
+    "target": "JOSH KNOBLAUCH",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0131": {
+    "target": "\u0002额外支持\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0132": {
+    "target": "ERIC NORRIS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0133": {
+    "target": "RICHARD TERRELL",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0134": {
+    "target": "PAUL DUNN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0135": {
+    "target": "MASON GOOCH",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0136": {
+    "target": "DOUGLAS COAKLEY",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0137": {
+    "target": "BRANDON HOLMES",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0138": {
+    "target": "CARLOS VENEGAS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0139": {
+    "target": "SHALE WILLIAMS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0140": {
+    "target": "MIKELL GREEN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0143": {
+    "target": "-: 销售 :-",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0145": {
+    "target": "\u0002北美销售副总裁\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0146": {
+    "target": "BRIAN GARRISON",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0148": {
+    "target": "\u0002区域销售经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0149": {
+    "target": "LAURA FRANZEN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0151": {
+    "target": "\u0002渠道营销协调\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0152": {
+    "target": "MAEGAN EASON",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0154": {
+    "target": "\u0002销售支持协调\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0155": {
+    "target": "JACLYN PELLOCK",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0158": {
+    "target": "-: 市场营销 :-",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0160": {
+    "target": "\u0002市场营销副总裁\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0161": {
+    "target": "RICHARD IGGO",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0163": {
+    "target": "\u0002产品营销经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0164": {
+    "target": "AUBREY NORRIS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0166": {
+    "target": "\u0002素材协调\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0167": {
+    "target": "GEOFF BLAIR",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0169": {
+    "target": "\u0002产品助理经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0170": {
+    "target": "BLAKE HOCKENBROUGH",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0172": {
+    "target": "\u0002活动协调\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0173": {
+    "target": "JONATHAN ROSALES",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0176": {
+    "target": "-: 创意服务 :-",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0178": {
+    "target": "\u0002创意服务副总裁\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0179": {
+    "target": "SCOTT JENKINS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0181": {
+    "target": "\u0002美术总监\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0182": {
+    "target": "OMAR MEJIA",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0184": {
+    "target": "\u0002项目流程经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0185": {
+    "target": "LEAH WINDOM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0187": {
+    "target": "\u0002多媒体制作人\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0188": {
+    "target": "DANIEL FORD",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0190": {
+    "target": "\u0002网站开发\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0191": {
+    "target": "ERIC LORENTZ",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0193": {
+    "target": "\u0002平面设计\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0194": {
+    "target": "ANDRIA PHILLIPS",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0196": {
+    "target": "\u0002项目协调\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0197": {
+    "target": "JOSH HOOVER",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0200": {
+    "target": "-: SOUTHPEAK GAMES 欧洲分部 :-",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0202": {
+    "target": "\u0002欧洲区常务董事\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0203": {
+    "target": "JONATHAN HALES",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0205": {
+    "target": "\u0002欧洲销售总监\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0206": {
+    "target": "FELIX BRADSHAW",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0208": {
+    "target": "\u0002欧洲公关经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0209": {
+    "target": "ROB BURMAN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0211": {
+    "target": "\u0002英国销售经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0212": {
+    "target": "SIMON COWLEY",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0214": {
+    "target": "\u0002产品营销经理\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0215": {
+    "target": "ED BLINCOE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0216": {
+    "target": "SARAH BROCKHURST",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0218": {
+    "target": "\u0002公关与市场营销专员\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0219": {
+    "target": "VICTORIA SMITH",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0222": {
+    "target": "\u0002- 大屏移植版开发人员 -\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0224": {
+    "target": "由 ATOOI 制作",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0226": {
+    "target": "\u0002游戏总监兼制作人\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0227": {
+    "target": "JOOLS WATSHAM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0229": {
+    "target": "\u0002技术总监\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0230": {
+    "target": "MATTHEW GAMBRELL",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0232": {
+    "target": "\u0002程序协力\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0233": {
+    "target": "DAVIDE PASCA",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0235": {
+    "target": "\u0002测试组长\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0236": {
+    "target": "SHAUN ZAFAR",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0238": {
+    "target": "\u0002本地化与支持\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0239": {
+    "target": "EDWARD DI GERONIMO JR.",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0240": {
+    "target": "MAITE AZCUTIA",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0241": {
+    "target": "LAURA CANO",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0242": {
+    "target": "BEATRICE CERUTI",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0243": {
+    "target": "MARÍA GARRIDO DE VEGA",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0244": {
+    "target": "LINDA GESCHWANDTNER",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0245": {
+    "target": "ELLENITA GOMEZ ALES",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0246": {
+    "target": "STEFAN HAHN",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0247": {
+    "target": "CHRISTOPH HÖNOW",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0248": {
+    "target": "KYULEE KIM",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0249": {
+    "target": "INÊS MARQUES",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0250": {
+    "target": "TOMMY NORDKVIST",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0251": {
+    "target": "GERALD PAETSCH",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0253": {
+    "target": "\u0002特别鸣谢\u0001",
+    "status": "draft"
+  },
+  "EN/CREDITS.TBL:0254": {
+    "target": "SUZANNA, SAM, AND SPENCER",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0255": {
+    "target": "JACOB MCCLENDON",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0256": {
+    "target": "CHRIS BRYANT",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0257": {
+    "target": "STEFAN IVASKOVIC",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0258": {
+    "target": "DOMINIC VILLARREAL",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0259": {
+    "target": "PETER PALMER",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0260": {
+    "target": "ALLISON KEAGY",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0261": {
+    "target": "ELIAS MORENO",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0262": {
+    "target": "AMITY GENTRY",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0263": {
+    "target": "IVY BOWLING",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0264": {
+    "target": "KYLE BARRENTINE",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0265": {
+    "target": "CASEY WHITNEY",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0266": {
+    "target": "CAITLIN BODNAR",
+    "status": "preserved",
+    "notes": "保留原作者、公司或产品名称的原始拼写。"
+  },
+  "EN/CREDITS.TBL:0269": {
+    "target": "\u0002感谢游玩！\u0001",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0000": {
+    "target": "删除数据",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0001": {
+    "target": "继续游戏",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0002": {
+    "target": "新游戏",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0003": {
+    "target": "普通",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0004": {
+    "target": "困难",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0005": {
+    "target": "疯狂",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0006": {
+    "target": "普通",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0007": {
+    "target": "困难",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0008": {
+    "target": "疯狂",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0009": {
+    "target": "删除全部数据？",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0010": {
+    "target": "确定吗？",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0011": {
+    "target": "是",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0012": {
+    "target": "否",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0013": {
+    "target": "生存模式",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0014": {
+    "target": "击杀数：",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0015": {
+    "target": "正在检查备份数据。",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0016": {
+    "target": "所有剧情进度都将丢失。",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0017": {
+    "target": "生存模式进度将保留。",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0018": {
+    "target": "退出游戏",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0019": {
+    "target": "画面设置",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0020": {
+    "target": "这些设置将在重启游戏后生效。",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0021": {
+    "target": "垂直同步",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0022": {
+    "target": "抗锯齿",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0023": {
+    "target": "显示模式",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0024": {
+    "target": "返回",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0025": {
+    "target": "开",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0026": {
+    "target": "关",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0027": {
+    "target": "窗口",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0028": {
+    "target": "无边框窗口",
+    "status": "draft"
+  },
+  "EN/GAMEMODE.TBL:0029": {
+    "target": "独占全屏",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0000": {
+    "target": "继续",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0001": {
+    "target": "查看",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0002": {
+    "target": "打开",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0003": {
+    "target": "拾取",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0004": {
+    "target": "使用",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0005": {
+    "target": "进入",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0006": {
+    "target": "离开",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0007": {
+    "target": "攀爬",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0008": {
+    "target": "拉动",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0009": {
+    "target": "启动",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0010": {
+    "target": "空",
+    "status": "needs-context",
+    "notes": "Empty 可能是空容器状态或清空动作，待交互场景核对。"
+  },
+  "EN/GUI.TBL:0011": {
+    "target": "地图",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0012": {
+    "target": "任务",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0013": {
+    "target": "设置",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0014": {
+    "target": "物品",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0015": {
+    "target": "页",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0016": {
+    "target": "下一页|",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0017": {
+    "target": "返回",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0018": {
+    "target": "确定",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0019": {
+    "target": "……正在保存进度……",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0020": {
+    "target": "载入中",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0021": {
+    "target": "读取存档失败。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0022": {
+    "target": "请关闭电源，",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0023": {
+    "target": "然后重新插入 DS 游戏卡。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0024": {
+    "target": "读取存档失败。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0025": {
+    "target": "请关闭电源，",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0026": {
+    "target": "然后重新插入 DS 游戏卡。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0027": {
+    "target": "存档数据已损坏。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0028": {
+    "target": "正在删除数据。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0029": {
+    "target": "按任意键继续。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0031": {
+    "target": "存档数据已损坏。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0032": {
+    "target": "正在恢复游戏进度。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0033": {
+    "target": "按任意键继续。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0034": {
+    "target": "已恢复默认设置。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0035": {
+    "target": "按任意键继续。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0036": {
+    "target": "游戏统计数据已重置。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0037": {
+    "target": "按任意键继续。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0038": {
+    "target": "正在保存，请勿触碰游戏卡， ",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0039": {
+    "target": "也请勿关闭电源。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0040": {
+    "target": "生命",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0041": {
+    "target": "护盾",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0042": {
+    "target": "治疗药片",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0043": {
+    "target": "医疗包",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0044": {
+    "target": "解毒剂",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0045": {
+    "target": "肾上腺素",
+    "status": "draft",
+    "notes": "对应查看说明中的 Adrenaline Syringe（肾上腺素注射器）；此处原文为 Adrenaline，沿用简短名称肾上腺素。"
+  },
+  "EN/GUI.TBL:0046": {
+    "target": "中毒已解除",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0047": {
+    "target": "未中毒",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0048": {
+    "target": "肾上腺素强化",
+    "status": "needs-context",
+    "notes": "增强机能的具体游戏效果待实测。"
+  },
+  "EN/GUI.TBL:0049": {
+    "target": "左轮手枪弹药",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0050": {
+    "target": "突击步枪弹药",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0051": {
+    "target": "钉子",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0052": {
+    "target": "霰弹枪弹药",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0053": {
+    "target": "气雾罐",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0054": {
+    "target": "炸药",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0055": {
+    "target": "武器弹药已满",
+    "status": "needs-context",
+    "notes": "Weapon Full 暂按弹药已满处理，待拾取场景核对。"
+  },
+  "EN/GUI.TBL:0056": {
+    "target": "武器不匹配",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0057": {
+    "target": "生命已满",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0058": {
+    "target": "物品栏已满",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0059": {
+    "target": "炸药已满",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0060": {
+    "target": "自制短刀",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0061": {
+    "target": "左轮手枪",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0062": {
+    "target": "大锤",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0063": {
+    "target": "霰弹枪",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0064": {
+    "target": "突击步枪",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0065": {
+    "target": "火焰喷射器",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0066": {
+    "target": "炸药",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0067": {
+    "target": "遗物",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0068": {
+    "target": "射钉枪",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0069": {
+    "target": "骨锯",
+    "status": "needs-context",
+    "notes": "同一武器在物品说明中称 Buzz Saw；需结合模型判断骨锯/电锯命名。"
+  },
+  "EN/GUI.TBL:0070": {
+    "target": "手电筒",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0071": {
+    "target": "仪式匕首",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0072": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0073": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0074": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0075": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0076": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0077": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0078": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0079": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0080": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/GUI.TBL:0081": {
+    "target": "检查点",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0082": {
+    "target": "新目标",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0083": {
+    "target": "目标完成",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0084": {
+    "target": "跳过 >",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0085": {
+    "target": "进度已保存",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0086": {
+    "target": "生命已恢复",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0087": {
+    "target": "\u0002- 场地已肃清 -\u0001",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0088": {
+    "target": "前往下一个场地。",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0089": {
+    "target": "波次",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0090": {
+    "target": "消灭所有敌人！",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0091": {
+    "target": "击杀数：",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0092": {
+    "target": "物品栏",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0093": {
+    "target": "抬起",
+    "status": "needs-context",
+    "notes": "Lift 暂按抬起物体动作；须核对交互对象。"
+  },
+  "EN/GUI.TBL:0094": {
+    "target": "放下",
+    "status": "needs-context",
+    "notes": "Drop 暂按放下物体动作；须核对交互对象。"
+  },
+  "EN/GUI.TBL:0095": {
+    "target": "移动",
+    "status": "draft"
+  },
+  "EN/GUI.TBL:0096": {
+    "target": "松开",
+    "status": "needs-context",
+    "notes": "Release 暂按松开物体动作；须核对交互对象。"
+  },
+  "EN/GUI.TBL:0097": {
+    "target": "转动",
+    "status": "needs-context",
+    "notes": "Turn 暂按转动物体动作；须核对交互对象。"
+  },
+  "EN/GUI.TBL:0098": {
+    "target": "切换",
+    "status": "needs-context",
+    "notes": "Toggle 暂按状态切换动作；须核对交互对象。"
+  },
+  "EN/INVENTORY.TBL:0000": {
+    "target": "治疗药片：恢复生命。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0001": {
+    "target": "医疗包：恢复全部生命。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0002": {
+    "target": "解毒剂：解除中毒。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0003": {
+    "target": "肾上腺素：增强运动机能。",
+    "status": "draft",
+    "notes": "对应查看说明中的 Adrenaline Syringe（肾上腺素注射器）；此处原文为 Adrenaline，沿用简短名称肾上腺素。"
+  },
+  "EN/INVENTORY.TBL:0004": {
+    "target": "左轮手枪弹药。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0005": {
+    "target": "突击步枪弹药。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0006": {
+    "target": "一盒钉子。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0007": {
+    "target": "霰弹枪弹药。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0008": {
+    "target": "气雾罐。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0009": {
+    "target": "炸药。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0010": {
+    "target": "自制短刀：监狱中自制的刀具。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0011": {
+    "target": "左轮手枪。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0012": {
+    "target": "大锤。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0013": {
+    "target": "霰弹枪。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0014": {
+    "target": "突击步枪。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0015": {
+    "target": "火焰喷射器：气雾罐加打火机。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0016": {
+    "target": "炸药。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0017": {
+    "target": "神秘遗物。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0018": {
+    "target": "射钉枪。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0019": {
+    "target": "电锯。",
+    "status": "needs-context",
+    "notes": "源文 Buzz Saw 与 GUI 的 BONESAW 不同，暂保留语义差异，待核对模型。"
+  },
+  "EN/INVENTORY.TBL:0020": {
+    "target": "仪式匕首。",
+    "status": "draft"
+  },
+  "EN/INVENTORY.TBL:0021": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/INVENTORY.TBL:0022": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/INVENTORY.TBL:0023": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/INVENTORY.TBL:0024": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/INVENTORY.TBL:0025": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/INVENTORY.TBL:0026": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/INVENTORY.TBL:0027": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/INVENTORY.TBL:0028": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/INVENTORY.TBL:0029": {
+    "target": "N/A",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/MAP.TBL:0000": {
+    "target": "曙光治疗中心",
+    "status": "draft"
+  },
+  "EN/MAP.TBL:0001": {
+    "target": "曙光锅炉房",
+    "status": "draft"
+  },
+  "EN/MAP.TBL:0002": {
+    "target": "佩尔夫村",
+    "status": "needs-context",
+    "notes": "Pelf 为地名，暂音译佩尔夫，待语音/场景审校。"
+  },
+  "EN/MAP.TBL:0003": {
+    "target": "波因特矿井",
+    "status": "needs-context",
+    "notes": "Point 暂视为地名音译波因特，须核对地理语境及语音。"
+  },
+  "EN/MAP.TBL:0004": {
+    "target": "波因特通道",
+    "status": "needs-context",
+    "notes": "与 Point Mine 暂统一音译，须核对地名语境。"
+  },
+  "EN/OPTIONS.TBL:0001": {
+    "target": "操作类型",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0002": {
+    "target": "反转 Y 轴",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0003": {
+    "target": "字幕",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0004": {
+    "target": "双击跳跃",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0005": {
+    "target": "亮度",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0006": {
+    "target": "音效",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0007": {
+    "target": "音乐",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0008": {
+    "target": "类型 1",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0009": {
+    "target": "类型 2",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0010": {
+    "target": "关",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0011": {
+    "target": "开",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0012": {
+    "target": "关",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0013": {
+    "target": "开",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0014": {
+    "target": "关",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0015": {
+    "target": "开",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0016": {
+    "target": "普通",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0017": {
+    "target": "明亮",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0018": {
+    "target": "更亮",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0019": {
+    "target": "普通",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0020": {
+    "target": "低音量",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0021": {
+    "target": "关",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0022": {
+    "target": "退出",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0023": {
+    "target": "退出游戏？",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0024": {
+    "target": "从上次存档点重新开始？",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0025": {
+    "target": "确定吗？",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0026": {
+    "target": "退出游戏",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0027": {
+    "target": "继续",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0028": {
+    "target": "上次存档",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0029": {
+    "target": "退出生存模式",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0030": {
+    "target": "重试",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0031": {
+    "target": "取消",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0032": {
+    "target": "是",
+    "status": "draft"
+  },
+  "EN/OPTIONS.TBL:0033": {
+    "target": "否",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0000": {
+    "target": "反转",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0001": {
+    "target": "普通",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0002": {
+    "target": "显示",
+    "status": "needs-context",
+    "notes": "Display 的选项范围待设置界面核对。"
+  },
+  "EN/OPTIONSNEW.TBL:0003": {
+    "target": "操作类型",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0004": {
+    "target": "瞄准速度",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0005": {
+    "target": "音效",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0006": {
+    "target": "音乐",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0007": {
+    "target": "心跳声",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0008": {
+    "target": "类型 1",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0009": {
+    "target": "类型 2",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0010": {
+    "target": "类型 3",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0011": {
+    "target": "最慢",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0012": {
+    "target": "慢",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0013": {
+    "target": "普通",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0014": {
+    "target": "快",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0015": {
+    "target": "最快",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0016": {
+    "target": "普通",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0017": {
+    "target": "低音量",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0018": {
+    "target": "关",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0019": {
+    "target": "退出游戏",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0020": {
+    "target": "地图",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0021": {
+    "target": "物品栏",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0022": {
+    "target": "是",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0023": {
+    "target": "否",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0024": {
+    "target": "继续",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0025": {
+    "target": "退出游戏",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0026": {
+    "target": "上次存档",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0027": {
+    "target": "取消",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0028": {
+    "target": "确定吗？",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0029": {
+    "target": "从上次存档点重新开始？",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0030": {
+    "target": "退出游戏？",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0031": {
+    "target": "键盘",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0032": {
+    "target": "现代",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0033": {
+    "target": "经典",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0034": {
+    "target": "灵敏度",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0035": {
+    "target": "滤镜：",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0036": {
+    "target": "字幕",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0037": {
+    "target": "小地图",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0038": {
+    "target": "敌人音乐",
+    "status": "needs-context",
+    "notes": "Enemy Music 可能指遇敌提示音乐，暂直译，待菜单/战斗核对。"
+  },
+  "EN/OPTIONSNEW.TBL:0039": {
+    "target": "手电筒",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0040": {
+    "target": "开",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0041": {
+    "target": "轻微",
+    "status": "needs-context",
+    "notes": "SUBTLE 对应的具体显示效果/设置项尚待菜单核对。"
+  },
+  "EN/OPTIONSNEW.TBL:0042": {
+    "target": "强烈",
+    "status": "needs-context",
+    "notes": "BOLD 对应的具体显示效果/设置项尚待菜单核对。"
+  },
+  "EN/OPTIONSNEW.TBL:0043": {
+    "target": "复古",
+    "status": "needs-context",
+    "notes": "RETRO 对应的具体显示效果/设置项尚待菜单核对。"
+  },
+  "EN/OPTIONSNEW.TBL:0044": {
+    "target": "标准",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0045": {
+    "target": "左手操作",
+    "status": "draft"
+  },
+  "EN/OPTIONSNEW.TBL:0046": {
+    "target": "AZERTY",
+    "status": "preserved",
+    "notes": "非译内容：占位标记或键盘布局名称。"
+  },
+  "EN/SAVE.TBL:0000": {
+    "target": "保存进度？",
+    "status": "draft"
+  },
+  "EN/SAVE.TBL:0001": {
+    "target": "挖开坟墓？",
+    "status": "draft"
+  },
+  "EN/SAVE.TBL:0002": {
+    "target": "补充喷火器燃料？",
+    "status": "draft"
+  },
+  "EN/SAVE.TBL:0003": {
+    "target": "是",
+    "status": "draft"
+  },
+  "EN/SAVE.TBL:0004": {
+    "target": "否",
+    "status": "draft"
+  },
+  "EN/SAVE.TBL:0005": {
+    "target": "……正在保存进度……",
+    "status": "draft"
+  },
+  "EN/SURVIVAL.TBL:0000": {
+    "target": "\u0003恭喜解锁|\u0002生存模式 I|\u0003可在标题画面进入生存模式。",
+    "status": "draft"
+  },
+  "EN/SURVIVAL.TBL:0001": {
+    "target": "\u0003恭喜解锁|\u0002生存模式 II|\u0003可在标题画面进入生存模式。",
+    "status": "draft"
+  },
+  "EN/SURVIVAL.TBL:0002": {
+    "target": "\u0003恭喜解锁|\u0002生存模式 III|\u0003可在标题画面进入生存模式。",
+    "status": "draft"
+  },
+  "EN/SURVIVAL.TBL:0003": {
+    "target": "\u0003恭喜解锁|\u0002生存模式 IV|\u0003可在标题画面进入生存模式。",
+    "status": "draft"
+  },
+  "EN/SURVIVAL.TBL:0004": {
+    "target": "\u0003恭喜解锁|\u0002生存模式 V|\u0003可在标题画面进入生存模式。",
+    "status": "draft"
+  }
+}

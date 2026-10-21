@@ -124,3 +124,6 @@ decompiled/
 
 # Keep intentionally tracked placeholders if used
 !.gitkeep
+
+# Installed font caches are local build inputs
+assets/fonts/*.ttf

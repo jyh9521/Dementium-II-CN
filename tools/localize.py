@@ -318,7 +318,7 @@ def main():
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('scan'); p.add_argument('game', type=Path); p.add_argument('output', type=Path)
     p = sub.add_parser('extract'); p.add_argument('archive', type=Path); p.add_argument('output', type=Path); p.add_argument('--source', default='EN')
-    p = sub.add_parser('build'); p.add_argument('archive', type=Path); p.add_argument('translation', type=Path); p.add_argument('output', type=Path); p.add_argument('--font', type=Path); p.add_argument('--identity', type=Path, required=True)
+    p = sub.add_parser('build'); p.add_argument('archive', type=Path); p.add_argument('translation', type=Path); p.add_argument('output', type=Path); p.add_argument('--font', type=Path); p.add_argument('--profile', type=Path); p.add_argument('--identity', type=Path, required=True)
     p = sub.add_parser('patch'); p.add_argument('input', type=Path); p.add_argument('delta', type=Path); p.add_argument('output', type=Path); p.add_argument('--reverse', action='store_true')
     args = parser.parse_args()
     if args.command == 'scan':
@@ -357,9 +357,21 @@ def main():
             raise ValueError('Unsupported original archive')
         zar = Zar(data)
         records = json.loads(args.translation.read_text(encoding='utf-8'))
+        validate(records, extract(zar))
+        logical_records = records
+        if args.font and args.profile:
+            raise ValueError('Use --font or --profile, not both')
+        mixed_fonts = {}
+        if args.profile:
+            from font_pipeline import build_mixed
+            profile = json.loads(args.profile.read_text(encoding='utf-8'))
+            mixed_fonts, records, mixed_info = build_mixed(zar, records, profile)
         changes = import_text(zar, records)
         info = {'added_glyphs': 0}
-        if args.font:
+        if args.profile:
+            changes.update(mixed_fonts)
+            info = mixed_info
+        elif args.font:
             fonts, info = build_font(zar, records, args.font)
             changes.update(fonts)
         else:
@@ -379,10 +391,16 @@ def main():
         if not target.exists() or filehash(target) != digest(out):
             target.write_bytes(out)
         write_json(args.output / 'patch.json', make_delta(data, out))
+        if args.profile:
+            from font_pipeline import render_previews
+            render_previews(Zar(out), args.output, profile, info)
+            write_json(args.output / 'runtime-text.json', records)
+            write_json(args.output / 'font-report.json', info)
         parsed_output = Zar(out)
         actual_changes = [name for name in zar.entries if zar.read(name) != parsed_output.read(name)]
-        write_json(args.output / 'build-report.json', {'changed_resources': actual_changes, 'translated': sum(bool(r['target']) and r['target'] != r['source'] for r in records), 'total': len(records), 'font': info, 'original_sha256': digest(data), 'modified_sha256': digest(out), 'runtime_verified': False})
-        print(f'BUILD translated={sum(bool(r["target"]) and r["target"] != r["source"] for r in records)} total={len(records)} changed_resources={len(actual_changes)} added_glyphs={info["added_glyphs"]} reextract=PASS')
+        count = sum(bool(r['target']) and r['target'] != r['source'] for r in logical_records)
+        write_json(args.output / 'build-report.json', {'changed_resources': actual_changes, 'translated': count, 'total': len(records), 'font': info, 'original_sha256': digest(data), 'modified_sha256': digest(out), 'runtime_verified': False})
+        print(f'BUILD translated={count} total={len(records)} changed_resources={len(actual_changes)} added_glyphs={info["added_glyphs"]} reextract=PASS')
     elif args.command == 'patch':
         if args.input.resolve() == args.output.resolve():
             raise ValueError('Use a separate output path')

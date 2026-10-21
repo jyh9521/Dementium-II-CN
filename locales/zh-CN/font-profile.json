@@ -1,0 +1,246 @@
+{
+  "schema": 1,
+  "fonts": {
+    "body": {
+      "file": "fusion-pixel-12px-proportional-zh_hans.ttf",
+      "sha256": "60f62ae34b95eea47e5986dd425bcd51c4f785165bf06befade60a059f036066",
+      "pixel_size": 12
+    },
+    "title": {
+      "file": "ChillBitmap_16px.ttf",
+      "sha256": "9c699de0d24e482700fa0a08ce3abe58ef2ceaf6173323c77b767c72cd538512",
+      "pixel_size": 16
+    }
+  },
+  "title_resources": [
+    "EN/CHAPTERS.TBL"
+  ],
+  "atlas_width": 512,
+  "max_atlas_height": 4096,
+  "linefeed": 16,
+  "document_width": 228,
+  "review_width": 240,
+  "forbidden_start": "，。！？：；、）》】」』〉〕…",
+  "forbidden_end": "（《【「『〈〔",
+  "previews": {
+    "body": [
+      "这是来自天堂的明信片。",
+      "看在上帝的份上，趁现在还来得及，赶快离开这里。",
+      "——威廉"
+    ],
+    "interaction": [
+      "按 E 拾取",
+      "按 F 使用",
+      "门已经锁住了",
+      "弹药不足"
+    ],
+    "title": [
+      "新游戏",
+      "继续游戏",
+      "第一章",
+      "游戏结束"
+    ],
+    "mixed": [
+      "William 留下了一张明信片。",
+      "按 E 拾取",
+      "HP：100",
+      "9mm 弹药",
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "abcdefghijklmnopqrstuvwxyz",
+      "0123456789  William  HP:100",
+      "Å Ç ç É é"
+    ]
+  },
+  "replace_existing_ranges": [
+    [
+      32,
+      126
+    ],
+    [
+      160,
+      591
+    ]
+  ],
+  "document_layouts": {
+    "EN/EXAMINE.041": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.042": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.043": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.045": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.046": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.047": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.048": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.049": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.050": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.051": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.052": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    },
+    "EN/EXAMINE.053": {
+      "leading_lines": 0,
+      "max_visible_lines": 4,
+      "reflow": true,
+      "soft_joiner": "",
+      "preserve_line_prefixes": [
+        "——"
+      ],
+      "preserve_line_suffixes": [
+        "："
+      ],
+      "width": 228,
+      "pane_height": 72,
+      "line_spacing": 0
+    }
+  }
+}
