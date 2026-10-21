@@ -3191,11 +3191,11 @@
       "labels": [
         {
           "source": "Y Axis",
-          "target": "纵轴反转",
+          "target": "纵轴",
           "box": [
             155,
             218,
-            207,
+            181,
             236
           ]
         }
@@ -3209,8 +3209,8 @@
           240
         ],
         "source_pixels_sha256": "2babfd82f38b0adbffba3218ce1bfc88d72c4b83ce60594b0c7644deacb1f506",
-        "output_pixels_sha256": "a1d5245feafa1178ce486b47c2686411b83623c76fab95c433562f4eafae9a8b",
-        "xor": "eNrt3EFuwjAQBdBcsNfgFOx6Cq7hC6aiwmgy2I5V1EXr9ySUkDhhkcXXjE22DQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfm7f94/0/VRv/OjY4PeHv/Hu/QH4N3n1kgMxElr7jcw45EceO5FNh0/r/NkxTxJgjbwa5EA3r0Y504unfM2opGuN613vSQIslVclHC+P7X1TOnlV8vneZyLHmn3CUe6prwCWzat4fEvfcy1T6piaWRN9xEO+TcyTTfcDZRbAOnl1395ut0NmXS6XXl59n4tjZua9Qs0Wa6+afaVz3T5Tv3maAMvkVYl1VaydemsoQp7VDDr0EcP+Ne7neGkt/3u3pwjAv82run+osxp1TkkZ85zzyj3FTiY975+z8WyuSm0FIK/qptZMnV7gs28YY6L2BmMW1TH1PrnX2Ki3Sm+9/Hay7sKTBFhuPXsZ9QLTusHW+oxrzK+Qa9c4vh5PuVd66+XP1mF4kgDL5VWrHtrz+dgzzOsuevVV47dbmTesoXr/UQZgvX5g6tVtW/tdFXV9xdbo743y6DA2z2PlOanO+kK9QAD1VUlDSqpjSro2j499v5L2Sx7zuPVnWJ/48m6n2fcWArDG+wMB4K+8nx0AAAAAAAAAAIDf9QXEzlI4",
+        "output_pixels_sha256": "c3e3adb0380e10dde8a2f37a3cb4c4732b1a3cb756b7dc8025cc3c861d77927f",
+        "xor": "eNrt3FFugkAUQFE2yDZcBX9dhduYDVJpnObxnAFisU3NOYmBKvrZm3lMGAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF5tnudfeQGAXgHwRw0Z09+7etdvvadXAPywVw+diclpnTeatOpTvlavADirV6327PVqOcRX73vxbb0C4IRelfB+qWuim9LpVcmf9156BcCJvXqY3aXr4kUlNaIcmCOO936NegXAs71ajtfrddWsy+XS69XXZ/GaA72Kx9iXUzsGwNv3qsT/+XHt1NtDEXo23JuzmiOG8ynMBz9a88LcMb0CoNOrer5aZzXWR7FD8aKSZ4pDY+/7cnr7/d76S68A2O1VnO91ZoHfc8PYhjobjDPFek39ndqo9FtxvWUeCMDR/exlaxaY9g0Ojf0ZU+xX6NoUO1XbtRxDt/QKgKO9iuuh1j6KVYta+y5666vGuso8EICn54Fxv0XqTL43Ned7VVv3r3Kf4vpKrwB4Zh4YlPQswJK+m6+f4nfT+djZH+j+FQCHnx/o+ewA/Jfns+sVANqoVwAAAAAAAAC81ifldKrl",
         "reviewed_regions": [
           [
             0,
@@ -3219,15 +3219,15 @@
             240
           ]
         ],
-        "workflow": "user-approved PNG import; native-size export; no generation",
-        "prompt": "User approved the manual-review image set. Exact PNG import and native-size export only; no image generation or added text."
+        "workflow": "bounded native bitmap crop; preserve existing glyphs; no generation",
+        "prompt": "Shorten Y-axis legend to 纵轴; preserve the existing key and first two glyphs; clear only final two glyphs to leave difficulty value unobstructed."
       },
-      "approved_png_sha256": "b6b5960898ba5223092897d61bdc1ca3179eac83e60b5547925c8a7d1543f22d",
+      "approved_png_sha256": "cfb05cb3734a485d390e8ec6940184d5337392acae63ac78f3e525618ce214fd",
       "approved_working_size": [
         428,
         240
       ],
-      "review": "User confirmed 图片没问题，文本暂时先这样 before requesting the installer"
+      "review": "2026-10-21 user screenshot overlap correction; two-glyph label"
     },
     {
       "resource": "TEXTURES/OPTIONS/EN/LEGEND_NX_YAXIS.PNG",
@@ -3239,11 +3239,11 @@
       "labels": [
         {
           "source": "Y Axis",
-          "target": "纵轴反转",
+          "target": "纵轴",
           "box": [
             155,
             218,
-            207,
+            181,
             236
           ]
         }
@@ -3257,8 +3257,8 @@
           240
         ],
         "source_pixels_sha256": "ebef87eac704764ec63935845d574b14c6845931082a3ca4b2a1f22e7c4e2388",
-        "output_pixels_sha256": "54637c8c000ecb3195618759700237a0e6e5da6457b19b84b69eaa021978337d",
-        "xor": "eNrt3U1ugzAQBlBOm1Nk11PkGr5gqkZ1NEw8QH82we9JURAYsmDxacaGLAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8G7u9/vpPwDIK3kFgLySVwDIKwDeOr92VeO39v309/7r+gCcN6tiJIy2B5mxyo889kA2rT6j43v73D2AebNqL6+2cqaKp3zOVkk3Gled7w4CnH/+KuRVC/tbON6KvGr9+ChHRpm0kWOH8lN9BTBvXRXy4WUdRhoXB7W0pqEdqMvaaOxWfXW0HyizAObJq6/v2+22yqzL5VLl1eNYHrPXRww1W6y9eva14ryyF6gnCDBlXrVYV+XaaZQLIaue14h9xLB9jds5XkbL//7aUwTgtP3Avp3rrJe+XsqY55xX7ikWmfS8fs7GvbkqtRWAvOqR0Gum/j1Yn/fImxgTvTcYs6iP6dfJvcZBvdWq9fLLzroLdxJguvqq5V5gyouqtlr1/Xp+hVy7xvF9f8q9Vq2X31uH4U4CzNcPzPVQniOKWTRad1HVV9Va+pR5mzVU9YwyAPM8f9W/Uq9uKd7D1PuEy6C/t5VHq7F5HivPSRXrC/UCAeZ+XvjZDwxayoWWarM8/prOjdstj/n+2Y+wPvHl3U5H31sIwPnzCgAAgPP9/xUA+L9GAAAAAADgtz4BntwOGg==",
+        "output_pixels_sha256": "32da3ce3572826b1003adefeb8639ec95f13d99342a89db0245550909fb68a12",
+        "xor": "eNrt3VFOwkAUhlE2yDZYBW+ugm3MBqsYSn6uM7YQlFjPSUgbKI2++GUuLe52AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMBfM03T5h8A6JVeAbC1Xr3qdwJAr/QKgBf1a9Ho+O+e+802AvA/WpXJ6e13mnTTp3qsXgHwk61a6tV5k4/R+/JpvQLg0c96olctnm/xehv0qs2v13YNWqZXADy8ropefZndlePyoFYa0Vasy/aXfu31CoBHe3Xenk6nm2YdDodRrz5fq8cs9Cq32ZendgyAzfeq5d/8unbada6hiFZdz5FzxNg/xnzwrTcvrB3TKwAG88B5v66z6vooO5THtTpTHF3T8XH+0fpLrwBY7FXO9+ZtXQPtLnPDbMM8G8yZ4nzMfJ65UeVcud4yDwRg7fqq1VlgucZvtLbKud+1X9G1Y3Zqbtd5G93SKwBWzwNjPdT9vopsUe+6i9H6qrOuMg8E4O77r7IXnXuzps77ps55hp9f1T7l+kqvALjjfuHrPDC0et9VWZvV44/lvbm/H1wf6PMrAFb1akvfBQ8AegWA/3/1nJ8JAL36iw8AAAAAAOA53gGwMfQd",
         "reviewed_regions": [
           [
             0,
@@ -3267,15 +3267,15 @@
             240
           ]
         ],
-        "workflow": "user-approved PNG import; native-size export; no generation",
-        "prompt": "User approved the manual-review image set. Exact PNG import and native-size export only; no image generation or added text."
+        "workflow": "bounded native bitmap crop; preserve existing glyphs; no generation",
+        "prompt": "Shorten Y-axis legend to 纵轴; preserve the existing key and first two glyphs; clear only final two glyphs to leave difficulty value unobstructed."
       },
-      "approved_png_sha256": "9b61962abddb35e7c74aa46dac3d41447d67861c75798bc4546eca1e18a032e5",
+      "approved_png_sha256": "188499730dec82709dbd3666f0dd7da2cd16616e3afbd2a32e229456298d447b",
       "approved_working_size": [
         428,
         240
       ],
-      "review": "User confirmed 图片没问题，文本暂时先这样 before requesting the installer"
+      "review": "2026-10-21 user screenshot overlap correction; two-glyph label"
     },
     {
       "resource": "TEXTURES/OPTIONS/EN/LEGEND_PC_YAXIS.PNG",
@@ -3287,11 +3287,11 @@
       "labels": [
         {
           "source": "Y Axis",
-          "target": "纵轴反转",
+          "target": "纵轴",
           "box": [
             155,
             218,
-            207,
+            181,
             236
           ]
         }
@@ -3305,8 +3305,8 @@
           240
         ],
         "source_pixels_sha256": "99c673ed8926ed906c04e3274ecaa4a5aa76b6ddf86157d80df273acc818a9cb",
-        "output_pixels_sha256": "8967b35ff88dacec6fe19b4d3249b49b5d1e9cbd7784a2db81d600e8b0a1f99b",
-        "xor": "eNrt3FGOgjAQBmBO6yl821N4jV7QzRpnM4wtZbM+2e9LDAgFE3n4M0Nh2wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOD97ve7PwEAeQUA8gqAdfNrajT+aNtff+9d5wfgc7MqR0JvvZMZu/yoY09k0+7T2z/b5uoBrJtVs7w6yplRPNVjjkq63rjR8a4gwBr3r54R0dL2lva3QV612N/LkV4mHeTYqfxUXwGsW1elfNjlWPlea5kWY3KmTeqy1ht7VF+d7QfKLIB18upnebvddpl1uVxGefXYV8fM+oipZsu1V2RfGxw37AXqCQIsmVct11W1durlQsqq33PkPmJav+b1Gi+96X//7SkC8LH9wFivddZLX6/37FbUSaNnu/L3OH/Nxtm9KrUVgLyKSIiaKZad+XmPvMkxEb3BnEUxJs5Te42dequN5stvk3kXriTAcvVVq73Akhej2mrX94v8Srl2zeNje8m9NpovP5uH4UoCrNcPrPVQvUeUs6g372JUX83eBTXrB27jZ5oBWOj5q1iUXt02eA9T9Am3Tn/vKI92Y+t9rHpPajC/UC8QYO3nhX/7gUkrudBKbVbHX8uxeb3VMc+f/UrzE1/e7XT2vYUAeD87AAAA6isA5BUAAAAAALCOb8uIWpU=",
+        "output_pixels_sha256": "2c3a48d5447be05d31d28a1ff441579a26bbfca01c9dd677fe8c1686ce345f1c",
+        "xor": "eNrt3FtuwjAQBdBskG2wCv66CrbhDaalwugy2LxKq7Y6R0KJEsdIfHA1EyfLAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK+3rqsfAQB5Vb7rJz4AyCt5BcAvya+bZuOvHZNXALw6qzJyRvuDTDrLpzpWXgHwnVl1K68Om/zMrsvD8gqAr9y/OuZJi+MtzrdJXrV+vmbXJMvkFQBP11WRVxe9uzIuB7WSEe2OumxzzK+NvALg2bw6bPf7/VlmbbfbWV59nqtjbuRVbjNfXppjAPz7vGr5n19rp2WwhiKy6jRH9hFjfxf9wbdRv7DmmLwCYNIP7Pu1zqr1URs9u3W451V7irM1HR/zz+oveQXAzbzK/l7f1hpoOfYNMxt6bzB7in1Mn6dnVJkr6y39QADura9a7QWWNX6z2ir7fqf8ilzbZU717DpsI7fkFQB39wOjHhq+ryKzaLTuYlZfDeoq/UAAHn7+KvNi8GzWOrhuHcyzXHk34cXawV5fySsAHnhe+NQPDK0+d1Vqszp+V67N/c1kfaD7VwB4PzsAyCsA1FfyCoAfzysAAAAAAOBvewfsLrNC",
         "reviewed_regions": [
           [
             0,
@@ -3315,15 +3315,15 @@
             240
           ]
         ],
-        "workflow": "user-approved PNG import; native-size export; no generation",
-        "prompt": "User approved the manual-review image set. Exact PNG import and native-size export only; no image generation or added text."
+        "workflow": "bounded native bitmap crop; preserve existing glyphs; no generation",
+        "prompt": "Shorten Y-axis legend to 纵轴; preserve the existing key and first two glyphs; clear only final two glyphs to leave difficulty value unobstructed."
       },
-      "approved_png_sha256": "37725af0931ce2a6e81809ccb7378a854d51d27e44f631da4d64218431041d15",
+      "approved_png_sha256": "87f67966ec71996cf600a3d6f8d59d045f1e196343ff85ecc3b8c7f6eb5914ca",
       "approved_working_size": [
         428,
         240
       ],
-      "review": "User confirmed 图片没问题，文本暂时先这样 before requesting the installer"
+      "review": "2026-10-21 user screenshot overlap correction; two-glyph label"
     },
     {
       "resource": "TEXTURES/OPTIONS/EN/LEGEND_PS4_YAXIS.PNG",
@@ -3335,11 +3335,11 @@
       "labels": [
         {
           "source": "Y Axis",
-          "target": "纵轴反转",
+          "target": "纵轴",
           "box": [
             155,
             218,
-            207,
+            181,
             236
           ]
         }
@@ -3353,8 +3353,8 @@
           240
         ],
         "source_pixels_sha256": "0272eb51406b16147be834a0d6f9c19e4ea5197bbc11efb13ca455f6d2e4acca",
-        "output_pixels_sha256": "2eb0e0d29456086f6c5036a44d50035ef59c36a68ae167790beef696e7643def",
-        "xor": "eNrt3EFugzAQBVBOm1Nk11PkGr5go0Y1GiYeoGpW+D2pgoIhCxZfMzYsCwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfM73CdX4vWN//b1P3R+A62ZVjITR/iAzNvmRx57Ips3f6PzRMU8PYN6sOsqrvZyp4ilfs1fSjcZV13uCAJfPqZhXLRxv4Xwr8qr186McGWXSTo6dyk/1FcC8dVXIh02Opf9zLdP6mJhpB3VZG43dq6/O9gNlFsA8efWzfTwem8y63W5VXr3O5TFHfcRQs8Xaq2dfK64re4F6ggBT5lWLdVWunUa5ELJqvUfsI4b9e9zP8TJa/vffniIAl+0H9v1cZ7319VLGrHNeuadYZNJ6/5yNR3NVaisAedUjoddMfTtYn/fKmxgTvTcYs6iP6ffJvcZBvdWq9fLLwboLTxJguvqq5V5gyouqttr0/Xp+hVy7x/H9eMq9Vq2XP1qH4UkCzNcPzPVQniOKWTRad1HVV9Va+pR5uzVU9Y4yAPO8f9U3qVe3FN9h6n3CZdDf28ujzdg8j5XnpIr1hXqBAHO/L7z2A4OWcqGl2iyPv6dr437LY35/9iusT3z7ttPZ7xYCcP28AgAAAAAAAAAAAADonqlYS6Q=",
+        "output_pixels_sha256": "af618218eba1d280586bb84892702d8a141afa5cfd1bc2eebaf0d06cc276ca67",
+        "xor": "eNrt3NFtwjAUhtEsyBpMwVunYA0vmJYKo59buwmIVlV1jlQlApPHfvIlYVkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPhp67r+yh8A6BUAf6Qpm2brv3tNrwB4dasyOaPzQZPu+lTX6hUAP9mqrV5dDvk3+1y+rFcAPPudUvSqxest3m+TXrX+fm3XpGV6BcDT+6ro1ZfZXVmXi1ppRNuxLztc+3XQKwCe7dXleD6f75p1PB5nvfp8r67Z6FUesy8v7RgA/75XLf/n173TMriHIlp1u0bOEeP8FPPBt9G8sHZMrwCYzAP7ed1n1f1RdijXtTpTnN3T8XH92f5LrwDY7FXO9/qx7oGW69ww29BngzlT7Gv6dXqjyrVyv2UeCMDe/VWrs8Byj99sb5Vzv1u/omun7FRv1+UY3dIrAHbPA2M/NPy9imzR6L6L2f5qsK8yDwTg4eevsheDZ7PWwefWwXWm31/VPuX+Sq8AeOB54ds8MLT63FXZm9X1p/LZPD9M7g/0/RUAu3rl99kBQK8A0Cu9AgAAAAAAAKB7B8n+pFE=",
         "reviewed_regions": [
           [
             0,
@@ -3363,15 +3363,15 @@
             240
           ]
         ],
-        "workflow": "user-approved PNG import; native-size export; no generation",
-        "prompt": "User approved the manual-review image set. Exact PNG import and native-size export only; no image generation or added text."
+        "workflow": "bounded native bitmap crop; preserve existing glyphs; no generation",
+        "prompt": "Shorten Y-axis legend to 纵轴; preserve the existing key and first two glyphs; clear only final two glyphs to leave difficulty value unobstructed."
       },
-      "approved_png_sha256": "b272980f83dbd5a8465fce613377865acc7ba193388ba5007bdd7657fcd6da11",
+      "approved_png_sha256": "709b09b9ba38988c78d35b6c23677ffe46856008b472ab358d6f50cf76f8d9fe",
       "approved_working_size": [
         428,
         240
       ],
-      "review": "User confirmed 图片没问题，文本暂时先这样 before requesting the installer"
+      "review": "2026-10-21 user screenshot overlap correction; two-glyph label"
     },
     {
       "resource": "TEXTURES/HUD/THATWASYOURLASTBREATH.PNG",

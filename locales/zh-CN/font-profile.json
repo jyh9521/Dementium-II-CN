@@ -26,7 +26,7 @@
     "body": [
       "这是来自天堂的明信片。",
       "看在上帝的份上，趁现在还来得及，赶快离开这里。",
-      "——威廉"
+      " - 威廉"
     ],
     "interaction": [
       "按 E 拾取",
@@ -68,7 +68,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -83,7 +83,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -98,7 +98,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -113,7 +113,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -128,7 +128,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -143,7 +143,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -158,7 +158,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -173,7 +173,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -188,7 +188,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -203,7 +203,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -218,7 +218,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -233,7 +233,7 @@
       "reflow": true,
       "soft_joiner": "",
       "preserve_line_prefixes": [
-        "——"
+        " - "
       ],
       "preserve_line_suffixes": [
         "："
@@ -250,5 +250,97 @@
     "复古CRT",
     "高清"
   ],
-  "image_config": "image-text.json"
+  "image_config": "image-text.json",
+  "prose_layouts": {
+    "EN/EXAMINE.501": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.502": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.504": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.505": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.515": {
+      "soft_lines": true,
+      "keep_first_line": false,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.539": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.540": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.541": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.542": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.543": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.544": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.546": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.547": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.548": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.554": {
+      "soft_lines": true,
+      "keep_first_line": false,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.568": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.569": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    },
+    "EN/EXAMINE.572": {
+      "soft_lines": true,
+      "keep_first_line": true,
+      "min_tail_width": 52
+    }
+  }
 }

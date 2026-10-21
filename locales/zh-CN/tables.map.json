@@ -2408,13 +2408,13 @@
     "text_type": "ui"
   },
   "EN/OPTIONSNEW.TBL:0041": {
-    "target": "轻微",
+    "target": "半透明",
     "status": "reviewed-context-pending",
     "notes": "SUBTLE 对应的具体显示效果/设置项尚待菜单核对。",
     "text_type": "ui"
   },
   "EN/OPTIONSNEW.TBL:0042": {
-    "target": "强烈",
+    "target": "不透明",
     "status": "reviewed-context-pending",
     "notes": "BOLD 对应的具体显示效果/设置项尚待菜单核对。",
     "text_type": "ui"

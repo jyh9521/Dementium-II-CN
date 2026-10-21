@@ -65,6 +65,13 @@ class LayoutTests(unittest.TestCase):
         self.assertEqual(wrapped.replace('\n', ''), '甲乙丙丁')
         self.assertTrue(all(glyph_width(line, self.meta) <= 25 for line in wrapped.split('\n')))
 
+    def test_final_tail_is_balanced_without_losing_text_or_controls(self):
+        source = '甲乙丙丁甲乙丙丁甲'
+        result = wrap_text(source, self.meta, 103, self.start, self.end, min_tail_width=39)
+        self.assertEqual(result.replace('\n', ''), source)
+        self.assertTrue(all(glyph_width(line, self.meta) >= 39 for line in result.splitlines()))
+        self.assertTrue(all(glyph_width(line, self.meta) <= 103 for line in result.splitlines()))
+
     def test_latin_word_is_not_split(self):
         self.assertEqual(self.wrap('甲William乙'), '甲\nWilliam\n乙')
         self.assertIn('9mm', self.wrap('甲9mm乙', 20))
@@ -198,6 +205,21 @@ class SyntheticAtlasTests(unittest.TestCase):
         self.assertEqual(meta['linefeed'], 16)
         self.assertEqual(runtime[1]['target'], '开始')
         self.assertEqual(TOKEN.findall(runtime[0]['target']), TOKEN.findall(records[0]['target']))
+
+    def test_present_but_empty_existing_glyph_is_rebuilt(self):
+        from PIL import Image
+        meta = copy.deepcopy(self.meta)
+        meta['glyphs'][str(ord('甲'))] = dict(w=1, h=1, logw=12, xo=0, yo=0, tx=3, ty=3)
+        self.original.putpixel((3,3), (0,0,0,0))
+        buffer = io.BytesIO(); self.original.save(buffer, format='PNG')
+        self.members['FONTS/D2FONT_12X15.PNG'] = buffer.getvalue()
+        self.members['FONTS/D2FONT_12X15.JSON'] = json.dumps(meta).encode()
+        changes, _, report = build_mixed(self.zar, self.records, self.profile)
+        self.assertEqual(report['repaired_blank_codes'], [ord('甲')])
+        output = json.loads(changes['FONTS/D2FONT_12X15.JSON'])
+        glyph = output['glyphs'][str(ord('甲'))]
+        atlas = Image.open(io.BytesIO(changes['FONTS/D2FONT_12X15.PNG']))
+        self.assertIsNotNone(atlas.crop((glyph['tx'],glyph['ty'],glyph['tx']+glyph['w'],glyph['ty']+glyph['h'])).getchannel('A').getbbox())
 
     def test_aliases_and_generated_members_are_deterministic(self):
         first, runtime, report = build_mixed(self.zar, self.records, self.profile)

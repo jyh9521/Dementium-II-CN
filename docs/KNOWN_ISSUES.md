@@ -704,3 +704,6 @@ A useful known-issues document should let players and maintainers understand:
 - whether the issue belongs to the localization, the original game, an emulator, or another mod
 
 Known limitations should be documented clearly rather than hidden.
+
+## 2026-10-21 截图反馈修复
+空白省略号、长文短尾、纵轴提示遮挡、小地图透明度译名及长破折号已作离线修复；详见 SCREENSHOT_TEXT_FIX.md。修改后游戏内复验仍待进行。

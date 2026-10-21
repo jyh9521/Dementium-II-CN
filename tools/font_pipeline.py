@@ -97,7 +97,7 @@ def glyph_width(text, meta, spacing=1):
     return max(0, width - trailing_spacing)
 
 
-def wrap_text(text, meta, width, forbidden_start='', forbidden_end=''):
+def wrap_text(text, meta, width, forbidden_start='', forbidden_end='', min_tail_width=0):
     """Wrap physical document lines only, without splitting protected atoms/Latin words."""
     atom = re.compile(TOKEN.pattern + r'|[A-Za-z0-9]+(?:[\x27.-][A-Za-z0-9]+)*|[^\r\n]', re.S)
     output = []
@@ -127,6 +127,14 @@ def wrap_text(text, meta, width, forbidden_start='', forbidden_end=''):
                 chosen = end
                 while chosen < len(words) and not valid_boundary(chosen):
                     chosen += 1
+            # Rebalance only a paragraph's last short tail, preserving punctuation atoms.
+            if chosen < len(words) and min_tail_width:
+                candidate = chosen
+                while candidate > 1 and glyph_width(''.join(words[candidate:]), meta) < min_tail_width:
+                    candidate -= 1
+                if (candidate > 0 and valid_boundary(candidate)
+                        and glyph_width(''.join(words[candidate:]), meta) <= width):
+                    chosen = candidate
             output.append(''.join(words[:chosen]).strip(' '))
             words = trim_spaces(words[chosen:])
     return '\n'.join(output)
@@ -141,6 +149,15 @@ def layout_document(text, meta, profile, rule=None):
     """
     rule = rule or {}
     width = rule.get('width', profile['document_width'])
+    if rule.get('soft_lines'):
+        # The editable source keeps semantic headings/blank paragraphs; physical
+        # line breaks inside prose are not a second paragraph boundary.
+        lines = text.replace('\r\n', '\n').replace('\r', '\n').split('\n')
+        heading = lines.pop(0) if rule.get('keep_first_line') else None
+        paragraphs = re.split(r'\n[ \t]*\n+', '\n'.join(lines).strip('\n'))
+        text = '\n\n'.join(p.replace('\n', rule.get('soft_joiner', '')) for p in paragraphs)
+        if heading is not None:
+            text = heading + '\n' + text
     if rule.get('reflow'):
         parts, current = [], ''
         prefixes = tuple(rule.get('preserve_line_prefixes', []))
@@ -161,10 +178,10 @@ def layout_document(text, meta, profile, rule=None):
         if current:
             parts.append(current)
         text = '\n'.join(parts)
-    text = wrap_text(text, meta, width, profile['forbidden_start'], profile['forbidden_end'])
+    text = wrap_text(text, meta, width, profile['forbidden_start'], profile['forbidden_end'], rule.get('min_tail_width', 0))
     if rule:
         lines = text.split('\n')
-        if len(lines) > rule['max_visible_lines']:
+        if len(lines) > rule.get('max_visible_lines', 1000):
             raise ValueError('Document layout line budget exceeded: %d > %d' % (len(lines),rule['max_visible_lines']))
         if any(glyph_width(line, meta) > width for line in lines):
             raise ValueError('Document layout width budget exceeded')
@@ -184,9 +201,19 @@ def build_mixed(zar, records, profile):
     name = 'FONTS/D2FONT_12X15'
     meta = json.loads(zar.read(name + '.JSON'))
     original_glyphs = copy.deepcopy(meta['glyphs'])
+    original_atlas = Image.open(io.BytesIO(zar.read(name + '.PNG'))).convert('RGBA')
+    required_text = ''.join(r['target'] or r['source'] for r in records) + ''.join(''.join(v) for v in profile['previews'].values()) + ''.join(profile.get('extra_texts', []))
+    # A cmap entry is not coverage: shipped U+2026 has an empty alpha rectangle.
+    blank_existing = []
+    for code in printable(required_text):
+        glyph = meta['glyphs'].get(str(code))
+        if glyph and not chr(code).isspace() and not TOKEN.fullmatch(chr(code)):
+            rect = (glyph['tx'], glyph['ty'], glyph['tx']+glyph['w'], glyph['ty']+glyph['h'])
+            if original_atlas.crop(rect).getchannel('A').getbbox() is None:
+                blank_existing.append(code)
     replace_ranges = profile.get('replace_existing_ranges', [])
     replaced_codes = sorted(int(c) for c in original_glyphs
-                            if any(start <= int(c) <= end for start, end in replace_ranges))
+                            if any(start <= int(c) <= end for start, end in replace_ranges) or int(c) in blank_existing)
     previews = profile['previews']
     all_text = ''.join(r['target'] or r['source'] for r in records) + ''.join(''.join(v) for v in previews.values()) + ''.join(profile.get('extra_texts', []))
     required = sorted(printable(all_text) | set(replaced_codes))
@@ -249,6 +276,8 @@ def build_mixed(zar, records, profile):
         mask = Image.new('L', (size, height))
         ImageDraw.Draw(mask).text((0, shift), chr(c), font=font, fill=255)
         mask = mask.point(lambda value: 255 if value >= 128 else 0)
+        if not chr(c).isspace() and mask.getbbox() is None:
+            raise ValueError('Empty raster glyph: U+%04X' % c)
         glyph = Image.new('RGBA', mask.size, (255,255,255,0)); glyph.putalpha(mask)
         atlas.paste(glyph, (x, y))
         key = aliases[c] if role == 'title' else c
@@ -262,12 +291,12 @@ def build_mixed(zar, records, profile):
         logical = row['target'] or row['source']
         text = route_titles(logical, aliases, row['resource'] in profile['title_resources'])
         if row['target'] and '/EXAMINE.' in row['resource']:
-            rule = profile.get('document_layouts', {}).get(row['resource'])
+            rule = profile.get('document_layouts', {}).get(row['resource']) or profile.get('prose_layouts', {}).get(row['resource'])
             text = layout_document(text, meta, profile, rule)
             if rule:
                 document_layouts.append(dict(id=row['id'], leading_lines=rule.get('leading_lines',0),
                                              visible_lines=len(text.lstrip('\n').split('\n')),
-                                             max_visible_lines=rule['max_visible_lines'], width=rule.get('width',profile['document_width']),
+                                             max_visible_lines=rule.get('max_visible_lines'), width=rule.get('width',profile['document_width']),
                                              pane_height=rule.get('pane_height'), line_spacing=rule.get('line_spacing',0)))
         row['target'] = text
         widths = [glyph_width(line, meta) for line in re.split(r'[|\r\n]', text)]
@@ -278,7 +307,7 @@ def build_mixed(zar, records, profile):
     assert atlas.crop((0,0,old.width,old.height)).tobytes() == old.tobytes()
     buffer = io.BytesIO(); atlas.save(buffer, format='PNG')
     changes = {name+'.JSON': (json.dumps(meta,ensure_ascii=False,indent=2)+'\n').encode(), name+'.PNG': buffer.getvalue()}
-    report = dict(added_glyphs=len(rows), body_added=len(body_codes), title_added=len(title_codes),
+    report = dict(repaired_blank_codes=sorted(blank_existing), added_glyphs=len(rows), body_added=len(body_codes), title_added=len(title_codes),
                   body_fallback_codes=fallback_codes, body_fallback_native_pixels=16,
                   original_glyphs_preserved=len(original_glyphs)-len(replaced_codes),
                   replaced_original_codes=replaced_codes, original_pixels_preserved=True,

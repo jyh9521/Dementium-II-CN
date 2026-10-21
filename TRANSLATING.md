@@ -777,3 +777,6 @@ A mature translation layer should allow contributors to:
 - add another locale without reverse-engineering the entire game again
 
 The translation system should be maintainable independently from the original translator's memory.
+
+## 2026-10-21 补充标点约定
+译文长破折号统一写作两侧带空格的 ` - `；保留英文专名/数字内原有连字符。小地图SUBTLE/BOLD按透明度译为半透明/不透明。

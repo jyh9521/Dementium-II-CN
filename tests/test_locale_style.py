@@ -52,6 +52,16 @@ class LocaleStyleTests(unittest.TestCase):
         self.assertEqual(lint([self.row('继续。')], {'terminal_periods': ['.']}), [])
         self.assertTrue(lint([self.row('Continue.')], {'terminal_periods': ['.']}))
 
+    def test_locale_targets_do_not_reintroduce_em_dash(self):
+        import json
+        root = Path(__file__).resolve().parents[1]
+        for path in (root/'locales/zh-CN').glob('*.map.json'):
+            for key, row in json.loads(path.read_text(encoding='utf-8')).items():
+                self.assertNotIn('—', row['target'], key)
+        rows = json.loads((root/'locales/zh-CN/tables.map.json').read_text(encoding='utf-8'))
+        self.assertEqual(rows['EN/OPTIONSNEW.TBL:0041']['target'], '半透明')
+        self.assertEqual(rows['EN/OPTIONSNEW.TBL:0042']['target'], '不透明')
+
     def test_invalid_target_and_configuration(self):
         self.assertEqual(lint([self.row(None)])[0]['code'], 'target-type')
         with self.assertRaises(ValueError):
