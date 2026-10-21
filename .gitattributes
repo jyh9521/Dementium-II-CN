@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+# Markdown hard breaks and TSV examples intentionally contain trailing whitespace.
+*.md text eol=lf whitespace=-blank-at-eol
+*.png binary
+*.otf binary

@@ -1,0 +1,126 @@
+# Local project instructions
+AGENTS.md
+docs/LOCALIZATION_STANDARD.md
+
+# Build output
+build/
+dist/
+out/
+
+# Temporary and working directories
+tmp/
+temp/
+.cache/
+.cache-*/
+work/
+_work/
+scratch/
+
+# Local configuration
+*.local
+*.local.*
+config.local.*
+settings.local.*
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Node.js
+node_modules/
+
+# C/C++ / Visual Studio
+.vs/
+*.obj
+*.o
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.dll
+*.exe
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archives and release packages
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+
+# Disc images and large game images
+*.iso
+*.bin
+*.cue
+*.img
+*.mdf
+*.mds
+
+# Common game binaries / proprietary outputs
+*.zar
+*.nftr
+assets/fonts/*.otf
+*.elf
+*.xbe
+*.xex
+
+# Backups
+*.bak
+*.backup
+*.orig
+*.old
+*.prepatch
+*.pre-patch
+
+# Patch/build intermediates
+*.tmp
+*.temp
+
+# Optional local original-game input directories
+original/
+original_game/
+game_original/
+game-files/
+game_files/
+
+# Optional extracted proprietary resource directories
+extracted/
+unpacked/
+decompiled/
+
+# Keep intentionally tracked placeholders if used
+!.gitkeep
