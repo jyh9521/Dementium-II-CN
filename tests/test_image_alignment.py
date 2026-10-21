@@ -66,6 +66,57 @@ class InkBearingTests(unittest.TestCase):
         self.assertLessEqual(abs((bounds[1]+bounds[3])/2-8),.5)
         self.assertEqual(result.getpixel((2,2)),(255,0,0,255))
 
+    def test_left_ink_anchor_retains_original_key_gap(self):
+        label=self.config['images'][0]['labels'][0]
+        label.update(ink_center=True,ink_align='left')
+        out,_=build_images(self.zar,self.config,self.font)
+        im=Image.open(io.BytesIO(next(iter(out.values()))))
+        self.assertEqual(im.crop(label['box']).getchannel('A').getbbox()[0],0)
+
+    def test_native_tracking_compacts_without_resampling_strokes(self):
+        label=self.config['images'][0]['labels'][0]
+        label.update(target='中中',ink_center=True,ink_align='left')
+        wide,_=build_images(self.zar,self.config,self.font)
+        label['letter_spacing']=-1
+        narrow,_=build_images(self.zar,self.config,self.font)
+        a=Image.open(io.BytesIO(next(iter(wide.values())))).crop(label['box']).getchannel('A')
+        b=Image.open(io.BytesIO(next(iter(narrow.values())))).crop(label['box']).getchannel('A')
+        self.assertEqual(a.getbbox()[2]-b.getbbox()[2],1)
+        self.assertEqual(sum(a.get_flattened_data()),sum(b.get_flattened_data()))
+
+    def test_native_diagram_audit_rejects_opaque_background_regression(self):
+        from audit_image_alignment import audit
+        label=self.config['images'][0]['labels'][0]
+        self.config['images'][0]['alignment_review']={'mode':'source-native-pixel-preservation'}
+        output,_=build_images(self.zar,self.config,self.font)
+        name=self.config['images'][0]['resource']
+        class View:
+            entries={name:None}
+            def __init__(self,raw):self.raw=raw
+            def read(self,_):return self.raw
+        modified=output[name]
+        self.assertEqual(audit(View(self.raw),View(modified),self.config)['result'],'PASS')
+        im=Image.open(io.BytesIO(modified)).convert('RGBA');im.putpixel((0,0),(0,0,0,255))
+        stream=io.BytesIO();im.save(stream,format='PNG')
+        report=audit(View(self.raw),View(stream.getvalue()),self.config)
+        self.assertEqual(report['result'],'FAIL')
+        self.assertTrue(any('outside text panes' in r['reason'] for r in report['issues']))
+
+    def test_repository_control_recipes_preserve_original_diagrams(self):
+        import json
+        config=json.loads((Path(__file__).resolve().parents[1]/'locales/zh-CN/image-text.json').read_text('utf8'))
+        controls=[r for r in config['images'] if 'CONTROLS_' in r['resource']]
+        self.assertEqual(len(controls),12)
+        for recipe in controls:
+            self.assertNotIn('art_delta',recipe)
+            self.assertEqual(recipe['alignment_review']['mode'],'source-native-pixel-preservation')
+            for label in recipe['labels']:
+                if label['source']=='Jump':self.assertEqual(label['target'],'跳跃')
+        for recipe in config['images']:
+            if 'YAXIS' in recipe['resource']:
+                self.assertTrue(recipe['labels'][0]['target'].endswith(':'))
+                self.assertLess(recipe['labels'][0]['box'][2],188)
+
 
 if __name__=='__main__':
     unittest.main()

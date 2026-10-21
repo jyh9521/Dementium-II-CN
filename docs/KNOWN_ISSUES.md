@@ -710,3 +710,7 @@ Known limitations should be documented clearly rather than hidden.
 
 ## 2026-10-21 全文/全图复查
 全部676条文本和988张PNG已做资源级审计，16条文本及21张图片修正。详见 FULL_TEXT_LAYOUT_AUDIT.md、FULL_IMAGE_LAYOUT_AUDIT.md。9条动态变量及改后游戏内显示仍待实机复验。
+
+## 本轮菜单/UI验收状态（2026-10-21）
+
+F1菜单及输入隔离已做离线原生CPU片段回放，988张PNG完成资源扫描；这不代表游戏内验收。不同分辨率鼠标坐标、手柄焦点、全部武器与死亡类型仍需实机检查；未启动游戏或更改玩家存档。原生无限弹药不会从零自动创造弹药，任务/物品/杀敌按钮是一次性操作。

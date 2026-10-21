@@ -86,6 +86,10 @@ def main():
         recipe=json.loads((root/'locales/zh-CN/executable-text.json').read_text(encoding='utf-8'))
         original_exe=(args.game/'Dementium II.exe').read_bytes()
         expected_exe,exe_patch=build_executable(original_exe,recipe)
+        if json.loads((args.build/'exe-patch.json').read_text(encoding='utf-8')).get('format')=='native-menu-pe-v1':
+            from debug_menu import build_menu, make_patch
+            expected_exe,_=build_menu(expected_exe)
+            exe_patch=make_patch(original_exe,expected_exe)
         assert expected_exe==(args.build/'Dementium II.exe').read_bytes()
         assert exe_patch==json.loads((args.build/'exe-patch.json').read_text(encoding='utf-8'))
         assert apply_executable_patch(expected_exe,exe_patch,True)==original_exe

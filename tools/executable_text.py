@@ -86,6 +86,9 @@ def build_executable(data, recipe):
 
 def apply_executable_patch(data, patch, reverse=False):
     """Apply only to the exact recorded before/after identity; reject all drift."""
+    if patch.get('format') == 'native-menu-pe-v1':
+        from debug_menu import apply_patch
+        return apply_patch(data, patch, reverse)
     if patch.get('schema') != 1 or patch.get('format') != 'fixed-slot-utf8-v1':
         raise ValueError('Unsupported executable patch manifest')
     before = patch['modified_sha256'] if reverse else patch['original_sha256']

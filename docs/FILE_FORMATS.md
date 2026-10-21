@@ -848,3 +848,7 @@ A mature format document should allow another developer to understand:
 - which parts remain unknown
 
 The goal is to preserve enough knowledge that future localization work does not require repeating the same binary-format reverse engineering.
+
+## native-menu-pe-v1（2026-10-21）
+
+独立于fixed-slot-utf8-v1的精确版本PE差分：original_size、modified_size、original_sha256、modified_sha256、排序不重叠的runs（offset/old/new等长十六进制）与append（base64追加字节）。原版/修改版完整身份、每段期望字节、追加尺寸和结果哈希全部验证后才写出；反向应用截回original_size。新增.locmenu只读不可执行节，用RIP相对引用及已有DIR64重定位的表指针引用UTF-8数据。不放宽旧只读文字槽格式的范围约束，不把它作为跨版本固定偏移补丁。语言文本在locales/<locale>/debug-menu.json，通用实现见tools/debug_menu.py。

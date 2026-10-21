@@ -114,8 +114,16 @@ def build_images(zar, config, fontpath):
                 scratch = Image.new('L', (width+40, height+40))
                 pen = ImageDraw.Draw(scratch)
                 for i, (line, bbox) in enumerate(zip(lines, boxes)):
-                    pen.text((20-bbox[0], 20+i*size-bbox[1]), line, font=font,
-                             fill=255, stroke_width=stroke, stroke_fill=128 if stroke else 255)
+                    spacing = label.get('letter_spacing', 0)
+                    if spacing:
+                        advance = 20-bbox[0]
+                        for character in line:
+                            pen.text((round(advance), 20+i*size-bbox[1]), character, font=font,
+                                     fill=255, stroke_width=stroke, stroke_fill=128 if stroke else 255)
+                            advance += font.getlength(character) + spacing
+                    else:
+                        pen.text((20-bbox[0], 20+i*size-bbox[1]), line, font=font,
+                                 fill=255, stroke_width=stroke, stroke_fill=128 if stroke else 255)
                 bounds = scratch.getbbox()
                 if bounds is None:
                     raise ValueError('Empty label raster: '+name)
@@ -129,7 +137,8 @@ def build_images(zar, config, fontpath):
             draw = ImageDraw.Draw(mask)
             top = (tile.height-height)//2
             if centered_ink is not None:
-                mask.paste(centered_ink, ((tile.width-width)//2, top))
+                left = 0 if label.get('ink_align') == 'left' else (tile.width-width)//2
+                mask.paste(centered_ink, (left, top))
             for i, (line, bbox) in enumerate(zip(lines, boxes)):
                 if centered_ink is not None:
                     break

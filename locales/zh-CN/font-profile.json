@@ -361,5 +361,6 @@
   },
   "document_defaults": {
     "min_tail_width": 52
-  }
+  },
+  "debug_menu_font": true
 }

@@ -3,7 +3,7 @@
 ZAR1双索引重建、UTF-8提取/回写和BMP字形机制见 [技术报告](docs/TECHNICAL_ANALYSIS.md)。
 新增 OPEN/UNLOCK 交互资源后，实际英文文本清单为179资源、676条记录。
 英文与正文Fusion12、章节中文ChillBitmap16；图形标签采用受哈希和像素区域约束的重建配方。
-PC菜单固定字面量仅改只读数据槽，不改代码/指针/PE布局；安装器可同时恢复EXE与资源。
+5个PC菜单固定字面量仍仅改只读数据槽；新F1菜单另使用受版本/字节守卫的native-menu-pe-v1代码与只读PE数据节改动，安装器可同时恢复EXE与资源。
 用户已提供部分中文实机画面；完整实机QA仍待进行。所有新构建/验证均不启动游戏。
 下方保留技术证据分类及记录标准。
 
@@ -862,3 +862,7 @@ A mature technical implementation should allow future contributors to understand
 - which questions remain unresolved
 
 The goal is to preserve enough technical knowledge that future localization work can build on the project rather than repeat the same reverse engineering.
+
+## 原生菜单与原像素UI修复
+
+新增只读非执行`.locmenu`节，现有RIP引用与有DIR64重定位的表指针指向该节；保留ASLR、原生回调和存档实现。仅F1键码与隐藏菜单门禁分支为逻辑修改。详见`docs/NATIVE_CHEAT_MENU.md`。操作图不再整图重绘，原按键/箭头/连线/透明度采用源像素保护；配对死亡图以共同几何基底及原版色阶构建，见`docs/NATIVE_UI_IMAGE_REPAIR.md`及`docs/IMAGE_VARIANT_TONES.md`。

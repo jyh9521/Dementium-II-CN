@@ -17,6 +17,7 @@ namespace LocalizationInstaller {
   public int schema;
   public MemberPatch[] members;
   public LiteralPatch[] literals;
+  public MemberPatch native_executable;
   public static ResourcePayload Load()=>Payload.Read<ResourcePayload>("resource-patches.gz",true);
  }
  public sealed class ResourceState {
@@ -26,13 +27,14 @@ namespace LocalizationInstaller {
  public sealed class SavedComponent { public string name,backup,original,installed; }
  public sealed class ResourceComponent {
   public string path,current,backup,original;
-  public bool installed;
+  public bool installed,upgrade;
  }
  public sealed class ResourceInspection {
   public List<ResourceComponent> components=new List<ResourceComponent>();
-  public bool CanInstall=>components.Any(c=>!c.installed);
+  public bool NativeExecutable;
+  public bool CanInstall=>components.Any(c=>!c.installed || c.upgrade);
   public bool CanRestore=>components.Any(c=>c.installed);
-  public string Summary=>CanInstall ? "资源可匹配，可以安装（不限制整包哈希或 build）" : "汉化已安装，可恢复安装前文件";
+  public string Summary=>components.Any(c=>c.upgrade) ? "已核对旧版安装记录及原版备份，可以升级或恢复原版" : CanInstall ? (NativeExecutable ? "资源匹配、原生菜单程序精确校验通过，可以安装" : "资源可匹配，可以安装（不限制整包哈希或 build）") : "汉化已安装，可恢复安装前文件";
  }
  sealed class ArchiveMember { public string name; public long offset,size,toc; }
  // Strict structure/target-resource checks, not a whole-file version allow-list.
@@ -100,12 +102,20 @@ namespace LocalizationInstaller {
   static readonly JsonSerializerOptions Json=new JsonSerializerOptions {IncludeFields=true,WriteIndented=true};
   public ResourceEngine(Payload settings,ResourcePayload patches,Action<string,int> progress=null) {
    legacy=settings;data=patches;report=progress ?? ((s,n)=>{});
-   if(data?.schema!=1 || data.members==null || data.members.Length<1 || data.literals==null || data.literals.Length<1 || data.members.Any(p=>p.name=="~INDEX") || data.members.Select(p=>p.name).Distinct().Count()!=data.members.Length)throw new InvalidDataException("资源补丁元数据不匹配");
+   if(data?.schema!=1 || data.members==null || data.members.Length<1 || data.literals==null || (data.literals.Length<1 && data.native_executable==null) || data.members.Any(p=>p.name=="~INDEX") || data.members.Select(p=>p.name).Distinct().Count()!=data.members.Length)throw new InvalidDataException("资源补丁元数据不匹配");
    foreach(var p in data.members) {
     if(p.source_size<0 || p.target_size<0 || p.source_size>64*1024*1024 || p.target_size>64*1024*1024 || !ValidHash(p.source_sha256) || !ValidHash(p.target_sha256) || p.runs==null)throw new InvalidDataException("资源补丁字段不匹配");
    }
    foreach(var p in data.literals)if(p.capacity<2 || p.capacity>1024 || Encoding.UTF8.GetByteCount(p.source)>=p.capacity || Encoding.UTF8.GetByteCount(p.target)>=p.capacity || p.source.Contains('\0') || p.target.Contains('\0'))throw new InvalidDataException("菜单字节槽不匹配");
    foreach(string name in new[]{legacy.Settings.archive_file,legacy.Settings.executable_file,legacy.Settings.backup_folder})if(!SimpleName(name))throw new InvalidDataException("非法补丁路径");
+   if(legacy.Executable?.format=="native-menu-pe-v1" && data.native_executable==null)throw new InvalidDataException("缺少原生菜单程序差分");
+   if(data.native_executable!=null) {
+    var p=data.native_executable;var d=legacy.Executable;
+    if(p.name!=legacy.Settings.executable_file || p.source_size<=0 || p.target_size<p.source_size || p.target_size>256*1024*1024 ||
+      !ValidHash(p.source_sha256) || !ValidHash(p.target_sha256) || p.runs==null || d?.format!="native-menu-pe-v1" ||
+      p.source_size!=d.original_size || p.target_size!=d.modified_size || p.source_sha256!=d.original_sha256 || p.target_sha256!=d.modified_sha256)
+     throw new InvalidDataException("原生菜单程序补丁身份不匹配");
+   }
   }
   static bool SimpleName(string s)=>!String.IsNullOrWhiteSpace(s) && s!="." && s!=".." && Path.GetFileName(s)==s && !s.Contains('/') && !s.Contains('\\') && !s.Contains(':');
   static bool ValidHash(string s)=>s!=null && s.Length==64 && s.All(c=>"0123456789abcdef".Contains(c));
@@ -164,6 +174,12 @@ namespace LocalizationInstaller {
   }
   (int original,int installed) ExeState(string path) {
    if(new FileInfo(path).Length>256*1024*1024)throw new InvalidDataException("游戏程序过大");
+   if(data.native_executable!=null) {
+    var p=data.native_executable;long size=new FileInfo(path).Length;string hash=Engine.Hash(path);
+    if(size==p.source_size && hash==p.source_sha256)return(1,0);
+    if(size==p.target_size && hash==p.target_sha256)return(0,1);
+    throw new InvalidDataException("原生菜单仅匹配已核对的程序版本；程序哈希或尺寸不符");
+   }
    var hits=Literals(File.ReadAllBytes(path));return(hits.Count(h=>!h.installed),hits.Count(h=>h.installed));
   }
   public void Transform(string source,string target,bool archive) {
@@ -186,7 +202,11 @@ namespace LocalizationInstaller {
     }
     if(ArchiveState(target).original!=0)throw new InvalidDataException("汉化资源生成未完成");
    } else {
-    byte[] bytes=File.ReadAllBytes(source);var hits=Literals(bytes);foreach(var hit in hits)hit.target.CopyTo(bytes,hit.offset);
+    byte[] bytes=File.ReadAllBytes(source);
+    if(data.native_executable!=null) {
+     var p=data.native_executable;
+     if(bytes.Length!=p.target_size || Digest(bytes)!=p.target_sha256)bytes=ApplyMember(bytes,p);
+    } else {var hits=Literals(bytes);foreach(var hit in hits)hit.target.CopyTo(bytes,hit.offset);}
     using(var output=new FileStream(target,FileMode.CreateNew,FileAccess.Write,FileShare.None)){output.Write(bytes);output.Flush(true);}
     if(ExeState(target).original!=0)throw new InvalidDataException("程序菜单生成未完成");
    }
@@ -199,18 +219,34 @@ namespace LocalizationInstaller {
    foreach(var f in state.files)if(!SimpleName(f.name) || !SimpleName(f.backup) || !ValidHash(f.original) || !ValidHash(f.installed))throw new InvalidDataException("安装记录字段损坏");
    return state;
   }
+  void VerifySourceBackup(string backup,string hash,bool archive) {
+   if(!File.Exists(backup) || Engine.Hash(backup)!=hash)throw new InvalidDataException("安装前备份缺失或损坏");
+   var scan=archive?ArchiveState(backup):ExeState(backup);
+   if(scan.original<1 || scan.installed!=0)throw new InvalidDataException("备份不是本版补丁支持的原版资源或程序");
+  }
   public ResourceInspection Inspect(string selected,bool includeExe=true) {
    string path=Path.GetFullPath(selected);if(!String.Equals(Path.GetFileName(path),legacy.Settings.archive_file,StringComparison.OrdinalIgnoreCase))throw new InvalidDataException("请选择 rom.zar");
-   string dir=Path.GetDirectoryName(path),cache=Path.Combine(dir,legacy.Settings.backup_folder);var state=ReadState(cache);var result=new ResourceInspection();
+   string dir=Path.GetDirectoryName(path),cache=Path.Combine(dir,legacy.Settings.backup_folder);var state=ReadState(cache);var result=new ResourceInspection {NativeExecutable=includeExe && data.native_executable!=null};
    foreach(string name in includeExe?new[]{legacy.Settings.archive_file,legacy.Settings.executable_file}:new[]{legacy.Settings.archive_file}) {
     string file=Path.Combine(dir,name);report("检查资源定位："+name,5);
     if(!File.Exists(file))throw new FileNotFoundException("缺少游戏文件："+name);
-    bool archive=name==legacy.Settings.archive_file;var scan=archive?ArchiveState(file):ExeState(file);
-    if(scan.original>0 && scan.installed>0)throw new InvalidDataException("文件含部分汉化资源，请先恢复或反馈："+name);
     string current=Engine.Hash(file);var saved=state.files.FirstOrDefault(f=>f.name==name);
+    bool archive=name==legacy.Settings.archive_file; (int original,int installed) scan;
+    try {
+     scan=archive?ArchiveState(file):ExeState(file);
+     if(scan.original>0 && scan.installed>0)throw new InvalidDataException("文件含部分汉化资源，请先恢复或反馈："+name);
+    } catch(InvalidDataException) {
+     // An older localization is accepted only through its exact receipt and a
+     // verified original backup which passes this NEW payload's source checks.
+     if(saved==null || saved.installed!=current)throw;
+     string backup=Path.Combine(cache,saved.backup);VerifySourceBackup(backup,saved.original,archive);
+     result.components.Add(new ResourceComponent {path=file,current=current,installed=true,upgrade=true,original=saved.original,backup=backup});
+     continue;
+    }
     var c=new ResourceComponent {path=file,current=current,installed=scan.original==0};
     if(c.installed) {
-     if(saved!=null && saved.installed==current){c.original=saved.original;c.backup=Path.Combine(cache,saved.backup);}
+     if(saved!=null && saved.installed!=current)throw new InvalidDataException("安装记录与当前汉化文件不匹配："+name);
+     if(saved!=null && saved.installed==current){c.original=saved.original;c.backup=Path.Combine(cache,saved.backup);VerifySourceBackup(c.backup,c.original,archive);}
      else { // Adopt a known legacy installation only with its exact recorded backup.
       Delta delta=archive?legacy.Archive:legacy.Executable;string backup=Path.Combine(cache,archive?"original.zar":"original.exe");
       if(current!=delta.modified_sha256 || !File.Exists(backup) || Engine.Hash(backup)!=delta.original_sha256)throw new InvalidDataException("汉化已存在，但缺少匹配的恢复记录或文件安装后已变化："+name);
@@ -238,10 +274,12 @@ namespace LocalizationInstaller {
    using var gate=new FileStream(Path.Combine(cache,"operation.lock"),FileMode.OpenOrCreate,FileAccess.ReadWrite,FileShare.None,1,FileOptions.DeleteOnClose);
    inspection=Inspect(selected,includeExe);
    string token=Guid.NewGuid().ToString("N");var stages=new Dictionary<ResourceComponent,string>();var expected=new Dictionary<ResourceComponent,string>();var prior=new Dictionary<ResourceComponent,string>();var written=new List<ResourceComponent>();
-   string stateTemp=Path.Combine(cache,"receipt-"+token+".tmp");var temps=new List<string>{stateTemp};
+   string stateTemp=Path.Combine(cache,"receipt-"+token+".tmp"),statePath=Path.Combine(cache,Receipt),statePrior=Path.Combine(cache,"receipt-prior-"+token+".tmp");
+   bool stateExisted=File.Exists(statePath),stateWritten=false;string stateHash=stateExisted?Engine.Hash(statePath):null;
+   var temps=new List<string>{stateTemp,statePrior};
    try {
     foreach(var c in inspection.components) {
-     if(restore?!c.installed:c.installed)continue;
+     if(restore?!c.installed:(c.installed && !c.upgrade))continue;
      if(!restore && !File.Exists(c.backup)) {
       string pending=Path.Combine(cache,"backup-"+token+"-"+Path.GetFileName(c.path));temps.Add(pending);File.Copy(c.path,pending);
       if(Engine.Hash(pending)!=c.current)throw new IOException("备份写入不完整");File.Move(pending,c.backup);
@@ -249,16 +287,18 @@ namespace LocalizationInstaller {
      if(!File.Exists(c.backup) || Engine.Hash(c.backup)!=c.original)throw new IOException("备份发生变化");
      string stage=Path.Combine(cache,"stage-"+token+"-"+Path.GetFileName(c.path));stages.Add(c,stage);temps.Add(stage);
      report(restore?"恢复安装前文件："+Path.GetFileName(c.path):"按资源生成汉化："+Path.GetFileName(c.path),50);
-     if(restore)File.Copy(c.backup,stage);else Transform(c.path,stage,Path.GetFileName(c.path)==legacy.Settings.archive_file);
+     if(restore)File.Copy(c.backup,stage);else Transform(c.upgrade?c.backup:c.path,stage,Path.GetFileName(c.path)==legacy.Settings.archive_file);
      expected[c]=Engine.Hash(stage);
      if(restore && expected[c]!=c.original)throw new IOException("恢复临时文件不完整");
     }
     if(inspection.components.Any(c=>Engine.Hash(c.path)!=c.current))throw new IOException("源文件被其他程序修改，已中止");
     if(!restore) {
-     var receipt=new ResourceState();
-     foreach(var c in inspection.components)receipt.files.Add(new SavedComponent {name=Path.GetFileName(c.path),backup=Path.GetFileName(c.backup),original=c.original,installed=c.installed?c.current:expected[c]});
+     var receipt=ReadState(cache);
+     foreach(var c in inspection.components) {
+      string name=Path.GetFileName(c.path);receipt.files.RemoveAll(f=>f.name==name);
+      receipt.files.Add(new SavedComponent {name=name,backup=Path.GetFileName(c.backup),original=c.original,installed=expected.TryGetValue(c,out string installed)?installed:c.current});
+     }
      using(var file=new FileStream(stateTemp,FileMode.CreateNew,FileAccess.Write,FileShare.None)){file.Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(receipt,Json)));file.Flush(true);}
-     string destination=Path.Combine(cache,Receipt);if(File.Exists(destination))File.Replace(stateTemp,destination,null,true);else File.Move(stateTemp,destination);
     }
     int i=0;
     foreach(var c in inspection.components) {
@@ -268,8 +308,16 @@ namespace LocalizationInstaller {
      if(Engine.Hash(rollback)!=c.current){File.Replace(rollback,c.path,null,true);throw new IOException("提交时源文件改变，已保留原状态");}
      written.Add(c);if(Engine.Hash(c.path)!=expected[c])throw new IOException("写入不完整，正在恢复");
     }
+    if(!restore) {
+     // Commit the receipt only after BOTH game components commit; retain its
+     // exact previous bytes for any subsequent transaction rollback.
+     if(File.Exists(statePath)!=stateExisted || (stateExisted && Engine.Hash(statePath)!=stateHash))throw new IOException("安装记录被其他程序改变，已中止");
+     if(stateExisted)File.Replace(stateTemp,statePath,statePrior,true);else File.Move(stateTemp,statePath);
+     stateWritten=true;
+    }
     report(restore?"安装前文件恢复完成":"汉化安装完成（资源级匹配）",100);return restore?"RESTORED":"INSTALLED";
    } catch {
+    if(stateWritten) {if(stateExisted)File.Replace(statePrior,statePath,null,true);else File.Delete(statePath);}
     foreach(var c in written.AsEnumerable().Reverse()) {
      File.Replace(prior[c],c.path,null,true);if(Engine.Hash(c.path)!=c.current)throw new IOException("事务恢复失败，请保留备份并反馈");
     }

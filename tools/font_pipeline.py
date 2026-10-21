@@ -318,6 +318,9 @@ def build_mixed(zar, records, profile):
                   coverage=coverage, title_aliases={str(c): v for c,v in aliases.items()},
                   linefeed_before=13, linefeed_after=meta['linefeed'], layout_review=layouts,
                   document_layouts=document_layouts, runtime_verified=False)
+    if profile.get('debug_menu_font'):
+        from debug_menu import build_font as build_debug_font
+        changes['TUFFY_BOLD.TTF'] = build_debug_font(zar, paths['body'])
     return changes, runtime, report
 
 

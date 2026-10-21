@@ -35,6 +35,8 @@ static class InstallerTests {
         Case("baseline verify leaves bytes unchanged",delegate {var d=Fixture();var s=new Engine(Data()).Inspect(Path.Combine(d,"rom.zar"),true);Assert(s.CanInstall && !s.CanRestore,"Bad state");Original(d);Assert(!Directory.Exists(Path.Combine(d,".dementium-locale")),"Verification wrote files");});
         Case("install both components",delegate {var d=Fixture();var p=Data();var e=new Engine(p);Assert(e.Operate(Path.Combine(d,"rom.zar"),true,false)=="INSTALLED","Install result");Assert(Engine.Hash(Path.Combine(d,"rom.zar"))==p.Archive.modified_sha256,"ROM result");Assert(Engine.Hash(Path.Combine(d,"Game.exe"))==p.Executable.modified_sha256,"EXE result");});
         Case("restore byte identical",delegate {var d=Fixture();var e=new Engine(Data());e.Operate(Path.Combine(d,"rom.zar"),true,false);e.Operate(Path.Combine(d,"rom.zar"),true,true);Original(d);Assert(File.Exists(Path.Combine(d,".dementium-locale/original.zar")),"Backup removed");});
+        Case("native menu PE delta appended section installs and reverses",delegate {var d=Fixture();var p=Data();var program=exe.Concat(Encoding.ASCII.GetBytes("NEW SECTION FIXTURE")).ToArray();program[3]=99;p.Executable=Patch(exe,program,"native-menu-pe-v1");var e=new Engine(p);var path=Path.Combine(d,"rom.zar");e.Operate(path,true,false);Assert(File.ReadAllBytes(Path.Combine(d,"Game.exe")).SequenceEqual(program),"Native PE payload mismatch");Assert(e.Operate(path,true,false)=="ALREADY_INSTALLED","Native idempotence");e.Operate(path,true,true);Original(d);});
+        Case("native menu unknown program rejects before archive writes",delegate {var d=Fixture();var p=Data();p.Executable.format="native-menu-pe-v1";File.AppendAllText(Path.Combine(d,"Game.exe"),"UNKNOWN");var id=HashFile(Path.Combine(d,"rom.zar"));Reject(()=>new Engine(p).Operate(Path.Combine(d,"rom.zar"),true,false));Assert(HashFile(Path.Combine(d,"rom.zar"))==id && !Directory.Exists(Path.Combine(d,".dementium-locale")),"Unknown native EXE changed archive");});
         Case("repeated install no write",delegate {var d=Fixture();var e=new Engine(Data());var path=Path.Combine(d,"rom.zar");e.Operate(path,true,false);var t=File.GetLastWriteTimeUtc(path);Assert(e.Operate(path,true,false)=="ALREADY_INSTALLED","Idempotent install");Assert(File.GetLastWriteTimeUtc(path)==t,"Unnecessary write");});
         Case("repeated restore no write",delegate {var d=Fixture();var e=new Engine(Data());var path=Path.Combine(d,"rom.zar");var t=File.GetLastWriteTimeUtc(path);Assert(e.Operate(path,true,true)=="ALREADY_RESTORED","Idempotent restore");Assert(File.GetLastWriteTimeUtc(path)==t,"Unnecessary write");});
         Case("rom-only file supported",delegate {var d=Fixture();File.Delete(Path.Combine(d,"Game.exe"));var e=new Engine(Data());var path=Path.Combine(d,"rom.zar");e.Operate(path,false,false);e.Operate(path,false,true);Assert(File.ReadAllBytes(path).SequenceEqual(rom),"ROM-only restore");});
@@ -65,6 +67,7 @@ static class InstallerTests {
         ResourceTests.Run(Case,root);
         Console.WriteLine("INSTALLER_UNIT tests="+count+" result=PASS");
     }
+    static string HashFile(string path)=>Engine.Hash(path);
     static void SteamFixture(bool legacy,bool wrong,bool traversal,bool missing) {
         string install=Path.Combine(root,Guid.NewGuid().ToString()),library=Path.Combine(root,"中文 Steam Library "+Guid.NewGuid().ToString());
         Directory.CreateDirectory(Path.Combine(install,"steamapps"));Directory.CreateDirectory(Path.Combine(library,"steamapps","common","Custom Game Folder"));
@@ -93,7 +96,7 @@ static class InstallerTests {
         try {if(args.Length==1 && args[0]=="--detect"){foreach(var p in SteamLocator.Installed())Console.WriteLine("STEAM_DETECTED="+p);return 0;}
             if(args.Length==3 && args[0]=="--real"){Real(args[1],args[2]);return 0;}
             if(args.Length==3 && args[0]=="--resource-real"){ResourceTests.Real(args[1],args[2]);return 0;}
-            if(args.Length==2 && args[0]=="--inspect"){var result=new ResourceEngine(Payload.Load(),ResourcePayload.Load()).Inspect(args[1],true);Console.WriteLine("INSPECT files="+result.components.Count+" can_install="+result.CanInstall+" can_restore="+result.CanRestore+" writes=NONE version_allowlist=NONE result=PASS");return 0;}
+            if(args.Length==2 && args[0]=="--inspect"){var result=new ResourceEngine(Payload.Load(),ResourcePayload.Load()).Inspect(args[1],true);Console.WriteLine("INSPECT files="+result.components.Count+" can_install="+result.CanInstall+" can_restore="+result.CanRestore+" writes=NONE executable_match="+(result.NativeExecutable?"NATIVE_EXACT":"RELOCATED_LITERALS")+" result=PASS");return 0;}
             root=Path.GetFullPath(args.Length==1?args[0]:"build/installer-unit-tests");Directory.CreateDirectory(root);Unit();return 0;
         }catch(Exception ex){Console.Error.WriteLine(ex);return 1;}
     }

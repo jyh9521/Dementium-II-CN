@@ -39,6 +39,10 @@ def main():
     recipe=json.loads((root/'locales/zh-CN/executable-text.json').read_text(encoding='utf-8'))
     original=(game/'Dementium II.exe').read_bytes()
     modified,delta=build_executable(original,recipe)
+    from debug_menu import build_menu, make_patch
+    modified,menu_report=build_menu(modified)
+    delta=make_patch(original,modified)
+    write_json(out/'debug-menu-report.json',menu_report)
     (out/'Dementium II.exe').write_bytes(modified)
     write_json(out/'exe-patch.json',delta)
     for path in game.iterdir():

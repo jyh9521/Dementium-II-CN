@@ -63,7 +63,7 @@ namespace LocalizationInstaller {
         public Engine(Payload data,Action<string,int> report=null) {
             payload=data; progress=report ?? delegate(string s,int n) {};
             ValidateDelta(data.Archive,"zar-sparse-delta-v1");
-            ValidateDelta(data.Executable,"fixed-slot-utf8-v1");
+            ValidateDelta(data.Executable,data.Executable?.format=="native-menu-pe-v1" ? "native-menu-pe-v1" : "fixed-slot-utf8-v1");
             foreach(string name in new [] {data.Settings.archive_file,data.Settings.executable_file,data.Settings.backup_folder})
                 if(String.IsNullOrWhiteSpace(name) || System.IO.Path.GetFileName(name)!=name || name=="." || name=="..")
                     throw new InvalidDataException("Invalid payload file name");
@@ -181,7 +181,7 @@ namespace LocalizationInstaller {
             }
         }
         public static void Apply(string source,string target,Delta delta,bool reverse) {
-            if(delta==null || (delta.format!="zar-sparse-delta-v1" && delta.format!="fixed-slot-utf8-v1"))
+            if(delta==null || (delta.format!="zar-sparse-delta-v1" && delta.format!="fixed-slot-utf8-v1" && delta.format!="native-menu-pe-v1"))
                 throw new InvalidDataException("Unsupported patch format");
             ValidateDelta(delta,delta.format);
             string expected=reverse?delta.modified_sha256:delta.original_sha256;

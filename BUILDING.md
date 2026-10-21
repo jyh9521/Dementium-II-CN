@@ -577,3 +577,7 @@ The build process should not depend on the original author's memory or private l
 
 ## 全量排版门禁
 完整构建现在自动运行 audit_text_layout.py 和 audit_image_alignment.py，生成逐记录、逐图片/标签台账；任何越预算、错误短尾、保护码变化、非预期图片改动或居中漂移均停止构建。数值预算属于离线门禁，9条动态变量仍需实机展开复验。
+
+## 原生菜单构建
+
+完整构建同时生成`native-menu-pe-v1`程序差分与调试字体字符子集，新增依赖capstone==5.0.7；不复用未知程序版本的代码偏移。语言数据位于`locales/zh-CN/debug-menu.json`，字体仍使用已记录哈希/OFL许可的Fusion来源。详见`docs/NATIVE_CHEAT_MENU.md`。
