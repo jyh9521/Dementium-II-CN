@@ -12,11 +12,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="5.3.2" />
-    <Compile Include="InstallerEngine.cs;SteamLocator.cs;MaterialWindow.xaml.cs;AssemblyInfo.cs;Platform.cs" />
+    <Compile Include="InstallerEngine.cs;ResourceEngine.cs;SteamLocator.cs;MaterialWindow.xaml.cs;AssemblyInfo.cs;Platform.cs" />
     <Page Include="MaterialWindow.xaml" />
     <Resource Include="branding/logo.png;branding/app.ico" />
     <EmbeddedResource Include="../build/installer/patch.rom.gz" LogicalName="patch.rom.gz" />
     <EmbeddedResource Include="../build/installer/patch.exe.gz" LogicalName="patch.exe.gz" />
+    <EmbeddedResource Include="../build/installer/resource-patches.gz" LogicalName="resource-patches.gz" />
     <EmbeddedResource Include="../locales/zh-CN/installer.json" LogicalName="installer.json" />
     <EmbeddedResource Include="licenses/*.txt" />
   </ItemGroup>

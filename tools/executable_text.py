@@ -61,7 +61,7 @@ def build_executable(data, recipe):
     if len(data) != recipe['source_size'] or _sha(data) != recipe['source_sha256']:
         raise ValueError('Unsupported executable identity')
     changes = []
-    for entry in recipe['entries']:
+    for entry in sorted(recipe['entries'], key=lambda item: item['offset']):
         offset, capacity = entry['offset'], entry['slot_size']
         source = entry['source'].encode('utf-8')
         target = entry['target'].encode('utf-8')

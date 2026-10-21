@@ -31,6 +31,14 @@ def fixture():
 
 
 class ExecutableTextTests(unittest.TestCase):
+    def test_reordered_recipe_emits_canonical_offset_order(self):
+        data, recipe = fixture()
+        recipe['entries'].insert(0, dict(id='next', offset=612, slot_size=12, source='NEXT', target='下项'))
+        modified, patch = build_executable(data, recipe)
+        self.assertEqual([run['offset'] for run in patch['runs']], [600, 612])
+        self.assertEqual(apply_executable_patch(data, patch), modified)
+        self.assertEqual(apply_executable_patch(modified, patch, True), data)
+
     def setUp(self):
         self.data, self.recipe = fixture()
 

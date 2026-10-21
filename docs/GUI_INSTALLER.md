@@ -7,8 +7,8 @@
 主程序增加内置运行时后体积高于旧版约1.2MB，但仍不包含约579MB的完整游戏归档。
 目标系统 Windows 10 1809及以上 / Windows 11；仅当前Windows主机实际执行验证，不宣称所有系统通过。
 
-选择自己的 `rom.zar` → 验证 → 确认安装。固定同时处理同目录EXE的5个菜单词。
-备份路径 `.dementium-locale/original.zar`、`original.exe`，恢复后保留。
+选择自己的 `rom.zar` → 确认安装。可选检查资源，不以整包哈希/build作为安装白名单，固定同时处理同目录EXE的5个菜单词。
+资源级备份为 `.dementium-locale/original-完整SHA256.zar` / `.exe`，resource-state.json记录当前恢复身份；旧版备份不删除。
 手工选择路径仍可用，自动检测不写文件、不安装、不启动游戏。
 
 ## Steam 自动检测：已验证实现
@@ -59,7 +59,7 @@ JSON/GZip/ZIP规范化；记录SDK、依赖锁定和输入SHA，不将所有SDK/
 
 ## 验证与边界
 
-31项C#测试（23项归档事务+8项Steam定位）、117项既有Python测试，以及真实归档/EXE副本安装和逐字节恢复。
+53项C#测试（31项既有归档/定位 + 22项资源级兼容/恢复）、120项Python测试，以及真实归档/EXE副本安装和逐字节恢复。
 单文件在无有效DOTNET_ROOT、禁用多级运行时查找、无可用HTTP代理的条件下离线渲染。
 预览检查Material Ripple模板、入场动画状态变化、可见进度条/复选框移除，含最小窗口与2倍栅格渲染。
 这不等同在所有Windows版本、DPI、系统策略上的测试；动态效果遵循WPF/系统渲染条件。
@@ -70,3 +70,38 @@ JSON/GZip/ZIP规范化；记录SDK、依赖锁定和输入SHA，不将所有SDK/
 跨文件提交有失败恢复，但不宣称断电下跨文件原子事务；下一次支持检测并恢复混合状态。
 
 参考：[MaterialDesignInXamlToolkit](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/tree/v5.3.2)、[.NET单文件自包含发布](https://learn.microsoft.com/en-us/dotnet/core/deploying/single-file/overview)、[.NET Windows平台](https://learn.microsoft.com/en-us/dotnet/core/install/windows)。
+
+
+## 2026-10-21 原版基线更新：26099941
+
+原安装器基于旧Steam build 26091059；用户指定的现有Steam安装清单为26099941，depot 5342931 manifest 2467892649090529485。
+新ROM SHA256 97618c6f7935e1214f00c7c35f9f45689d898328f51f1024a054850027657e33，579234304字节。
+新EXE SHA256 ea68364b72c7c1ef5b84d24990ddcab6090eedff752736d3ef3c634733351e56，5522944字节。
+两归档同为3471成员，文本提取结果完全相同，仅TEX/SETTINGS.TSV第391字节由0x33变为0x31；重新构建保留该新版资源，不套回旧文件。
+5个EXE槽重新核对.rdata位置和完整零填充。HI-RES CRT新槽只有12字节，不能沿用旧16字节槽覆盖后面的数字1。
+已保留旧基线元数据于assets/supported-builds/26091059.json，旧构建在忽略的build/archive中；该精确差分作为构建参考；后续资源级安装器不把此整包哈希作为玩家版本白名单。
+界面版本标签及报错改由locale设置读取，构建时强制与supported-build.json一致，防止再次显示旧build。
+验证包含指定实际安装路径的只读Inspect、真实文件副本安装/恢复和新版TSV字节保留；实际安装路径从未执行安装或游戏。
+
+
+## 资源级安装模式（当前实现，版本维持1.0.0）
+
+UI使用ResourceEngine，而非旧Engine的固定整包差分入口。构建参考仍锁定受审计输入，以确保翻译来源和再现性。
+运行端不限制build/整包哈希/整文件大小；SHA仅用于被改资源匹配、备份/安装记录完整性和并发修改检测。
+
+- tools/build_resource_payload.py从审定归档构建源依赖的成员内差分，不分发完整归档或完整原版贴图。
+- installer/ResourceEngine.cs动态解析当前ZAR名称/TOC；只替换待汉化成员，按实际EOF追加，更新当前~INDEX尺寸，保留不相关更新。
+- EXE扫描实际.rdata范围，匹配完整原文/译文及NUL字节槽，要求唯一且范围不重叠；不使用配方中的offset和完整EXE身份。
+- 所有待改资源必须是已知原文资源或本补丁输出；实际文本/字体结构变化时报告资源名，不以猜测写入。
+- 完整备份按原件实际SHA命名，多版本备份共存；resource-state.json先记录计划输出再提交，支持中断混合状态恢复。
+- 游戏更新产生新原版且资源仍兼容时，创建新备份。安装后文件被其他程序再次修改时不静默恢复旧文件。
+- 可选资源检查；检测到路径后可直接安装。恢复按钮仍要求备份目录存在。
+
+旧Engine/固定差分保留供CLI和精确参考/回归测试，不是新GUI的版本门禁。
+旧安装器到资源级版本只有已知安装输出和可信旧备份可以自动接纳，不将无来源的已汉化文件当原件备份。
+
+```powershell
+python -X utf8 tools/verify_installer.py --game "当前Steam原版目录" --older-game "另一个原版副本目录"
+```
+
+此验证分别运行精确参考、资源级当前版、不同全包哈希/EXE偏移的旧版及合成变化，逐字节恢复各自原件，不启动游戏。

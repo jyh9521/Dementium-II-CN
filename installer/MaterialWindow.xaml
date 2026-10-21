@@ -28,7 +28,7 @@
    </Grid>
   </md:Card>
   <Grid Grid.Row="2" Margin="0,20,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-   <Button x:Name="Verify" Content="验证文件" Height="44" Margin="0,0,12,0" Style="{StaticResource RoundedOutlined}" Click="Verify_Click" />
+   <Button x:Name="Verify" Content="检查资源" Height="44" Margin="0,0,12,0" Style="{StaticResource RoundedOutlined}" Click="Verify_Click" />
    <Button x:Name="Install" Grid.Column="1" Content="安装汉化" Height="44" Margin="0,0,12,0" Style="{StaticResource MaterialDesignFilledButton}" IsEnabled="False" Click="Install_Click" />
    <Button x:Name="Restore" Grid.Column="2" Content="恢复原版" Height="44" Style="{StaticResource MaterialDesignFilledTonalButton}" IsEnabled="False" Click="Restore_Click" />
   </Grid>
@@ -40,7 +40,7 @@
    </Grid>
   </md:Card>
   <Grid Grid.Row="5" Margin="0,14,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-   <TextBlock VerticalAlignment="Center" FontSize="12"><Run Text="支持 "/><Hyperlink NavigateUri="https://store.steampowered.com/app/5342930/Dementium_II/" RequestNavigate="Link_Click">Steam</Hyperlink><Run Text=" 2026 build 26091059"/></TextBlock>
+   <TextBlock VerticalAlignment="Center" FontSize="12"><Run Text="支持 "/><Hyperlink NavigateUri="https://store.steampowered.com/app/5342930/Dementium_II/" RequestNavigate="Link_Click">Steam</Hyperlink><Run x:Name="BuildLabel"/></TextBlock>
    <TextBlock Grid.Column="1" VerticalAlignment="Center"><Hyperlink NavigateUri="https://blog.blfy.cc/" RequestNavigate="Link_Click">伯翎飞云</Hyperlink></TextBlock>
   </Grid>
  </Grid>

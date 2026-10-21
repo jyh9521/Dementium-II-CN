@@ -13,6 +13,7 @@ import zipfile
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--game', type=Path, required=True, help='Verified original game input')
+    parser.add_argument('--older-game', type=Path, help='Optional other build to prove no container hash lock')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     os.chdir(root)
@@ -47,9 +48,20 @@ def main():
                            '--game', args.game.resolve(), '--build', root/'build/full-zh-CN'],
             args.game.resolve() if stage=='baseline' else root/'build/full-zh-CN')
     run('NATIVE_UNIT', [sdk, tests, out/'material-unit-fixtures'], 'Synthetic fixtures + embedded real payload')
+    run('SOURCE_READ_ONLY_INSPECT', [sdk, tests, '--inspect', args.game.resolve()/'rom.zar'],
+        'Actual user-selected source directory; inspect only, no writes')
     target = out/('real-fixture-'+uuid.uuid4().hex[:12])
     run('REAL_NATIVE_INSTALL_RESTORE', [sdk, tests, '--real', args.game.resolve(), target],
         'Copies of original ROM+EXE; target='+str(target))
+    target = out/('resource-real-'+uuid.uuid4().hex[:12])
+    run('RESOURCE_REAL_INSTALL_RESTORE', [sdk, tests, '--resource-real', args.game.resolve(), target],
+        'Named members and relocated literals; copied current real game')
+    if args.older_game:
+        run('OLDER_BUILD_READ_ONLY', [sdk, tests, '--inspect', args.older_game.resolve()/'rom.zar'],
+            'Different whole-file hashes; original directory is read-only')
+        target = out/('resource-older-'+uuid.uuid4().hex[:12])
+        run('RESOURCE_OLDER_INSTALL_RESTORE', [sdk, tests, '--resource-real', args.older_game.resolve(), target],
+            'Different real game build, archive/EXE hashes and EXE offsets')
     run('PYTHON_UNIT', ['python', '-X', 'utf8', '-m', 'unittest', 'discover', '-s', 'tests', '-q'], 'Repository test suite')
     run('STEAM_READ_ONLY', [sdk, tests, '--detect'], 'Registry Steam roots + libraryfolders.vdf + appmanifest_5342930.acf')
     environment = dict(os.environ, DOTNET_ROOT=str(out/'no-installed-runtime'), DOTNET_MULTILEVEL_LOOKUP='0',
@@ -81,10 +93,11 @@ def main():
         for name, expected in hashes.items():
             assert hashlib.sha256(z.read(name)).hexdigest() == expected
 
-    paths = dict(MODIFIED_FILE=exe, DIFF_FILE=root/'build/full-zh-CN/patch.json',
+    paths = dict(MODIFIED_FILE=exe, DIFF_FILE=out/'resource-patches.gz',
                  VERIFICATION=out/'VERIFICATION.txt', ROLLBACK=rollback)
-    lines = ['Changed fields: WPF MaterialDesign3 GUI + animation; required ROM and EXE; Steam manifest discovery;',
-             'centered supplied logo/icon; compact layout; no visible checkbox/progress bar; two requested links.',
+    lines = ['Changed fields: ResourceEngine named archive members and dynamic .rdata literal search; no build/container hash allow-list;',
+             'Install enabled directly on path selection; optional resource check; content-addressed original backups and receipts.',
+             'Version remains 1.0.0; supplied logo/icon, Material Design motion and requested links unchanged.',
              'Text/image game delta unchanged; original in-game logo and company name preserved.',
              'Original input hashes='+json.dumps(original),
              'Installer bytes='+str(exe.stat().st_size)+' SHA256='+digest(exe),

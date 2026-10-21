@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+from build_resource_payload import write_payload
 
 
 def main():
@@ -27,6 +28,9 @@ def main():
         target.write_bytes(gzip.compress(raw,compresslevel=9,mtime=0))
         inputs[str(src)]=hashlib.sha256(raw).hexdigest()
     locale=root/'locales/zh-CN/installer.json'
+    inputs['resource-patches.json']=write_payload(a.build,root/'locales/zh-CN/executable-text.json',work/'resource-patches.gz')
+    if json.loads(locale.read_text(encoding='utf-8')).get('build_label')!='2026 build '+identity['buildid']:
+        raise ValueError('Installer build label differs from supported source identity')
     for src in [locale,root/'installer/app.manifest',*(root/'installer').glob('*.cs')]:
         inputs[src.relative_to(root).as_posix()]=hashlib.sha256(src.read_text(encoding='utf-8').encode('utf-8')).hexdigest()
     for src in [*(root/'installer').glob('*.xaml'),*(root/'installer').glob('*.csproj'),*(root/'installer').glob('*.props'),*(root/'installer').glob('*.json'),*(root/'installer/licenses').glob('*.txt'),*(root/'installer/branding').glob('*')]:
@@ -36,6 +40,7 @@ def main():
     publish=work/'publish'
     subprocess.run([str(compiler),'publish',str(root/'installer/Installer.csproj'),'-c','Release','-p:RestoreLockedMode=true','-o',str(publish)],check=True,cwd=root,env=env)
     subprocess.run([str(compiler),'build',str(root/'installer/Tests.csproj'),'-c','Release'],check=True,cwd=root,env=env)
+    subprocess.run([str(compiler),str(work/'tests/net10.0-windows10.0.17763.0/InstallerTests.dll'),str(work/'build-smoke-fixtures')],check=True,cwd=root,env=env)
     import shutil
     shutil.copyfile(publish/'Dementium-II-zh-CN-Setup.exe',a.output)
     info=dict(installer=str(a.output),size=a.output.stat().st_size,sha256=hashlib.sha256(a.output.read_bytes()).hexdigest(),

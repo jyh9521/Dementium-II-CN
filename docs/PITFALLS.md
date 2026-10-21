@@ -540,3 +540,20 @@ Negative knowledge should be preserved as carefully as successful implementation
 - Steam库路径比较必须规范化分隔符；安装目录来自ACF的installdir，不来自写死的common/Dementium II。
 - Material按钮内部含默认不可见的进度控件，UI检查应检查可见实例，而非把内部模板当作用户线性进度条。
 - RenderTargetBitmap拍子树时不继承Window背景，需在预览绘制中先填充与Window一致的底色，避免透明区域预览成黑色；该修复不修改品牌PNG。
+
+
+## 2026-10-21 新Steam build导致原版验证失败（已修复）
+
+Steam本机清单26099941与原补丁26091059不同，不能只替换ROM哈希：新EXE大小和.rdata槽位置也变了。
+新HI-RES CRT槽由16缩至12字节，且排列移到HI-RES后；必须核对完整源字符串/零填充及邻接数字1。
+差分生成器现在按offset规范化条目，避免语言配方顺序变化生成乱序runs被原生安装器拒绝。
+120项Python测试中包含乱序配方生成规范差分与双向恢复回归；版本元数据/界面标签一致性也增加测试。
+安装器实际目标路径使用只读--inspect验证；只在复制出的真实文件上安装和恢复。
+
+
+## 资源级兼容与恢复
+
+删除整包SHA门禁并继续使用绝对偏移不是兼容方案。资源级实现解析当前TOC/VFS、使用实际EOF追加，并在当前EXE的.rdata唯一匹配字节槽。
+不对未知目标内容猜写；不相关更新与待改资源内容更新须分开处理。
+备份名绑定实际输入而非构建参考；多次Steam更新不得覆盖先前备份，恢复必须选择这一次安装所记录的原件。
+整包SHA仍用于备份完整性与并发变更检测，不用于判定Steam版本。

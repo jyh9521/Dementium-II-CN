@@ -62,6 +62,7 @@ static class InstallerTests {
         Case("manifest traversal rejected",delegate {SteamFixture(false,false,true,false);});
         Case("missing required game executable not detected",delegate {SteamFixture(false,false,false,true);});
         Case("stale library ignored",delegate {Assert(SteamLocator.Discover(new[]{Path.Combine(root,Guid.NewGuid().ToString())}).Count==0,"Stale found");});
+        ResourceTests.Run(Case,root);
         Console.WriteLine("INSTALLER_UNIT tests="+count+" result=PASS");
     }
     static void SteamFixture(bool legacy,bool wrong,bool traversal,bool missing) {
@@ -91,6 +92,8 @@ static class InstallerTests {
     public static int Main(string[] args) {
         try {if(args.Length==1 && args[0]=="--detect"){foreach(var p in SteamLocator.Installed())Console.WriteLine("STEAM_DETECTED="+p);return 0;}
             if(args.Length==3 && args[0]=="--real"){Real(args[1],args[2]);return 0;}
+            if(args.Length==3 && args[0]=="--resource-real"){ResourceTests.Real(args[1],args[2]);return 0;}
+            if(args.Length==2 && args[0]=="--inspect"){var result=new ResourceEngine(Payload.Load(),ResourcePayload.Load()).Inspect(args[1],true);Console.WriteLine("INSPECT files="+result.components.Count+" can_install="+result.CanInstall+" can_restore="+result.CanRestore+" writes=NONE version_allowlist=NONE result=PASS");return 0;}
             root=Path.GetFullPath(args.Length==1?args[0]:"build/installer-unit-tests");Directory.CreateDirectory(root);Unit();return 0;
         }catch(Exception ex){Console.Error.WriteLine(ex);return 1;}
     }

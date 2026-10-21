@@ -18,16 +18,20 @@ namespace LocalizationInstaller {
   readonly Payload payload;
   bool busy;
   public MaterialWindow(Payload data,string selected=null,bool preview=false) {
-   payload=data;InitializeComponent();
-   ArchivePath.TextChanged+=delegate {if(!busy){Install.IsEnabled=Restore.IsEnabled=false;Status.Text="路径已变化，请验证文件";}};
+   payload=data;InitializeComponent();BuildLabel.Text=" 2026 · 资源级补丁";
+   ArchivePath.TextChanged+=delegate {if(!busy)Ready();};
    Closing+=delegate(object s,System.ComponentModel.CancelEventArgs e){if(busy){e.Cancel=true;Status.Text="正在处理文件，请等待完成后再关闭";}};
    Loaded+=async delegate {
     var easing=new CubicEase {EasingMode=EasingMode.EaseOut};
     ContentRoot.BeginAnimation(OpacityProperty,new DoubleAnimation(0,1,TimeSpan.FromMilliseconds(240)));
     ContentRoot.RenderTransform.BeginAnimation(TranslateTransform.YProperty,new DoubleAnimation(12,0,TimeSpan.FromMilliseconds(280)){EasingFunction=easing});
-    if(selected!=null){ArchivePath.Text=selected;Status.Text="请验证文件";}
-    else if(!preview)await DetectAsync();else Status.Text="先检测或选择 rom.zar，再验证文件";
+    if(selected!=null){ArchivePath.Text=selected;Ready();}
+    else if(!preview)await DetectAsync();else Status.Text="选择 rom.zar 后即可安装，不限制整包版本";
    };
+  }
+  void Ready() {
+   string path=ArchivePath.Text.Trim();Install.IsEnabled=File.Exists(path);Restore.IsEnabled=Install.IsEnabled && Directory.Exists(Path.Combine(Path.GetDirectoryName(path),payload.Settings.backup_folder));
+   Status.Text=Install.IsEnabled?"可直接安装，或检查资源兼容性（不校验整包版本）":"请检测或选择 rom.zar";
   }
   void Append(string message,int percentage=0) {
    if(!Dispatcher.CheckAccess()){Dispatcher.InvokeAsync(()=>Append(message,percentage));return;}
@@ -38,10 +42,10 @@ namespace LocalizationInstaller {
    if(busy)return;busy=true;Detect.IsEnabled=Browse.IsEnabled=Verify.IsEnabled=ArchivePath.IsEnabled=false;Install.IsEnabled=Restore.IsEnabled=false;Status.Text="正在读取 Steam 安装清单…";
    try {
     var found=await Task.Run(()=>SteamLocator.Installed());
-    if(found.Count>0){ArchivePath.Text=found[0];Status.Text="已找到游戏，请验证文件";foreach(var path in found)Append("Steam 安装清单："+path);}
+    if(found.Count>0){ArchivePath.Text=found[0];foreach(var path in found)Append("Steam 安装清单："+path);}
     else {Status.Text="未找到完整的 Steam 安装，请点击浏览选择 rom.zar";Append("已检查 Steam 注册位置、库配置和游戏清单；未修改任何文件");}
    }catch(Exception ex){Status.Text="自动检测未完成，请手动浏览选择";Append(ex.Message);}
-   finally{busy=false;Detect.IsEnabled=Browse.IsEnabled=Verify.IsEnabled=ArchivePath.IsEnabled=true;}
+   finally{busy=false;Detect.IsEnabled=Browse.IsEnabled=Verify.IsEnabled=ArchivePath.IsEnabled=true;Ready();}
   }
   async void Detect_Click(object s,RoutedEventArgs e){await DetectAsync();}
   void Browse_Click(object s,RoutedEventArgs e){var dialog=new OpenFileDialog {Title="请选择游戏根目录的 rom.zar",Filter="游戏资源文件 (rom.zar)|rom.zar",CheckFileExists=true};if(dialog.ShowDialog(this)==true)ArchivePath.Text=dialog.FileName;}
@@ -66,11 +70,11 @@ namespace LocalizationInstaller {
    busy=true;ArchivePath.IsEnabled=Browse.IsEnabled=Detect.IsEnabled=Verify.IsEnabled=Install.IsEnabled=Restore.IsEnabled=false;
    try {
     if(restore.HasValue && !await Confirm(restore.Value?"恢复原版":"安装汉化",restore.Value?"将恢复 rom.zar 和同目录游戏程序。存档与设置不变，原版备份保留。":"将备份 rom.zar 和同目录游戏程序，并安装汉化。存档与设置不变，不会启动游戏。")) {Status.Text="操作已取消，请重新验证";return;}
-    var engine=new Engine(payload,Append);
+    var engine=new ResourceEngine(payload,ResourcePayload.Load(),Append);
     Status.Text=restore.HasValue?(restore.Value?"正在恢复…":"正在安装…"):"正在验证…";
     if(restore.HasValue)Append(await Task.Run(()=>engine.Operate(path,true,restore.Value)));
     var state=await Task.Run(()=>engine.Inspect(path,true));
-    Install.IsEnabled=state.CanInstall;Restore.IsEnabled=state.CanRestore;Append("验证完成；游戏未启动");Status.Text=state.Summary;
+    Install.IsEnabled=state.CanInstall;Restore.IsEnabled=state.CanRestore;Append("资源检查完成；游戏未启动");Status.Text=state.Summary;
    }catch(UnauthorizedAccessException ex){
     Append(ex.Message);Status.Text="目标目录需要写入权限";
     if(await Confirm("写入权限","是否以管理员身份重新打开安装器？不会启动游戏。")) {

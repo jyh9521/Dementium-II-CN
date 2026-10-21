@@ -1,13 +1,13 @@
 {
   "schema": 1,
   "encoding": "utf-8",
-  "source_size": 5521920,
-  "source_sha256": "b71ce6d2d803a7ded50c07c5ca918658fb0b1423db68bbc31129c257909123c2",
+  "source_size": 5522944,
+  "source_sha256": "ea68364b72c7c1ef5b84d24990ddcab6090eedff752736d3ef3c634733351e56",
   "notes": "仅替换已审计的PC菜单/统计固定字符串及紧随其后的零填充；保持CRT技术缩写。原生UTF-8字形通路已验证，新增字形须纳入字体构建。除这些固定槽外，不改代码、指针、PE头或其他语言标签。",
   "entries": [
     {
-      "id": "exe-rdata-4290672",
-      "offset": 4290672,
+      "id": "exe-rdata-4291920",
+      "offset": 4291920,
       "source": "Accuracy",
       "target": "命中率",
       "status": "text-reviewed",
@@ -16,18 +16,8 @@
       "slot_size": 12
     },
     {
-      "id": "exe-rdata-4292984",
-      "offset": 4292984,
-      "source": "HI-RES CRT",
-      "target": "高清CRT",
-      "status": "text-reviewed",
-      "text_type": "ui",
-      "notes": "容量为原文字节及紧随其后的零填充，不包含下一个非零字节；每次构建核对完整原EXE哈希和全部槽字节。",
-      "slot_size": 16
-    },
-    {
-      "id": "exe-rdata-4293052",
-      "offset": 4293052,
+      "id": "exe-rdata-4294108",
+      "offset": 4294108,
       "source": "RETRO",
       "target": "复古",
       "status": "text-reviewed",
@@ -36,8 +26,8 @@
       "slot_size": 12
     },
     {
-      "id": "exe-rdata-4293064",
-      "offset": 4293064,
+      "id": "exe-rdata-4294120",
+      "offset": 4294120,
       "source": "RETRO CRT",
       "target": "复古CRT",
       "status": "text-reviewed",
@@ -46,10 +36,20 @@
       "slot_size": 12
     },
     {
-      "id": "exe-rdata-4293076",
-      "offset": 4293076,
+      "id": "exe-rdata-4294132",
+      "offset": 4294132,
       "source": "HI-RES",
       "target": "高清",
+      "status": "text-reviewed",
+      "text_type": "ui",
+      "notes": "容量为原文字节及紧随其后的零填充，不包含下一个非零字节；每次构建核对完整原EXE哈希和全部槽字节。",
+      "slot_size": 12
+    },
+    {
+      "id": "exe-rdata-4294144",
+      "offset": 4294144,
+      "source": "HI-RES CRT",
+      "target": "高清CRT",
       "status": "text-reviewed",
       "text_type": "ui",
       "notes": "容量为原文字节及紧随其后的零填充，不包含下一个非零字节；每次构建核对完整原EXE哈希和全部槽字节。",
@@ -58,47 +58,47 @@
   ],
   "preserved_candidates": [
     {
-      "offset": 4293044,
+      "offset": 4294040,
       "source": "Debug",
       "reason": "调试标签，非已确认普通玩家设置文本；不改调试语义"
     },
     {
-      "offset": 4293000,
+      "offset": 4294048,
       "source": "CRT RETRO",
       "reason": "其他内置语言标签，保留原样"
     },
     {
-      "offset": 4293016,
+      "offset": 4294064,
       "source": "CRT HI-RES",
       "reason": "其他内置语言标签，保留原样"
     },
     {
-      "offset": 4293032,
+      "offset": 4294080,
       "source": "RETRO (CRT)",
       "reason": "其他内置语言标签，保留原样"
     },
     {
-      "offset": 4293088,
+      "offset": 4294224,
       "source": "CRT ALTA RES.",
       "reason": "其他内置语言标签，保留原样"
     },
     {
-      "offset": 4293120,
+      "offset": 4294096,
       "source": "ALTA RIS.",
       "reason": "其他内置语言标签，保留原样"
     },
     {
-      "offset": 4293136,
+      "offset": 4294176,
       "source": "ALTA RIS. (CRT)",
       "reason": "其他内置语言标签，保留原样"
     },
     {
-      "offset": 4293152,
+      "offset": 4294192,
       "source": "RETRO-CRT",
       "reason": "其他内置语言标签，保留原样"
     },
     {
-      "offset": 4293168,
+      "offset": 4294208,
       "source": "ALTA RES.",
       "reason": "其他内置语言标签，保留原样"
     }

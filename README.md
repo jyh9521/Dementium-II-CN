@@ -1,6 +1,6 @@
 # Dementium II（2026 Steam）简体中文汉化工程
 
-Steam AppID **5342930**，当前分析 build **26091059**，不适用于 2013 HD 版。
+Steam AppID **5342930**，构建参考 build **26099941**（图形安装器不锁整包版本），不适用于 2013 HD 版。
 
 ## 当前实际状态（2026-10-21）
 
@@ -11,13 +11,13 @@ Steam AppID **5342930**，当前分析 build **26091059**，不适用于 2013 HD
 - 41张位图187个文字标签及5个PC菜单固定字面量完成配方重建。
 - 剧情正常用句号；设置、物体说明和操作提示的无内部标点单句不加句末句号。既有译文已追溯调整。
 - 正文和英文采用 Fusion Pixel12，章节中文采用 ChillBitmap16。
-- 明信片4行/72px门禁与离线遮挡回归通过；117项合成测试通过，另有实际文件、安装和双组件恢复验证。
+- 明信片4行/72px门禁与离线遮挡回归通过；120项测试通过，另有实际文件、安装和双组件恢复验证。
 - 用户已提供中文主菜单与明信片实机截图，修复后明信片仍待实机验收。
 - 不自动启动游戏，不修改 Steam 原件，不创建未经授权的正式 Release。
 
 ## 入口
 
-- **图形安装器**：本地`dist/Dementium-II-zh-CN-Setup.exe`，自动检测Steam库或选择自己的`rom.zar`，验证后固定同时处理同目录EXE；Material Design 3含动画、自包含运行时，不打包完整游戏、不要求另装.NET/Python。详见[安装器说明](docs/GUI_INSTALLER.md)。
+- **图形安装器**：本地`dist/Dementium-II-zh-CN-Setup.exe`，自动检测Steam库或选择自己的`rom.zar`，可直接安装，不限制整包哈希/build，按资源及原文定位并同时处理同目录EXE；Material Design 3含动画、自包含运行时，不打包完整游戏、不要求另装.NET/Python。详见[安装器说明](docs/GUI_INSTALLER.md)。
 - 安装器使用用户确认的41张精修工作图，26张不可辨/未核实图保持原版；英文LOGO和公司名不改。
 
 - [技术报告](docs/TECHNICAL_ANALYSIS.md)、[进度](docs/PROGRESS.md)。

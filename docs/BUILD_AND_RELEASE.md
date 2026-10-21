@@ -1,6 +1,6 @@
 # 全文汉化构建与交付
 
-支持Steam2026版AppID5342930、build26091059。输入哈希见 assets/supported-build.json。
+支持Steam2026版AppID5342930、build26099941。输入哈希见 assets/supported-build.json。
 依赖版本固定于 requirements.txt；字体由系统/用户Fonts目录与字体注册表自动发现，按SHA锁定，不下载/安装字体。
 
 ```powershell

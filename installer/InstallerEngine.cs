@@ -17,7 +17,7 @@ namespace LocalizationInstaller {
     }
     public sealed class Settings {
         public string title, subtitle, archive_file, executable_file, backup_folder;
-        public string notice, footer;
+        public string notice, footer, build_label;
     }
     public sealed class Payload {
         public Delta Archive, Executable;
@@ -26,7 +26,7 @@ namespace LocalizationInstaller {
             return new Payload { Archive=Read<Delta>("patch.rom.gz",true),
                 Executable=Read<Delta>("patch.exe.gz",true), Settings=Read<Settings>("installer.json",false) };
         }
-        static T Read<T>(string name,bool compressed) {
+        internal static T Read<T>(string name,bool compressed) {
             using(var raw=Assembly.GetExecutingAssembly().GetManifestResourceStream(name)) {
                 if(raw==null) throw new InvalidDataException("Missing embedded resource: "+name);
                 using(var memory=new MemoryStream()) {
@@ -106,7 +106,7 @@ namespace LocalizationInstaller {
                 c.Current=Hash(c.Path);long size=new FileInfo(c.Path).Length;
                 if(!((c.Current==c.Delta.original_sha256 && size==c.Delta.original_size) ||
                     (c.Current==c.Delta.modified_sha256 && size==c.Delta.modified_size)))
-                    throw new InvalidDataException("文件版本不匹配，未作修改："+System.IO.Path.GetFileName(c.Path)+"。本补丁仅支持 Steam 2026 build 26091059 的指定原版，或本补丁已安装版本");
+                    throw new InvalidDataException("文件版本不匹配，未作修改："+System.IO.Path.GetFileName(c.Path)+"。本补丁仅支持 Steam "+(payload.Settings.build_label ?? "指定版本")+" 的原版，或本补丁已安装版本");
                 if(File.Exists(c.Backup) && Hash(c.Backup)!=c.Delta.original_sha256)
                     throw new InvalidDataException("原版备份校验失败，未作修改："+c.Backup);
                 if(c.IsInstalled && !File.Exists(c.Backup))
