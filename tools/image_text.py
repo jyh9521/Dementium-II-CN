@@ -45,6 +45,12 @@ def erase_ink(image, region):
 def build_images(zar, config, fontpath):
     if isinstance(config, (str, Path)):
         config = json.loads(Path(config).read_text(encoding="utf-8"))
+    from image_preservation import validate_configuration
+    validate_configuration(zar,config)
+    if config.get('quality_contract'):
+        from check_image_layout import check as check_layout
+        errors=check_layout(config)
+        if errors:raise ValueError('Image quality contract: '+json.dumps(errors,ensure_ascii=False))
     with TTFont(str(fontpath)) as face:
         supported = set(face.getBestCmap())
     required = {ord(c) for r in config["images"] for label in r["labels"] for c in label["target"] if not c.isspace()}
@@ -63,6 +69,18 @@ def build_images(zar, config, fontpath):
         original = Image.open(io.BytesIO(raw)).convert("RGBA")
         if list(original.size) != recipe["size"]:
             raise ValueError(f"Unexpected image dimensions: {name}")
+        if recipe.get('art_delta'):
+            from art_delta import apply,png
+            result=apply(original,recipe['art_delta'])
+            encoded=png(result)
+            replacements[name]=encoded
+            report['labels']+=len(recipe['labels'])
+            report['images'].append(dict(resource=name,source_sha256=actual,
+                output_sha256=hashlib.sha256(encoded).hexdigest(),labels=len(recipe['labels']),
+                changed_pixels=sum(a!=b for a,b in zip(original.get_flattened_data(),result.get_flattened_data())),
+                dimensions_unchanged=True,workflow='reviewed-art-delta',
+                outside_regions_unchanged='full reviewed artwork; source geometry checked separately'))
+            continue
         result = original.copy()
         allowed = Image.new("L", original.size)
         for region in recipe.get("erase_regions", []):
@@ -98,6 +116,11 @@ def build_images(zar, config, fontpath):
                           stroke_width=stroke, stroke_fill=128 if stroke else 255)
             # Pixel font glyphs remain hard-edged; outline remains separately colored.
             pixels = mask.load()
+            for px0,py0,px1,py1 in recipe.get('protected_regions',[]):
+                left,top=max(x0,px0),max(y0,py0)
+                right,bottom=min(x1,px1),min(y1,py1)
+                if left<right and top<bottom and mask.crop((left-x0,top-y0,right-x0,bottom-y0)).getbbox():
+                    raise ValueError(f'Label overlaps physical input symbol: {name}: {label["target"]}')
             ink = tuple(label.get("color", [255,255,255,255]))
             outline = tuple(label.get("outline", [0,0,0,255]))
             for y in range(tile.height):
@@ -109,6 +132,13 @@ def build_images(zar, config, fontpath):
             result.paste(tile, (x0,y0))
             ImageDraw.Draw(allowed).rectangle((x0,y0,x1-1,y1-1), fill=255)
             report["labels"] += 1
+        for box in recipe.get('protected_regions',[]):
+            x0,y0,x1,y1=box
+            if not (0<=x0<x1<=original.width and 0<=y0<y1<=original.height):
+                raise ValueError('Protected input symbol outside texture')
+            result.paste(original.crop(box),(x0,y0))
+            if result.crop(box).tobytes()!=original.crop(box).tobytes():
+                raise AssertionError('Input symbol pixels changed')
         original_pixels = list(original.get_flattened_data())
         modified_pixels = list(result.get_flattened_data())
         permitted = list(allowed.get_flattened_data())
