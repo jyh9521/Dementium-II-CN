@@ -7,6 +7,11 @@ import zipfile
 from localize import write_json
 
 
+def text_payload(path):
+    # All allowlisted members are UTF-8 text. Normalize host checkout line endings.
+    return path.read_text(encoding='utf-8').encode('utf-8')
+
+
 def main():
     root = Path(__file__).resolve().parents[1]
     files = {
@@ -19,11 +24,11 @@ def main():
         'FONT-OFL.txt': root / 'assets/fonts/OFL.txt',
         'README.md': root / 'docs/PROBE_README.md',
     }
-    manifest = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in files.items()}
+    payloads = {name: text_payload(path) for name, path in files.items()}
+    manifest = {name: hashlib.sha256(data).hexdigest() for name, data in payloads.items()}
     destination = root / 'dist/Dementium-II-zh-CN-technical-probe.zip'
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(destination, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
-        payloads = {name: path.read_bytes() for name, path in files.items()}
         payloads['SHA256.json'] = (json.dumps(manifest, indent=2, sort_keys=True) + '\n').encode()
         for name, data in sorted(payloads.items()):
             info = zipfile.ZipInfo(name, date_time=(2026, 10, 21, 0, 0, 0))
