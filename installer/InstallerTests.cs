@@ -93,6 +93,12 @@ static class InstallerTests {
         Console.WriteLine("ROLLBACK files=2 restored=BYTE_IDENTICAL backup=RETAINED game_launch=NEVER result=PASS");
     }
     public static int Main(string[] args) {
+        if(args.Length==2 && (args[0]=="--resource-install" || args[0]=="--resource-restore")) {
+            try {
+                string result=new ResourceEngine(Payload.Load(),ResourcePayload.Load()).Operate(args[1],true,args[0]=="--resource-restore");
+                Console.WriteLine("RESOURCE_OPERATION result="+result+" game_launch=NEVER");return 0;
+            } catch(Exception ex) {Console.Error.WriteLine(ex);return 1;}
+        }
         try {if(args.Length==1 && args[0]=="--detect"){foreach(var p in SteamLocator.Installed())Console.WriteLine("STEAM_DETECTED="+p);return 0;}
             if(args.Length==3 && args[0]=="--real"){Real(args[1],args[2]);return 0;}
             if(args.Length==3 && args[0]=="--resource-real"){ResourceTests.Real(args[1],args[2]);return 0;}

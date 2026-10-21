@@ -50,3 +50,7 @@ Offline result: zero differences outside the selected lower ink, identical
 alpha, 2,230 selected pixels, and the second variant's 41-color source palette.
 The existing numeric centering gate passes (x error +0.5 px). The contact sheet
 was inspected at native size. This is raster QA, not a game-render acceptance.
+
+## 用户指定措辞修正
+
+两张均改为上行“你已咽下”、下行“最后一口气”。使用内置图像编辑更新同一共同底图文字，按原生尺寸审阅后重新捕获源依赖差分；第二张仍由第一张的精确像素基底与原版第二张的下行色阶生成。本次选定下行墨迹为1393像素；两张位置、上行、背景及alpha保持一致。

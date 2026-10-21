@@ -4,9 +4,22 @@ import gzip
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 from build_resource_payload import write_payload
+
+
+def verify_version(root):
+    policy=json.loads((root/'assets/release-policy.json').read_text(encoding='utf-8'))
+    source=(root/'installer/AssemblyInfo.cs').read_text(encoding='utf-8')
+    version=policy['installer_version']
+    expected={'AssemblyVersion':version+'.0','AssemblyFileVersion':version,'AssemblyInformationalVersion':version}
+    for field,value in expected.items():
+        match=re.search(r'\b'+field+r'\("([^"]+)"\)',source)
+        if not match or match.group(1)!=value:
+            raise ValueError('Installer version differs from explicit release policy: '+field)
+    return version
 
 
 def main():
@@ -14,10 +27,11 @@ def main():
     p.add_argument('--build',type=Path,default=Path('build/full-zh-CN'))
     p.add_argument('--output',type=Path,default=Path('dist/Dementium-II-zh-CN-Setup.exe'))
     a=p.parse_args();root=Path(__file__).resolve().parents[1]
+    version=verify_version(root)
     work=root/'build/installer';work.mkdir(parents=True,exist_ok=True)
     compiler=Path(os.environ.get('DOTNET_EXE',str(root/'build/toolchain/dotnet/dotnet.exe')))
     if not compiler.is_file():raise FileNotFoundError('Set DOTNET_EXE to a .NET 10 SDK dotnet.exe')
-    inputs={}
+    inputs={'assets/release-policy.json':hashlib.sha256((root/'assets/release-policy.json').read_bytes()).hexdigest()}
     identity=json.loads((root/'assets/supported-build.json').read_text(encoding='utf-8'))
     for src,name in [(a.build/'patch.json','patch.rom.gz'),(a.build/'exe-patch.json','patch.exe.gz')]:
         raw=src.read_text(encoding='utf-8').encode('utf-8');target=work/name
@@ -43,7 +57,7 @@ def main():
     subprocess.run([str(compiler),str(work/'tests/net10.0-windows10.0.17763.0/InstallerTests.dll'),str(work/'build-smoke-fixtures')],check=True,cwd=root,env=env)
     import shutil
     shutil.copyfile(publish/'Dementium-II-zh-CN-Setup.exe',a.output)
-    info=dict(installer=str(a.output),size=a.output.stat().st_size,sha256=hashlib.sha256(a.output.read_bytes()).hexdigest(),
+    info=dict(installer=str(a.output),installer_version=version,size=a.output.stat().st_size,sha256=hashlib.sha256(a.output.read_bytes()).hexdigest(),
               input_hashes=inputs,contains_full_game_files=False,requires_python=False,architecture='Windows x64',
               framework='.NET 10 self-contained WPF; no separately installed runtime required',material_design='MaterialDesignThemes 5.3.2 / Material Design 3',compiler=str(compiler),game_launch='NEVER')
     (work/'build-report.json').write_text(json.dumps(info,indent=2)+'\n',encoding='utf-8')

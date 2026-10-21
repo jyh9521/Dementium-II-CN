@@ -34,6 +34,8 @@ def main():
              '--logical',str(out/'text.json'),'--output',str(out/'text-layout-audit.json')],
             ['tools/audit_image_alignment.py','--original',str(game/'rom.zar'),
              '--archive',str(out/'rom.zar'),'--output',str(out/'image-layout-audit.json')]]
+    audits.append(['tools/audit_ui_corrections.py','--original',str(game/'rom.zar'),
+                   '--archive',str(out/'rom.zar'),'--output',str(out/'ui-correction-audit.json')])
     for command in audits:
         subprocess.run([sys.executable,'-X','utf8',*command],cwd=root,check=True)
     recipe=json.loads((root/'locales/zh-CN/executable-text.json').read_text(encoding='utf-8'))

@@ -581,3 +581,7 @@ The build process should not depend on the original author's memory or private l
 ## 原生菜单构建
 
 完整构建同时生成`native-menu-pe-v1`程序差分与调试字体字符子集，新增依赖capstone==5.0.7；不复用未知程序版本的代码偏移。语言数据位于`locales/zh-CN/debug-menu.json`，字体仍使用已记录哈希/OFL许可的Fusion来源。详见`docs/NATIVE_CHEAT_MENU.md`。
+
+## 用户固定版本策略
+
+补丁及安装器版本保持1.0.0，只有用户明确要求时才修改；修复或新增功能不自动递增版本。assets/release-policy.json是构建约束，build_installer.py逐项核对AssemblyVersion/FileVersion/InformationalVersion。
