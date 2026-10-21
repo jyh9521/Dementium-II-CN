@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 
 from localize import Zar, apply_delta, digest, extract, filehash, import_text, validate, write_json
+from check_runtime_assets import check as check_vfs
 
 
 def baseline(game, project):
@@ -15,6 +16,8 @@ def baseline(game, project):
     assert digest(data) == identity['rom_sha256']
     assert filehash(game / 'Dementium II.exe') == identity['exe_sha256']
     zar = Zar(data)
+    _, mismatches, decoded = check_vfs(zar)
+    assert not mismatches and decoded == 'PASS'
     rows = extract(zar)
     # Reconstruct every extracted byte span, including identity replacements.
     replacements = {}
@@ -43,7 +46,9 @@ def modified(game, project):
     for row in rows:
         assert actual[row['id']]['source'] == (row['target'] or row['source'])
     changed = [n for n in src.entries if src.read(n) != out.read(n)]
-    assert changed == ['EN/GAMEMODE.TBL', 'FONTS/D2FONT_12X15.JSON', 'FONTS/D2FONT_12X15.PNG']
+    assert changed == ['EN/GAMEMODE.TBL', 'FONTS/D2FONT_12X15.JSON', 'FONTS/D2FONT_12X15.PNG', '~INDEX']
+    _, mismatches, decoded = check_vfs(out)
+    assert not mismatches and decoded == 'PASS'
     assert len(out.entries) == len(src.entries)
     old_meta = json.loads(src.read('FONTS/D2FONT_12X15.JSON'))
     new_meta = json.loads(out.read('FONTS/D2FONT_12X15.JSON'))
@@ -67,7 +72,7 @@ def modified(game, project):
         part = new.crop((g['tx'], g['ty'], g['tx'] + g['w'], g['ty'] + g['h']))
         preview.alpha_composite(part, (x, 4)); x += g['logw'] + 1
     preview.resize((720, 150), Image.Resampling.NEAREST).save(built / 'font-preview.png')
-    return 'MODIFIED changed=3 text=New Game -> 新游戏 glyphs=3 delta=PASS reextract=PASS runtime=NOT_TESTED result=PASS'
+    return 'MODIFIED changed=4 text=New Game -> 新游戏 glyphs=3 delta=PASS reextract=PASS vfs=PASS runtime=NOT_TESTED result=PASS'
 
 
 def rollback(game, project):

@@ -27,7 +27,7 @@ def main():
     original = json.loads((root / 'build/inventory/game-manifest.json').read_text(encoding='utf-8'))['files']
     assert all(filehash(args.game / f['path']) == f['sha256'] for f in original)
     lines = ['Dementium II offline verification / 2026-10-21',
-             'changed field: rom.zar!EN/GAMEMODE.TBL:0002 New Game -> 新游戏; font JSON/PNG append three glyphs',
+             'changed field: rom.zar!EN/GAMEMODE.TBL:0002 New Game -> 新游戏; font JSON/PNG append three glyphs; ~INDEX synchronizes three size fields',
              'runtime: NOT_TESTED; game launch: NOT_PERFORMED by this verification',
              'original installation: ALL_8_FILES_HASH_UNCHANGED',
              'restored behavior: extracted menu text New Game; original archive SHA-256 restored; runtime behavior untested', '']

@@ -37,6 +37,34 @@ class Entry:
     toc: int
 
 
+def index_rows(data):
+    """VFS ~INDEX: u64 count, records <u32 size,u32 flags,u64 name offset>."""
+    if len(data) < 8:
+        raise ValueError('Truncated VFS index header')
+    count = struct.unpack_from('<Q', data)[0]
+    if count > (len(data) - 8) // 16:
+        raise ValueError('Truncated VFS index records')
+    base = 8 + count * 16
+    seen = set()
+    for i in range(count):
+        offset = 8 + 16 * i
+        size, flags, name_offset = struct.unpack_from('<IIQ', data, offset)
+        start = base + name_offset
+        if not base <= start < len(data):
+            raise ValueError('VFS name outside pool')
+        end = data.find(b'\0', start)
+        if end < 0:
+            raise ValueError('Unterminated VFS name')
+        name = data[start:end].decode('ascii')
+        if not name.startswith('/') or '..' in name.split('/') or '\\' in name or ':' in name:
+            raise ValueError('Invalid VFS name')
+        key = name.lstrip('/').upper()
+        if key in seen:
+            raise ValueError('Duplicate VFS name')
+        seen.add(key)
+        yield key, size, flags, offset
+
+
 class Zar:
     def __init__(self, data: bytes):
         self.data = data
@@ -81,6 +109,21 @@ class Zar:
     def rebuild(self, replacements):
         if set(replacements) - self.entries.keys():
             raise ValueError('Unknown replacement member')
+        replacements = dict(replacements)
+        if '~INDEX' in self.entries:
+            original_index = self.read('~INDEX')
+            if replacements.get('~INDEX', original_index) != original_index:
+                raise ValueError('VFS index is derived; replace its referenced members instead')
+            index = bytearray(original_index)
+            for name, size, flags, offset in index_rows(original_index):
+                if name in self.entries and flags == 0 and size != self.entries[name].size:
+                    raise ValueError('Original VFS/ZAR size mismatch: ' + name)
+                if name in replacements and len(replacements[name]) != size:
+                    if flags != 0 or len(replacements[name]) >= 0x80000000:
+                        raise ValueError('Unsupported VFS size/flags: ' + name)
+                    struct.pack_into('<I', index, offset, len(replacements[name]))
+            if bytes(index) != original_index:
+                replacements['~INDEX'] = bytes(index)
         out = bytearray(self.data)
         for name in sorted(replacements):
             payload = replacements[name]
@@ -336,8 +379,10 @@ def main():
         if not target.exists() or filehash(target) != digest(out):
             target.write_bytes(out)
         write_json(args.output / 'patch.json', make_delta(data, out))
-        write_json(args.output / 'build-report.json', {'changed_resources': sorted(changes), 'translated': sum(bool(r['target']) and r['target'] != r['source'] for r in records), 'total': len(records), 'font': info, 'original_sha256': digest(data), 'modified_sha256': digest(out), 'runtime_verified': False})
-        print(f'BUILD translated={sum(bool(r["target"]) and r["target"] != r["source"] for r in records)} total={len(records)} changed_resources={len(changes)} added_glyphs={info["added_glyphs"]} reextract=PASS')
+        parsed_output = Zar(out)
+        actual_changes = [name for name in zar.entries if zar.read(name) != parsed_output.read(name)]
+        write_json(args.output / 'build-report.json', {'changed_resources': actual_changes, 'translated': sum(bool(r['target']) and r['target'] != r['source'] for r in records), 'total': len(records), 'font': info, 'original_sha256': digest(data), 'modified_sha256': digest(out), 'runtime_verified': False})
+        print(f'BUILD translated={sum(bool(r["target"]) and r["target"] != r["source"] for r in records)} total={len(records)} changed_resources={len(actual_changes)} added_glyphs={info["added_glyphs"]} reextract=PASS')
     elif args.command == 'patch':
         if args.input.resolve() == args.output.resolve():
             raise ValueError('Use a separate output path')

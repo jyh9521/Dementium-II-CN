@@ -1,5 +1,11 @@
 # 本次已遇到的问题（2026-10-21）
 
+## ZAR TOC 与 VFS ~INDEX 必须同步（Verified）
+
+用户启动实验版时主字体 PNG 报 STB 加载失败。原因是外层成员已变长，VFS 仍按 ~INDEX 的旧长度分配读取缓冲区。
+此前完整 PNG 解码和封包解析均通过，未能检测真实读取路径中的截断。
+已添加双索引同步及回归；证据、失败样本和排除对齐假说的实验见 [STARTUP_FONT_FIX.md](STARTUP_FONT_FIX.md)。
+
 ## 干净检出的换行使发行 ZIP 哈希不同（Verified）
 
 首次干净源检出重建得到相同 rom.zar 和 patch.json，但 ZIP 哈希不同。
