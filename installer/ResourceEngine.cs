@@ -7,10 +7,14 @@ using System.Text;
 using System.Text.Json;
 
 namespace LocalizationInstaller {
+ public sealed class HashGuard { public long offset; public int length; public string sha256,target_sha256; }
  public sealed class MemberPatch {
   public string name,source_sha256,target_sha256,tail;
   public int source_size,target_size;
   public PatchRun[] runs;
+  public PatchRun[] guards;
+  public HashGuard[] hash_guards;
+  public MemberPatch[] source_variants;
  }
  public sealed class LiteralPatch { public string source,target; public int capacity; }
  public sealed class ResourcePayload {
@@ -34,7 +38,7 @@ namespace LocalizationInstaller {
   public bool NativeExecutable;
   public bool CanInstall=>components.Any(c=>!c.installed || c.upgrade);
   public bool CanRestore=>components.Any(c=>c.installed);
-  public string Summary=>components.Any(c=>c.upgrade) ? "已核对旧版安装记录及原版备份，可以升级或恢复原版" : CanInstall ? (NativeExecutable ? "资源匹配、原生菜单程序精确校验通过，可以安装" : "资源可匹配，可以安装（不限制整包哈希或 build）") : "汉化已安装，可恢复安装前文件";
+  public string Summary=>components.Any(c=>c.upgrade) ? "已核对旧版安装记录及原版备份，可以升级或恢复原版" : CanInstall ? (NativeExecutable ? "修改位置与程序特征检查通过，可以安装" : "资源与菜单特征检查通过，可以安装") : "汉化已安装，可恢复安装前文件";
  }
  sealed class ArchiveMember { public string name; public long offset,size,toc; }
  // Strict structure/target-resource checks, not a whole-file version allow-list.
@@ -121,8 +125,48 @@ namespace LocalizationInstaller {
   static bool ValidHash(string s)=>s!=null && s.Length==64 && s.All(c=>"0123456789abcdef".Contains(c));
   static string Digest(byte[] b)=>Convert.ToHexString(SHA256.HashData(b)).ToLowerInvariant();
   static byte[] Decode(string s)=>Convert.FromHexString(s);
-  static byte[] ApplyMember(byte[] original,MemberPatch patch) {
-   if(original.Length!=patch.source_size || Digest(original)!=patch.source_sha256)throw new InvalidDataException("资源内容已变化，请反馈适配："+patch.name);
+  static IEnumerable<MemberPatch> Variants(MemberPatch patch) {
+   yield return patch;
+   foreach(var variant in patch.source_variants ?? Array.Empty<MemberPatch>())yield return variant;
+  }
+  static bool Known(byte[] bytes,MemberPatch p,bool installed)=>bytes.Length==(installed?p.target_size:p.source_size) && Digest(bytes)==(installed?p.target_sha256:p.source_sha256);
+  static MemberPatch SelectMember(byte[] bytes,MemberPatch patch,bool installed=false)=>Variants(patch).FirstOrDefault(p=>Known(bytes,p,installed));
+  // Unknown EXE identities require explicit preimage context in addition to EVERY
+  // changed byte. Guards must cover all edits and the PE header/section table.
+  static bool NativeMatch(byte[] bytes,MemberPatch p,bool installed) {
+   if(Known(bytes,p,installed))return true;
+   if(bytes.Length!=(installed?p.target_size:p.source_size) || ((p.guards==null || p.guards.Length==0) && (p.hash_guards==null || p.hash_guards.Length==0)))return false;
+   var guards=p.guards ?? Array.Empty<PatchRun>();var hashes=p.hash_guards ?? Array.Empty<HashGuard>();
+   if(bytes.Length<64 || bytes[0]!=77 || bytes[1]!=90)return false;
+   int pe=BitConverter.ToInt32(bytes,60);
+   if(pe<64 || pe>bytes.Length-24 || Encoding.ASCII.GetString(bytes,pe,4)!="PE\0\0")return false;
+   long headerEnd=(long)pe+24+BitConverter.ToUInt16(bytes,pe+20)+40L*BitConverter.ToUInt16(bytes,pe+6);
+   if(headerEnd>p.source_size || !(guards.Any(g=>g.offset==0 && Decode(g.old).Length>=headerEnd) || hashes.Any(g=>g.offset==0 && g.length>=headerEnd)))return false;
+   foreach(var run in p.runs)if(!(guards.Any(g=>g.offset<=run.offset && g.offset+Decode(g.old).Length>=run.offset+Decode(run.old).Length) || hashes.Any(g=>g.offset<=run.offset && g.offset+g.length>=run.offset+Decode(run.old).Length)))return false;
+   foreach(var guard in hashes) {
+    string expected=installed?guard.target_sha256:guard.sha256;
+    if(guard.offset<0 || guard.length<1 || guard.offset>p.source_size-guard.length || !ValidHash(expected) || Digest(bytes.AsSpan((int)guard.offset,guard.length).ToArray())!=expected)return false;
+   }
+   foreach(var guard in guards) {
+    byte[] expected=Decode(guard.old);
+    if(expected.Length==0 || guard.offset<0 || guard.offset>p.source_size-expected.Length)return false;
+    if(installed)foreach(var run in p.runs) {
+     byte[] replacement=Decode(run.@new);long start=Math.Max(guard.offset,run.offset),end=Math.Min(guard.offset+expected.Length,run.offset+replacement.Length);
+     if(end>start)Buffer.BlockCopy(replacement,(int)(start-run.offset),expected,(int)(start-guard.offset),(int)(end-start));
+    }
+    if(!bytes.AsSpan((int)guard.offset,expected.Length).SequenceEqual(expected))return false;
+   }
+   foreach(var run in p.runs) {
+    byte[] expected=Decode(installed?run.@new:run.old);
+    if(run.offset<0 || run.offset>p.source_size-expected.Length || !bytes.AsSpan((int)run.offset,expected.Length).SequenceEqual(expected))return false;
+   }
+   byte[] tail=Convert.FromBase64String(p.tail ?? "");
+   return !installed || bytes.AsSpan(p.source_size).SequenceEqual(tail);
+  }
+  MemberPatch SelectNative(byte[] bytes,bool installed)=>Variants(data.native_executable).FirstOrDefault(p=>NativeMatch(bytes,p,installed));
+  static byte[] ApplyMember(byte[] original,MemberPatch patch,bool native=false) {
+   patch=native?patch:SelectMember(original,patch) ?? throw new InvalidDataException("资源内容已变化，请反馈适配："+patch.name);
+   if(native ? !NativeMatch(original,patch,false) : !Known(original,patch,false))throw new InvalidDataException("资源内容已变化，请反馈适配："+patch.name);
    byte[] output=new byte[patch.target_size];Buffer.BlockCopy(original,0,output,0,Math.Min(original.Length,output.Length));
    long end=0;
    foreach(var r in patch.runs) {
@@ -132,15 +176,15 @@ namespace LocalizationInstaller {
    }
    byte[] tail=Convert.FromBase64String(patch.tail ?? "");int prefix=Math.Min(original.Length,output.Length);
    if(tail.Length!=output.Length-prefix)throw new InvalidDataException("资源差分尾部不匹配");tail.CopyTo(output,prefix);
-   if(Digest(output)!=patch.target_sha256)throw new InvalidDataException("资源生成失败："+patch.name);return output;
+   if(native ? !NativeMatch(output,patch,true) : Digest(output)!=patch.target_sha256)throw new InvalidDataException("资源生成失败："+patch.name);return output;
   }
   // Returns original/installed counts. Resource hashes protect only members we edit.
   (int original,int installed) ArchiveState(string path) {
    using var archive=new ResourceArchive(path);int original=0,installed=0;
    foreach(var patch in data.members) {
     byte[] bytes=archive.Read(patch.name);string hash=Digest(bytes);
-    if(hash==patch.source_sha256 && bytes.Length==patch.source_size)original++;
-    else if(hash==patch.target_sha256 && bytes.Length==patch.target_size)installed++;
+    if(SelectMember(bytes,patch)!=null)original++;
+    else if(SelectMember(bytes,patch,true)!=null)installed++;
     else throw new InvalidDataException("待汉化资源已变化，请反馈适配："+patch.name);
    }
    archive.Index(new Dictionary<string,int>());return (original,installed);
@@ -175,10 +219,10 @@ namespace LocalizationInstaller {
   (int original,int installed) ExeState(string path) {
    if(new FileInfo(path).Length>256*1024*1024)throw new InvalidDataException("游戏程序过大");
    if(data.native_executable!=null) {
-    var p=data.native_executable;long size=new FileInfo(path).Length;string hash=Engine.Hash(path);
-    if(size==p.source_size && hash==p.source_sha256)return(1,0);
-    if(size==p.target_size && hash==p.target_sha256)return(0,1);
-    throw new InvalidDataException("原生菜单仅匹配已核对的程序版本；程序哈希或尺寸不符");
+    byte[] bytes=File.ReadAllBytes(path);
+    if(SelectNative(bytes,false)!=null)return(1,0);
+    if(SelectNative(bytes,true)!=null)return(0,1);
+    throw new InvalidDataException("程序修改位置或特征不匹配，未修改原文件；请反馈适配");
    }
    var hits=Literals(File.ReadAllBytes(path));return(hits.Count(h=>!h.installed),hits.Count(h=>h.installed));
   }
@@ -186,7 +230,7 @@ namespace LocalizationInstaller {
    if(archive) {
     using var input=new ResourceArchive(source);var replacements=new SortedDictionary<string,byte[]>(StringComparer.Ordinal);
     foreach(var patch in data.members) {
-     byte[] bytes=input.Read(patch.name);if(Digest(bytes)==patch.target_sha256 && bytes.Length==patch.target_size)continue;
+     byte[] bytes=input.Read(patch.name);if(SelectMember(bytes,patch,true)!=null)continue;
      replacements.Add(patch.name,ApplyMember(bytes,patch));
     }
     byte[] index=input.Index(replacements.ToDictionary(p=>p.Key,p=>p.Value.Length));
@@ -204,8 +248,10 @@ namespace LocalizationInstaller {
    } else {
     byte[] bytes=File.ReadAllBytes(source);
     if(data.native_executable!=null) {
-     var p=data.native_executable;
-     if(bytes.Length!=p.target_size || Digest(bytes)!=p.target_sha256)bytes=ApplyMember(bytes,p);
+     if(SelectNative(bytes,true)==null) {
+      var p=SelectNative(bytes,false) ?? throw new InvalidDataException("程序修改位置或特征不匹配，未修改原文件");
+      bytes=ApplyMember(bytes,p,true);
+     }
     } else {var hits=Literals(bytes);foreach(var hit in hits)hit.target.CopyTo(bytes,hit.offset);}
     using(var output=new FileStream(target,FileMode.CreateNew,FileAccess.Write,FileShare.None)){output.Write(bytes);output.Flush(true);}
     if(ExeState(target).original!=0)throw new InvalidDataException("程序菜单生成未完成");

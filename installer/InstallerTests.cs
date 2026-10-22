@@ -101,8 +101,9 @@ static class InstallerTests {
         }
         try {if(args.Length==1 && args[0]=="--detect"){foreach(var p in SteamLocator.Installed())Console.WriteLine("STEAM_DETECTED="+p);return 0;}
             if(args.Length==3 && args[0]=="--real"){Real(args[1],args[2]);return 0;}
+            if(args.Length==3 && args[0]=="--compat-real"){ResourceTests.CompatibilityReal(args[1],args[2]);return 0;}
             if(args.Length==3 && args[0]=="--resource-real"){ResourceTests.Real(args[1],args[2]);return 0;}
-            if(args.Length==2 && args[0]=="--inspect"){var result=new ResourceEngine(Payload.Load(),ResourcePayload.Load()).Inspect(args[1],true);Console.WriteLine("INSPECT files="+result.components.Count+" can_install="+result.CanInstall+" can_restore="+result.CanRestore+" writes=NONE executable_match="+(result.NativeExecutable?"NATIVE_EXACT":"RELOCATED_LITERALS")+" result=PASS");return 0;}
+            if(args.Length==2 && args[0]=="--inspect"){var result=new ResourceEngine(Payload.Load(),ResourcePayload.Load()).Inspect(args[1],true);Console.WriteLine("INSPECT files="+result.components.Count+" can_install="+result.CanInstall+" can_restore="+result.CanRestore+" writes=NONE executable_match="+(result.NativeExecutable?"GUARDED_NATIVE":"RELOCATED_LITERALS")+" result=PASS");return 0;}
             root=Path.GetFullPath(args.Length==1?args[0]:"build/installer-unit-tests");Directory.CreateDirectory(root);Unit();return 0;
         }catch(Exception ex){Console.Error.WriteLine(ex);return 1;}
     }

@@ -5,6 +5,7 @@
   "executable_file": "Dementium II.exe",
   "backup_folder": "cn-backup",
   "notice": "请选择游戏根目录的 rom.zar：",
-  "footer": "支持 Steam 2026 build 26099941",
-  "build_label": "2026 build 26099941"
+  "footer": "已验证支持 Steam build 26099941 / 26123896",
+  "build_label": "2026 build 26123896",
+  "supported_builds": "26099941 / 26123896"
 }

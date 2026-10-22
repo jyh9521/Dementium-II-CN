@@ -19,6 +19,7 @@ def main():
         'release-manifest.json':args.build/'release-manifest.json',
         'localize.py':root/'tools/localize.py','executable_text.py':root/'tools/executable_text.py',
         'debug_menu.py':root/'tools/debug_menu.py',
+        'native_profile.py':root/'tools/native_profile.py',
         'install_patch.py':root/'tools/install_patch.py','supported-build.json':root/'assets/supported-build.json',
         'LICENSE':root/'LICENSE','LICENSE-translations.md':root/'LICENSE-translations.md',
         'Fusion-Pixel-OFL.txt':root/'assets/fonts/Fusion-Pixel-OFL.txt',

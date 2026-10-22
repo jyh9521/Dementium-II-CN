@@ -17,7 +17,7 @@ namespace LocalizationInstaller {
     }
     public sealed class Settings {
         public string title, subtitle, archive_file, executable_file, backup_folder;
-        public string notice, footer, build_label;
+        public string notice, footer, build_label, supported_builds;
     }
     public sealed class Payload {
         public Delta Archive, Executable;

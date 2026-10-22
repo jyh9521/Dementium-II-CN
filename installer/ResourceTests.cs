@@ -89,6 +89,38 @@ static class ResourceTests {
   test("resource restore second commit failure keeps installed files",()=>{string d=Fixture();var e=Engine();e.Operate(Rom(d),true,false);var installed=Id(d);e.BeforeReplace=i=>{if(i==1)throw new IOException("injected restore failure");};Reject(()=>e.Operate(Rom(d),true,true));Same(d,installed);Engine().Operate(Rom(d),true,true);});
   test("resource concurrent precommit change is preserved",()=>{string d=Fixture();byte[] before=File.ReadAllBytes(Rom(d));var e=Engine();e.BeforeReplace=i=>{if(i==0)using(var f=new FileStream(Rom(d),FileMode.Append))f.WriteByte(66);};Reject(()=>e.Operate(Rom(d),true,false));Assert(File.ReadAllBytes(Rom(d)).SequenceEqual(before.Concat(new byte[]{66})),"Concurrent source change lost");Assert(File.ReadAllBytes(Program(d)).SequenceEqual(Exe()),"Other component changed");});
   test("resource native PE exact bytes append and rollback",()=>{string d=Fixture();var id=Id(d);var p=NativeData();var e=new ResourceEngine(p.settings,p.data);Assert(e.Operate(Rom(d),true,false)=="INSTALLED","Native install");Assert(File.ReadAllBytes(Program(d)).SequenceEqual(p.output),"Native PE append lost");Assert(e.Operate(Rom(d),true,false)=="ALREADY_INSTALLED","Native idempotence");e.Operate(Rom(d),true,true);Same(d,id);});
+  test("resource native guarded unknown identity installs preserves differences and rolls back",()=>{
+   string d=Fixture();var p=NativeData();byte[] source=Exe();source[1800]=42;File.WriteAllBytes(Program(d),source);var id=Id(d);
+   byte[] known=Exe();p.data.native_executable.hash_guards=new[]{
+    new HashGuard {offset=0,length=128,sha256=Hash(known.Take(128).ToArray()),target_sha256=Hash(p.output.Take(128).ToArray())},
+    new HashGuard {offset=240,length=32,sha256=Hash(known.Skip(240).Take(32).ToArray()),target_sha256=Hash(p.output.Skip(240).Take(32).ToArray())}};
+   var e=new ResourceEngine(p.settings,p.data);Assert(e.Operate(Rom(d),true,false)=="INSTALLED","Guarded install");
+   Assert(File.ReadAllBytes(Program(d))[1800]==42,"Unrelated difference lost");Assert(e.Operate(Rom(d),true,false)=="ALREADY_INSTALLED","Guarded idempotence");
+   e.Operate(Rom(d),true,true);Same(d,id);Assert(!Directory.Exists(Path.Combine(d,"cn-backup")),"Guarded restore residue");
+  });
+  test("resource native guarded feature mismatch makes zero writes",()=>{
+   foreach(int offset in new[]{60,70,108,250,256}) {
+    string d=Fixture();var p=NativeData();byte[] known=Exe();p.data.native_executable.hash_guards=new[]{new HashGuard {offset=0,length=512,sha256=Hash(known.Take(512).ToArray()),target_sha256=Hash(p.output.Take(512).ToArray())}};
+    byte[] source=Exe();source[offset]^=1;File.WriteAllBytes(Program(d),source);var id=Id(d);Reject(()=>new ResourceEngine(p.settings,p.data).Operate(Rom(d),true,false));Same(d,id);Assert(!Directory.Exists(Path.Combine(d,"cn-backup")),"Mismatch wrote backup");
+   }
+  });
+  test("resource native guards require complete header and edit coverage",()=>{
+   foreach(bool missingHeader in new[]{true,false}) {
+    string d=Fixture();var p=NativeData();byte[] source=Exe();source[1800]=42;File.WriteAllBytes(Program(d),source);var id=Id(d);
+    p.data.native_executable.hash_guards=new[]{new HashGuard {offset=missingHeader?240:0,length=missingHeader?32:128,sha256=Hash(source.Skip(missingHeader?240:0).Take(missingHeader?32:128).ToArray()),target_sha256=new string('0',64)}};
+    Reject(()=>new ResourceEngine(p.settings,p.data).Operate(Rom(d),true,false));Same(d,id);Assert(!Directory.Exists(Path.Combine(d,"cn-backup")),"Incomplete guards wrote backup");
+   }
+  });
+  test("resource multiple verified member sources install and restore",()=>{
+   string d=Fixture(text:Encoding.ASCII.GetBytes("ORIGINAL2"));var p=Data();byte[] source=Encoding.ASCII.GetBytes("ORIGINAL2");
+   p.members[0].source_variants=new[]{new MemberPatch {name="EN/A.TBL",source_size=source.Length,target_size=target.Length,source_sha256=Hash(source),target_sha256=Hash(target),runs=new[]{new PatchRun {offset=0,old=Convert.ToHexString(source.AsSpan(0,target.Length)),@new=Convert.ToHexString(target)}},tail=""}};
+   var id=Id(d);var e=new ResourceEngine(Settings(),p);e.Operate(Rom(d),true,false);e.Operate(Rom(d),true,true);Same(d,id);
+  });
+  test("resource multiple verified executable sources install and restore",()=>{
+   string d=Fixture();var p=NativeData();byte[] source=Exe();source[1800]=42;byte[] next=p.output.ToArray();next[1800]=42;File.WriteAllBytes(Program(d),source);var primary=p.data.native_executable;
+   primary.source_variants=new[]{new MemberPatch {name=primary.name,source_size=source.Length,target_size=next.Length,source_sha256=Hash(source),target_sha256=Hash(next),runs=primary.runs,tail=primary.tail}};
+   var id=Id(d);var e=new ResourceEngine(p.settings,p.data);e.Operate(Rom(d),true,false);Assert(File.ReadAllBytes(Program(d)).SequenceEqual(next),"Variant output");e.Operate(Rom(d),true,true);Same(d,id);
+  });
   test("resource native PE unknown hash rejects before writes",()=>{string d=Fixture();var p=NativeData();byte[] b=Exe();b[300]=1;File.WriteAllBytes(Program(d),b);var id=Id(d);Reject(()=>new ResourceEngine(p.settings,p.data).Operate(Rom(d),true,false));Same(d,id);Assert(!Directory.Exists(Path.Combine(d,"cn-backup")),"Native unknown source wrote backup");});
   test("resource native PE shifted literal match does not bypass lock",()=>{string d=Fixture(512);var p=NativeData();var id=Id(d);Reject(()=>new ResourceEngine(p.settings,p.data).Operate(Rom(d),true,false));Same(d,id);});
   test("resource native archive-only works with another EXE",()=>{string d=Fixture(512);var p=NativeData();var id=Id(d);var e=new ResourceEngine(p.settings,p.data);e.Operate(Rom(d),false,false);Assert(LocalizationInstaller.Engine.Hash(Program(d))==id[1],"Archive-only changed program");e.Operate(Rom(d),false,true);Same(d,id);});
@@ -105,18 +137,65 @@ static class ResourceTests {
   test("resource postreceipt failure rolls back receipt and upgraded files",()=>{string d=Fixture();Engine().Operate(Rom(d),true,false);var old=Id(d);byte[] receipt=File.ReadAllBytes(Receipt(d));var p=UpgradeData();var e=new ResourceEngine(p.settings,p.data,(m,n)=>{if(n==100)throw new IOException("after receipt injection");});Reject(()=>e.Operate(Rom(d),true,false));Same(d,old);Assert(File.ReadAllBytes(Receipt(d)).SequenceEqual(receipt),"Committed receipt not reverted");});
   test("resource archive-only upgrade retains executable receipt",()=>{string d=Fixture();var originalId=Id(d);Engine().Operate(Rom(d),true,false);var p=UpgradeData();var e=new ResourceEngine(p.settings,p.data);e.Operate(Rom(d),false,false);var state=JsonSerializer.Deserialize<ResourceState>(File.ReadAllText(Receipt(d)),new JsonSerializerOptions {IncludeFields=true});Assert(state.files.Count==2 && e.Inspect(Rom(d)).components[1].upgrade,"Executable receipt lost");e.Operate(Rom(d),true,true);Same(d,originalId);});
  }
+ static int SectionProbe(byte[] bytes,string section,MemberPatch patch,bool protectedRegion) {
+  int pe=BitConverter.ToInt32(bytes,60),count=BitConverter.ToUInt16(bytes,pe+6),table=pe+24+BitConverter.ToUInt16(bytes,pe+20);
+  for(int i=0;i<count;i++) {
+   int row=table+i*40;if(Encoding.ASCII.GetString(bytes,row,8).TrimEnd('\0')!=section)continue;
+   int start=checked((int)BitConverter.ToUInt32(bytes,row+20)),size=checked((int)BitConverter.ToUInt32(bytes,row+16));
+   for(int offset=start+size/2;offset<start+size;offset++) {
+    bool changed=patch.runs.Any(r=>offset>=r.offset && offset<r.offset+r.old.Length/2);
+    bool guarded=(patch.hash_guards ?? Array.Empty<HashGuard>()).Any(g=>offset>=g.offset && offset<g.offset+g.length);
+    if(!changed && guarded==protectedRegion)return offset;
+   }
+  }
+  throw new Exception("No suitable compatibility probe in "+section);
+ }
+ public static void CompatibilityReal(string source,string targetDir) {
+  Assert(!Directory.Exists(targetDir),"Compatibility output must not exist");
+  var payload=Payload.Load();var resource=ResourcePayload.Load();var patch=resource.native_executable;
+  Assert(patch?.hash_guards?.Length>0,"Real compatibility requires hash guards");
+  string sourceRom=Path.Combine(source,payload.Settings.archive_file),sourceExe=Path.Combine(source,payload.Settings.executable_file);
+  string sourceRomHash=LocalizationInstaller.Engine.Hash(sourceRom),sourceExeHash=LocalizationInstaller.Engine.Hash(sourceExe);
+  Assert(sourceRomHash==payload.Archive.original_sha256 && sourceExeHash==patch.source_sha256,"Expected verified current build inputs");
+  Directory.CreateDirectory(targetDir);
+  string rom=Path.Combine(targetDir,payload.Settings.archive_file),exe=Path.Combine(targetDir,payload.Settings.executable_file),cache=Path.Combine(targetDir,payload.Settings.backup_folder);
+  File.Copy(sourceRom,rom);File.Copy(sourceExe,exe);
+  byte[] originalExe=File.ReadAllBytes(exe);int resourceOffset=SectionProbe(originalExe,".rsrc",patch,false);byte[] changed=originalExe.ToArray();changed[resourceOffset]^=1;File.WriteAllBytes(exe,changed);
+  string mutatedHash=LocalizationInstaller.Engine.Hash(exe);Assert(mutatedHash!=patch.source_sha256,"Probe did not change identity");
+  var engine=new ResourceEngine(payload,resource);Assert(engine.Inspect(rom).CanInstall,"Unknown harmless identity not accepted");
+  Console.WriteLine("COMPAT_BASELINE section=.rsrc offset="+resourceOffset+" original_sha256="+sourceExeHash+" unknown_sha256="+mutatedHash+" checks=PASS writes=NONE result=PASS");
+  Assert(engine.Operate(rom,true,false)=="INSTALLED","Unknown identity install failed");
+  byte[] installed=File.ReadAllBytes(exe);Assert(installed[resourceOffset]==changed[resourceOffset],"Unknown resource difference lost");
+  string installedRom=LocalizationInstaller.Engine.Hash(rom),installedExe=LocalizationInstaller.Engine.Hash(exe);
+  Assert(engine.Operate(rom,true,false)=="ALREADY_INSTALLED","Unknown identity idempotence failed");
+  Assert(LocalizationInstaller.Engine.Hash(rom)==installedRom && LocalizationInstaller.Engine.Hash(exe)==installedExe,"Idempotent operation changed bytes");
+  Console.WriteLine("COMPAT_MODIFIED section=.rsrc difference=PRESERVED installed_sha256="+installedExe+" idempotence=PASS result=PASS");
+  Assert(engine.Operate(rom,true,true)=="RESTORED","Unknown identity restore failed");
+  Assert(LocalizationInstaller.Engine.Hash(rom)==sourceRomHash && LocalizationInstaller.Engine.Hash(exe)==mutatedHash && File.ReadAllBytes(exe).SequenceEqual(changed),"Unknown identity rollback differs");
+  Assert(!Directory.Exists(cache),"Unknown identity rollback left backup directory");
+  Console.WriteLine("COMPAT_ROLLBACK files=2 restored=BYTE_IDENTICAL restored_exe_sha256="+mutatedHash+" backup=REMOVED result=PASS");
+  int textOffset=SectionProbe(originalExe,".text",patch,true);byte[] incompatible=originalExe.ToArray();incompatible[textOffset]^=1;File.WriteAllBytes(exe,incompatible);
+  string badHash=LocalizationInstaller.Engine.Hash(exe);bool rejected=false;string reason="";
+  try {engine.Operate(rom,true,false);}catch(InvalidDataException ex){rejected=true;reason=ex.Message;}
+  Assert(rejected,"Changed dependent text section was accepted");
+  Assert(LocalizationInstaller.Engine.Hash(rom)==sourceRomHash && LocalizationInstaller.Engine.Hash(exe)==badHash,"Rejected dependent change wrote game files");
+  Assert(!Directory.Exists(cache),"Rejected dependent change wrote backup directory");
+  Console.WriteLine("COMPAT_REJECT section=.text offset="+textOffset+" modified_run=NO unknown_sha256="+badHash+" originals=UNCHANGED backup=ABSENT reason="+reason+" result=PASS");
+  Assert(LocalizationInstaller.Engine.Hash(sourceRom)==sourceRomHash && LocalizationInstaller.Engine.Hash(sourceExe)==sourceExeHash,"Source game installation changed");
+  Console.WriteLine("COMPAT_REAL cases=2 source_files=UNCHANGED game_launch=NEVER result=PASS");
+ }
  public static void Real(string source,string targetDir) {
   Assert(!Directory.Exists(targetDir),"Real output must not exist");Directory.CreateDirectory(targetDir);
   var payload=Payload.Load();var resource=ResourcePayload.Load();var e=new ResourceEngine(payload,resource,(m,n)=>Console.WriteLine(n+"% "+m));
   string rom=Path.Combine(targetDir,payload.Settings.archive_file),exe=Path.Combine(targetDir,payload.Settings.executable_file);
   File.Copy(Path.Combine(source,payload.Settings.archive_file),rom);File.Copy(Path.Combine(source,payload.Settings.executable_file),exe);
   string[] original={LocalizationInstaller.Engine.Hash(rom),LocalizationInstaller.Engine.Hash(exe)};
-  e.Inspect(rom);Console.WriteLine("RESOURCE_BASELINE files=2 archive_match=NAMED_MEMBERS executable_match="+(resource.native_executable!=null?"NATIVE_EXACT":"RELOCATED_LITERALS")+" result=PASS");e.Operate(rom,true,false);
+  e.Inspect(rom);Console.WriteLine("RESOURCE_BASELINE files=2 archive_match=NAMED_MEMBERS executable_match="+(resource.native_executable!=null?"GUARDED_NATIVE":"RELOCATED_LITERALS")+" result=PASS");e.Operate(rom,true,false);
   Assert(!e.Inspect(rom).CanInstall,"Real install state");
   if(original[0]==payload.Archive.original_sha256)Assert(LocalizationInstaller.Engine.Hash(rom)==payload.Archive.modified_sha256,"Reference archive output mismatch");
   if(original[1]==payload.Executable.original_sha256)Assert(LocalizationInstaller.Engine.Hash(exe)==payload.Executable.modified_sha256,"Reference executable output mismatch");
   Assert(e.Operate(rom,true,false)=="ALREADY_INSTALLED","Real idempotence");
-  Console.WriteLine("RESOURCE_MODIFIED files=2 idempotence=PASS named_members=PASS executable_match="+(resource.native_executable!=null?"NATIVE_EXACT":"RELOCATED_LITERALS")+" result=PASS");
+  Console.WriteLine("RESOURCE_MODIFIED files=2 idempotence=PASS named_members=PASS executable_match="+(resource.native_executable!=null?"GUARDED_NATIVE":"RELOCATED_LITERALS")+" result=PASS");
   e.Operate(rom,true,true);Assert(LocalizationInstaller.Engine.Hash(rom)==original[0] && LocalizationInstaller.Engine.Hash(exe)==original[1],"Real restore failed");
   Assert(!Directory.Exists(Path.Combine(targetDir,payload.Settings.backup_folder)),"Backup directory remains");
   Console.WriteLine("RESOURCE_ROLLBACK files=2 restored=BYTE_IDENTICAL backup=REMOVED game_launch=NEVER result=PASS");

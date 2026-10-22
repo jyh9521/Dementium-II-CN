@@ -3,8 +3,55 @@ import base64
 import gzip
 import hashlib
 import json
+import struct
 from pathlib import Path
 from localize import Zar, apply_delta, digest
+
+
+def native_hash_guards(source, target):
+    """Bind every address-bearing PE byte, without distributing original code.
+
+    The only unguarded original section is .rsrc (icons/version metadata).
+    Unknown builds can differ there, but not in code, globals, relocations,
+    imports, unwind data, layout or any patch byte. Guards cover the original
+    ranges only; the appended localization sections are checked separately.
+    """
+    from executable_text import _rdata
+    _rdata(source)
+    pe = struct.unpack_from('<I', source, 60)[0]
+    count, optional = struct.unpack_from('<H', source, pe+6)[0], struct.unpack_from('<H', source, pe+20)[0]
+    table = pe+24+optional
+    header_size = struct.unpack_from('<I', source, pe+24+60)[0]
+    ranges = [(0, header_size)]
+    for i in range(count):
+        pos=table+40*i
+        name=source[pos:pos+8].rstrip(b'\0')
+        size, offset=struct.unpack_from('<II',source,pos+16)
+        if size and name != b'.rsrc': ranges.append((offset,size))
+    guards=[]
+    for offset,size in ranges:
+        if offset+size>len(source): raise ValueError('Native guard exceeds original image')
+        guards.append(dict(offset=offset,length=size,sha256=digest(source[offset:offset+size]),
+                           target_sha256=digest(target[offset:offset+size])))
+    return guards
+
+
+def add_compatibility(payload, previous):
+    """Merge independently validated sparse source recipes, never game files."""
+    if previous.get('schema') != 1: raise ValueError('Unsupported compatibility payload')
+    old = {m['name']: m for m in previous['members']}
+    for member in payload['members']:
+        prior=old.pop(member['name'],None)
+        if prior and prior['source_sha256'] != member['source_sha256']:
+            member['source_variants']=[prior]
+    # A resource no longer needing modification must not become mandatory on
+    # the new build. A stale old-only recipe requires an explicit migration.
+    if old: raise ValueError('Unmapped legacy resources: '+', '.join(sorted(old)))
+    native=previous['native_executable']
+    if native['source_sha256'] == payload['native_executable']['source_sha256']:
+        raise ValueError('Compatibility source duplicates current executable')
+    payload['native_executable']['source_variants']=[native]
+    return payload
 
 
 def native_executable_payload(build, patch, identity):
@@ -64,6 +111,20 @@ def make_payload(build, recipe):
         if patch.get('format')=='native-menu-pe-v1':
             identity=json.loads((Path(__file__).resolve().parents[1]/'assets/supported-build.json').read_text(encoding='utf-8'))
             payload['native_executable']=native_executable_payload(build,patch,identity)
+            original_exe=bytearray((build/'Dementium II.exe').read_bytes()[:patch['original_size']])
+            for run in patch['runs']:
+                old=bytes.fromhex(run['old']);original_exe[run['offset']:run['offset']+len(old)]=old
+            payload['native_executable']['hash_guards']=native_hash_guards(bytes(original_exe),(build/'Dementium II.exe').read_bytes())
+            compatibility=Path(__file__).resolve().parents[1]/'assets/compatibility-payloads.json'
+            if compatibility.exists():
+                for item in json.loads(compatibility.read_text(encoding='utf-8'))['payloads']:
+                    path=Path(__file__).resolve().parents[1]/item['path']
+                    raw=path.read_bytes()
+                    if digest(raw)!=item['sha256']: raise ValueError('Compatibility payload identity mismatch')
+                    previous=json.loads(gzip.decompress(raw))
+                    if previous['native_executable']['source_sha256']!=item['exe_sha256']:
+                        raise ValueError('Compatibility executable source mismatch')
+                    add_compatibility(payload,previous)
     return payload
 
 

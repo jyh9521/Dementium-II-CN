@@ -14,6 +14,9 @@ class PauseLayoutTests(unittest.TestCase):
  def setUpClass(cls):
   cls.exe=Path(os.environ.get('DEMENTIUM_PAUSE_TEST_EXE',str(ROOT/'build/full-zh-CN/Dementium II.exe')))
   cls.archive=Path(os.environ.get('DEMENTIUM_PAUSE_TEST_ROM',str(ROOT/'build/full-zh-CN/rom.zar')))
+  from native_replay import require_native_fixture
+  require_native_fixture(cls.exe)
+  if not cls.archive.is_file():raise unittest.SkipTest('requires local native archive fixture')
   cls.pe=pefile.PE(str(cls.exe));cls.z=Zar(cls.archive.read_bytes())
  def test_native_value_immediately_follows_colon_and_shares_ink_top(self):
   p=self.pe;code=p.__data__

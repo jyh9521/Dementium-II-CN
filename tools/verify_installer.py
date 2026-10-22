@@ -99,10 +99,10 @@ def main():
 
     paths = dict(MODIFIED_FILE=exe, DIFF_FILE=out/'resource-patches.gz',
                  VERIFICATION=out/'VERIFICATION.txt', ROLLBACK=rollback)
-    lines = ['Changed fields: ResourceEngine named archive members and dynamic .rdata literal search; no build/container hash allow-list;',
+    lines = ['Changed fields: ResourceEngine versioned named members; exact native profiles and complete PE/code/data hash guards before writes;',
              'Install enabled directly on path selection; optional resource check; original filenames in cn-backup and receipts; verified full restore deletes backup folder.',
-             'Version remains 1.0.0; supplied logo/icon, Material Design motion and requested links unchanged.',
-             'Text/image game delta unchanged; original in-game logo and company name preserved.',
+             'Version 1.1.0; supported builds 26099941 / 26123896; unknown version mismatch stops before any file replacement.',
+             'New HEAD BOB translated; original in-game logo and company name preserved.',
              'Original input hashes='+json.dumps(original),
              'Installer bytes='+str(exe.stat().st_size)+' SHA256='+digest(exe),
              'ZIP bytes='+str(archive.stat().st_size)+' SHA256='+digest(archive),

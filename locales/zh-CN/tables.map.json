@@ -2495,5 +2495,11 @@
     "target": "\u0003恭喜解锁|\u0002生存模式 V|\u0003可在标题画面进入生存模式",
     "status": "text-reviewed",
     "text_type": "ui"
+  },
+  "EN/OPTIONSNEW.TBL:0047": {
+    "target": "行走晃动",
+    "status": "translated",
+    "notes": "Steam build 26123896新增HEAD BOB设置，保留原始行号与设置结构。",
+    "text_type": "ui"
   }
 }

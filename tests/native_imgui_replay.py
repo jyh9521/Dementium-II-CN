@@ -75,19 +75,19 @@ class ImGuiReplay(Replay):
 
     def run(self,rva,stop=None,**registers):
         result=super().run(rva,stop=stop,**registers)
-        expected=self.base+stop if stop is not None else self.stop
+        expected=self.base+self.rva(stop) if stop is not None else self.stop
         if self.uc.reg_read(UC_X86_REG_RIP)!=expected:raise RuntimeError('Native replay instruction budget ended before return')
         return result
 
     def initialize_message_path(self):
-        self.uc.mem_write(self.obj,struct.pack('<Q',self.base+0x3bb4d8))
-        self.uc.mem_write(self.window,struct.pack('<Q',self.base+0x433850))
+        self.uc.mem_write(self.obj,struct.pack('<Q',self.base+self.rva(0x3bb4d8)))
+        self.uc.mem_write(self.window,struct.pack('<Q',self.base+self.rva(0x433850)))
         self.run(0x2f010,stop=0x2f020,rdi=self.obj)
         self.run(0x62b75,stop=0x62b8a)
         self.run(0x1a8060,stop=0x1a80ee,rcx=self.obj)
         # Initialized TLS singleton getter boundary, not a mouse-event bypass.
         def window_getter(u,address,size,user):
-            if address!=self.base+0x2deb90:return
+            if address!=self.base+self.rva(0x2deb90):return
             sp=u.reg_read(UC_X86_REG_RSP)
             ret=self.pointer_at(sp)
             u.reg_write(UC_X86_REG_RAX,self.window)

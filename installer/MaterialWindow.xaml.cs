@@ -18,7 +18,7 @@ namespace LocalizationInstaller {
   readonly Payload payload;
   bool busy;
   public MaterialWindow(Payload data,string selected=null,bool preview=false) {
-   payload=data;InitializeComponent();BuildLabel.Text=" 2026 · 资源级补丁";
+   payload=data;InitializeComponent();BuildLabel.Text=" build "+(payload.Settings.supported_builds ?? payload.Settings.build_label)+" · v1.1";
    ArchivePath.TextChanged+=delegate {if(!busy)Ready();};
    Closing+=delegate(object s,System.ComponentModel.CancelEventArgs e){if(busy){e.Cancel=true;Status.Text="正在处理文件，请等待完成后再关闭";}};
    Loaded+=async delegate {
@@ -26,12 +26,12 @@ namespace LocalizationInstaller {
     ContentRoot.BeginAnimation(OpacityProperty,new DoubleAnimation(0,1,TimeSpan.FromMilliseconds(240)));
     ContentRoot.RenderTransform.BeginAnimation(TranslateTransform.YProperty,new DoubleAnimation(12,0,TimeSpan.FromMilliseconds(280)){EasingFunction=easing});
     if(selected!=null){ArchivePath.Text=selected;Ready();}
-    else if(!preview)await DetectAsync();else Status.Text="选择 rom.zar 后即可安装，不限制整包版本";
+    else if(!preview)await DetectAsync();else Status.Text="已验证版本见左下角；其他版本须通过修改位置与特征检查";
    };
   }
   void Ready() {
    string path=ArchivePath.Text.Trim();Install.IsEnabled=File.Exists(path);Restore.IsEnabled=Install.IsEnabled && (Directory.Exists(Path.Combine(Path.GetDirectoryName(path),payload.Settings.backup_folder)) || Directory.Exists(Path.Combine(Path.GetDirectoryName(path),".dementium-locale")));
-   Status.Text=Install.IsEnabled?"可直接安装，或检查资源兼容性（不校验整包版本）":"请检测或选择 rom.zar";
+   Status.Text=Install.IsEnabled?"安装前将检查全部修改位置与特征；不匹配则保留原文件":"请检测或选择 rom.zar";
   }
   void Append(string message,int percentage=0) {
    if(!Dispatcher.CheckAccess()){Dispatcher.InvokeAsync(()=>Append(message,percentage));return;}
@@ -69,7 +69,7 @@ namespace LocalizationInstaller {
    // Lock UI before opening a dialog: no concurrent operations or path changes.
    busy=true;ArchivePath.IsEnabled=Browse.IsEnabled=Detect.IsEnabled=Verify.IsEnabled=Install.IsEnabled=Restore.IsEnabled=false;
    try {
-    if(restore.HasValue && !await Confirm(restore.Value?"恢复原版":"安装汉化",restore.Value?"将恢复 rom.zar 和同目录游戏程序。存档与设置不变；恢复校验成功后删除 cn-backup 备份文件夹。":"将原文件名备份至游戏目录的 cn-backup 文件夹，并安装汉化。存档与设置不变，不会启动游戏。")) {Status.Text="操作已取消，请重新验证";return;}
+    if(restore.HasValue && !await Confirm(restore.Value?"恢复原版":"安装汉化",restore.Value?"将恢复 rom.zar 和同目录游戏程序。存档与设置不变；恢复校验成功后删除 cn-backup 备份文件夹。":"全部修改位置与特征匹配后，才将原文件备份至 cn-backup 并安装汉化；不匹配则不动原文件。存档与设置不变，不会启动游戏。")) {Status.Text="操作已取消，请重新验证";return;}
     var engine=new ResourceEngine(payload,ResourcePayload.Load(),Append);
     Status.Text=restore.HasValue?(restore.Value?"正在恢复…":"正在安装…"):"正在验证…";
     if(restore.HasValue)Append(await Task.Run(()=>engine.Operate(path,true,restore.Value)));

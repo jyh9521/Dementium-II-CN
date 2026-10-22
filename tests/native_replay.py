@@ -4,8 +4,19 @@ import pefile
 from unicorn import Uc,UC_ARCH_X86,UC_MODE_64,UC_HOOK_CODE
 from unicorn.x86_const import *
 BASE=0x140000000
+def require_native_fixture(path,profile='26099941'):
+    """Require the named shipped-build coordinate space, never silently rebase it."""
+    import unittest
+    from pathlib import Path
+    if not Path(path).is_file():raise unittest.SkipTest('requires local native build '+profile+' fixture: '+str(path))
+    pe=pefile.PE(str(path),fast_load=True)
+    data_section=next(s for s in pe.sections if s.Name.rstrip(b'\0')==b'.data')
+    actual={0x4a1000:'26123896',0x49f000:'26099941'}.get(data_section.VirtualAddress,'unknown')
+    if actual!=profile:raise unittest.SkipTest('requires native build '+profile+' fixture; supplied PE is '+actual)
+
 class Replay:
-    def __init__(self,path,image_base=None):
+    def __init__(self,path,image_base=None,native_profile='26099941'):
+        require_native_fixture(path,native_profile)
         self.pe=pefile.PE(str(path));old_base=self.pe.OPTIONAL_HEADER.ImageBase
         if image_base is not None:self.pe.relocate_image(image_base)
         self.base=self.pe.OPTIONAL_HEADER.ImageBase
@@ -29,6 +40,7 @@ class Replay:
                     self.stubs[stub]=imp.name.decode();slot=imp.address if self.base<=imp.address<self.base+self.pe.OPTIONAL_HEADER.SizeOfImage else self.base+imp.address-old_base
                     self.uc.mem_write(slot,struct.pack('<Q',stub));self.uc.mem_write(stub,b'\xc3')
         self.uc.hook_add(UC_HOOK_CODE,self.boundary)
+    def rva(self,value):return value
     def write(self,rva,data):self.uc.mem_write(self.base+rva,data)
     def read(self,rva,size):return bytes(self.uc.mem_read(self.base+rva,size))
     def byte(self,rva,value=None):

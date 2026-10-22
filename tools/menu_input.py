@@ -4,6 +4,7 @@ Only menu-visible keyboard dispatch differs. Opening centers/clips a visible
 system cursor to the game client; closing restores native capture. Win32 calls
 are existing imports; generated x64 code uses relative branches/RIP addressing.
 """
+from native_profile import rva as map_rva, guard
 import struct
 import pefile
 from native_patch import BASE,READER_STATE,MENU_STATE,assemble,guarded_write,jump,prepare_ui_section
@@ -15,7 +16,7 @@ def native_f1_previous_rva(data):
     pe=pefile.PE(data=data)
     md=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_64);md.detail=True
     targets=[]
-    for rva,expected in [(0x4fa2e,'cmp'),(0x4fa60,'mov')]:
+    for rva,expected in [(map_rva(0x4fa2e),'cmp'),(map_rva(0x4fa60),'mov')]:
         ins=next(md.disasm(pe.get_data(rva,7),BASE+rva))
         if ins.mnemonic!=expected:raise ValueError('F1 consumer instruction guard mismatch')
         op=ins.operands[0]
@@ -29,17 +30,17 @@ def native_f1_previous_rva(data):
 def patch_menu_input(data):
     data,report=prepare_ui_section(data)
     pe=pefile.PE(data=data);out=bytearray(data);code=BASE+report['code_rva']
-    symbols=dict(VISIBLE=BASE+0x4a2f1d,INPUT=BASE+0x4c2228,IO=BASE+0x4c2248,
-                 READER=BASE+READER_STATE,WHEEL=BASE+READER_STATE+4,
-                 WINDOW=BASE+0xa312b0,PREV=BASE+MENU_STATE,OWNED=BASE+MENU_STATE+1,
-                 CAPTURE=BASE+MENU_STATE+2,FRAME_RATE=BASE+0x4a4a58,
-                 CURSOR_HIDDEN=BASE+0xa344f4,GAME_CAPTURE=BASE+0x49f1a5,
-                 LOAD_CURSOR=BASE+0x37d818,SET_CURSOR=BASE+0x37d758,
-                 CLIP_CURSOR=BASE+0x37d760,GET_CLIENT=BASE+0x37d748,
-                 CLIENT_SCREEN=BASE+0x37d7b0,SET_POS=BASE+0x37d6f0)
-    symbols.update(VK_HELD=BASE+0xa30d20,KEY_UP=BASE+0xa25e28,KEY_INPUT=BASE+0xa2ca78,IMAGE_BASE=BASE)
+    symbols=dict(VISIBLE=BASE+map_rva(0x4a2f1d),INPUT=BASE+map_rva(0x4c2228),IO=BASE+map_rva(0x4c2248),
+                 READER=BASE+map_rva(READER_STATE),WHEEL=BASE+map_rva(READER_STATE)+4,
+                 WINDOW=BASE+map_rva(0xa312b0),PREV=BASE+map_rva(MENU_STATE),OWNED=BASE+map_rva(MENU_STATE)+1,
+                 CAPTURE=BASE+map_rva(MENU_STATE)+2,FRAME_RATE=BASE+map_rva(0x4a4a58),
+                 CURSOR_HIDDEN=BASE+map_rva(0xa344f4),GAME_CAPTURE=BASE+map_rva(0x49f1a5),
+                 LOAD_CURSOR=BASE+map_rva(0x37d818),SET_CURSOR=BASE+map_rva(0x37d758),
+                 CLIP_CURSOR=BASE+map_rva(0x37d760),GET_CLIENT=BASE+map_rva(0x37d748),
+                 CLIENT_SCREEN=BASE+map_rva(0x37d7b0),SET_POS=BASE+map_rva(0x37d6f0))
+    symbols.update(VK_HELD=BASE+map_rva(0xa30d20),KEY_UP=BASE+map_rva(0xa25e28),KEY_INPUT=BASE+map_rva(0xa2ca78),IMAGE_BASE=BASE)
     symbols['F1_PREVIOUS']=BASE+native_f1_previous_rva(data)
-    symbols.update({f'ACTION{i}':BASE+0xa121a0+4*i for i in range(10)})
+    symbols.update({f'ACTION{i}':BASE+map_rva(0xa121a0)+4*i for i in range(10)})
     blocks={}
     def put(offset,text):
         body=assemble(text,code+offset,symbols)
@@ -61,21 +62,21 @@ def patch_menu_input(data):
         cmp byte ptr [rcx+0x458],0
         jne normal_keys
         cmp edx,0x1c
-        je {BASE+0x1a7d50}
-        jmp {BASE+0x1a7d57}
+        je {BASE+map_rva(0x1a7d50)}
+        jmp {BASE+map_rva(0x1a7d57)}
     menu_keys:
         cmp edx,5
         je activate
         cmp edx,1
         je cancel
     normal_keys:
-        jmp {BASE+0x1a7c61}
+        jmp {BASE+map_rva(0x1a7c61)}
     activate:
         mov byte ptr [rcx+0x221],r8b
-        jmp {BASE+0x1a7d57}
+        jmp {BASE+map_rva(0x1a7d57)}
     cancel:
         mov byte ptr [rcx+0x222],r8b
-        jmp {BASE+0x1a7d57}
+        jmp {BASE+map_rva(0x1a7d57)}
     """)
     wheel=put(0x100,f"""
         cmp byte ptr [rip + @VISIBLE],0
@@ -84,7 +85,7 @@ def patch_menu_input(data):
         jne reader_wheel
         sub rsp,0x28
         test edx,edx
-        jmp {BASE+0x2ee36}
+        jmp {BASE+map_rva(0x2ee36)}
     reader_wheel:
         add dword ptr [rip + @WHEEL],edx
         ret
@@ -113,11 +114,11 @@ def patch_menu_input(data):
         je original_cursor
         mov byte ptr [rdi+0x19],0
         mov al,1
-        jmp {BASE+0x2f3250}
+        jmp {BASE+map_rva(0x2f3250)}
     original_cursor:
         cmp byte ptr [rdi+0x7a],0
         movzx eax,byte ptr [rip + @CURSOR_HIDDEN]
-        jmp {BASE+0x2f3241}
+        jmp {BASE+map_rva(0x2f3241)}
     """)
     capture=put(0x280,f"""
         cmp byte ptr [rip + @VISIBLE],0
@@ -125,7 +126,7 @@ def patch_menu_input(data):
         xor bl,bl
     store_capture:
         mov byte ptr [rip + @GAME_CAPTURE],bl
-        jmp {BASE+0x2f4b3}
+        jmp {BASE+map_rva(0x2f4b3)}
     """)
     raw_wheel=put(0x300,f"""
         cmp byte ptr [rip + @VISIBLE],0
@@ -134,7 +135,7 @@ def patch_menu_input(data):
         jne raw_done
         sub rsp,0x28
         mov rcx,qword ptr [rcx+0x450]
-        jmp {BASE+0x1a7d9b}
+        jmp {BASE+map_rva(0x1a7d9b)}
     raw_done:
         ret
     """)
@@ -148,7 +149,7 @@ def patch_menu_input(data):
         {masks}
     native_menu_gate:
         cmp byte ptr [rip + @VISIBLE],dil
-        jmp {BASE+0x155882}
+        jmp {BASE+map_rva(0x155882)}
     """)
     # Native window-message dispatch uses the same +19 capture request which
     # must be cleared to show/release the OS cursor. Keep its focus checks,
@@ -157,9 +158,9 @@ def patch_menu_input(data):
         cmp byte ptr [rip + @VISIBLE],0
         jne pointer_ready
         cmp byte ptr [rcx+0x19],0
-        je {BASE+0x2f5439}
+        je {BASE+map_rva(0x2f5439)}
     pointer_ready:
-        jmp {BASE+0x2f5386}
+        jmp {BASE+map_rva(0x2f5386)}
     """)
     # Engine UpdateInput synthesizes gameplay mouse state AFTER the platform
     # queue. With capture released its neutral raw values would erase queued UI
@@ -167,9 +168,9 @@ def patch_menu_input(data):
     # only while the menu owns input; ordinary gameplay keeps the exact writes.
     pointer_poll=put(0x940,f"""
         cmp byte ptr [rip + @VISIBLE],0
-        jne {BASE+0x2f5b5}
+        jne {BASE+map_rva(0x2f5b5)}
         mov byte ptr [rax+0x231],r8b
-        jmp {BASE+0x2f5af}
+        jmp {BASE+map_rva(0x2f5af)}
     """)
     # The REGISTERED Win32 WndProc has an outer first-click-to-capture gate,
     # before the common message translator and the inner dispatch fixed above.
@@ -177,10 +178,10 @@ def patch_menu_input(data):
     # Skip only recapture while visible; rejoin BEFORE native focus checks.
     window_click=put(0xa00,f"""
         cmp byte ptr [rip + @VISIBLE],0
-        jne {BASE+0x2f39e3}
+        jne {BASE+map_rva(0x2f39e3)}
         cmp byte ptr [rbx+0x19],r14b
-        jne {BASE+0x2f39e3}
-        jmp {BASE+0x2f39d2}
+        jne {BASE+map_rva(0x2f39e3)}
+        jmp {BASE+map_rva(0x2f39d2)}
     """)
     save='\n'.join(f'movdqu xmmword ptr [rsp+{0x60+i*16}],xmm{i}' for i in range(6))
     restore='\n'.join(f'movdqu xmm{i},xmmword ptr [rsp+{0x60+i*16}]' for i in range(6))
@@ -215,7 +216,7 @@ def patch_menu_input(data):
         mov byte ptr [rip + @PREV],1
         mov byte ptr [rip + @OWNED],1
         mov byte ptr [rcx+0x19],0
-        call {BASE+0x2f34d0}
+        call {BASE+map_rva(0x2f34d0)}
         xor ecx,ecx
         mov edx,0x7f00
         call qword ptr [rip + @LOAD_CURSOR]
@@ -293,7 +294,7 @@ def patch_menu_input(data):
         xor al,al
     restore_capture:
         mov byte ptr [rcx+0x19],al
-        call {BASE+0x2f34d0}
+        call {BASE+map_rva(0x2f34d0)}
         mov rcx,qword ptr [rsp+0x20]
         cmp byte ptr [rcx+0x19],0
         je focus_done
@@ -312,7 +313,7 @@ def patch_menu_input(data):
         pop rax
         popfq
         movd xmm0,dword ptr [rip + @FRAME_RATE]
-        jmp {BASE+0x4fa6e}
+        jmp {BASE+map_rva(0x4fa6e)}
     clear_input:
         mov rax,qword ptr [rip + @INPUT]
         test rax,rax
@@ -331,7 +332,7 @@ def patch_menu_input(data):
         sub rsp,0x28
         xor ecx,ecx
         xor edx,edx
-        call {BASE+0x66e70}
+        call {BASE+map_rva(0x66e70)}
         add rsp,0x28
     clear_done:
         ret
@@ -377,7 +378,7 @@ def patch_menu_input(data):
         cmp qword ptr [rip + @KEY_UP],0
         je advance_key
         xor r9d,r9d
-        call {BASE+0x2dd940}
+        call {BASE+map_rva(0x2dd940)}
         mov ecx,eax
         xor edx,edx
         call qword ptr [rip + @KEY_UP]
@@ -397,7 +398,7 @@ def patch_menu_input(data):
         pop rax
         popfq
         mov rdi,qword ptr [rbp+0x1e0]
-        jmp {BASE+0x2f3a45}
+        jmp {BASE+map_rva(0x2f3a45)}
     """)
     # After a lost-focus release, an OS auto-repeat is still not a fresh press.
     # Both native WM_KEYDOWN/WM_SYSKEYDOWN paths enter this exact point with
@@ -407,28 +408,28 @@ def patch_menu_input(data):
         test esi,0x40000000
         je fresh_key
         popfq
-        jmp {BASE+0x2deb38}
+        jmp {BASE+map_rva(0x2deb38)}
     fresh_key:
         popfq
         lea rcx,[rip + @IMAGE_BASE]
-        jmp {BASE+0x2de83a}
+        jmp {BASE+map_rva(0x2de83a)}
     """)
     # Intercept the common mode gate, so menu keys work in BOTH native modes.
     # The earlier F1 compare/unlock/debounce and padding bridge stay exact.
-    hooks=[(0x1a7c54,bytes.fromhex('80 b9 58 04 00 00 00'),key),(0x2ee30,bytes.fromhex('48 83 ec 28 85 d2'),wheel),
-           (0x1a7d90,bytes.fromhex('48 83 ec 28 48 8b 89 50 04 00 00'),raw_wheel),
-           (0x2f3236,bytes.fromhex('80 7f 7a 00 0f b6 05 b3 12 74 00'),cursor),
-           (0x2f537c,bytes.fromhex('80 79 19 00 0f 84 b3 00 00 00'),pointer),
-           (0x2f5a8,bytes.fromhex('44 88 80 31 02 00 00'),pointer_poll),
-           (0x2f39cc,bytes.fromhex('44 38 73 19 75 11'),window_click),
-           (0x2f3a3e,bytes.fromhex('48 8b bd e0 01 00 00'),focus_release),
-           (0x2de833,bytes.fromhex('48 8d 0d c6 17 d2 ff'),key_repeat),
-           (0x2f4ad,bytes.fromhex('88 1d f2 fc 46 00'),capture),
-           (0x15587b,bytes.fromhex('40 38 3d 9b d6 34 00'),reader_actions),
-           (0x4fa66,bytes.fromhex('66 0f 6e 05 ea 4f 45 00'),focus)]
+    hooks=[(map_rva(0x1a7c54),bytes.fromhex('80 b9 58 04 00 00 00'),key),(map_rva(0x2ee30),bytes.fromhex('48 83 ec 28 85 d2'),wheel),
+           (map_rva(0x1a7d90),bytes.fromhex('48 83 ec 28 48 8b 89 50 04 00 00'),raw_wheel),
+           (map_rva(0x2f3236),bytes.fromhex('80 7f 7a 00 0f b6 05 b3 12 74 00'),cursor),
+           (map_rva(0x2f537c),bytes.fromhex('80 79 19 00 0f 84 b3 00 00 00'),pointer),
+           (map_rva(0x2f5a8),bytes.fromhex('44 88 80 31 02 00 00'),pointer_poll),
+           (map_rva(0x2f39cc),bytes.fromhex('44 38 73 19 75 11'),window_click),
+           (map_rva(0x2f3a3e),bytes.fromhex('48 8b bd e0 01 00 00'),focus_release),
+           (map_rva(0x2de833),bytes.fromhex('48 8d 0d c6 17 d2 ff'),key_repeat),
+           (map_rva(0x2f4ad),bytes.fromhex('88 1d f2 fc 46 00'),capture),
+           (map_rva(0x15587b),bytes.fromhex('40 38 3d 9b d6 34 00'),reader_actions),
+           (map_rva(0x4fa66),bytes.fromhex('66 0f 6e 05 ea 4f 45 00'),focus)]
     for rva,expected,target in hooks:guarded_write(out,pe,rva,expected,jump(BASE+rva,target,len(expected)))
     report.update(blocks=blocks,key_hook=hex(key),wheel_hook=hex(wheel),raw_wheel_hook=hex(raw_wheel),reader_actions_hook=hex(reader_actions),focus_hook=hex(focus),
-                  cursor_hook=hex(cursor),capture_hook=hex(capture),pointer_dispatch_hook=hex(pointer),pointer_poll_hook=hex(pointer_poll),window_click_hook=hex(window_click),focus_release_hook=hex(focus_release),key_repeat_hook=hex(key_repeat),state=hex(BASE+MENU_STATE),
+                  cursor_hook=hex(cursor),capture_hook=hex(capture),pointer_dispatch_hook=hex(pointer),pointer_poll_hook=hex(pointer_poll),window_click_hook=hex(window_click),focus_release_hook=hex(focus_release),key_repeat_hook=hex(key_repeat),state=hex(BASE+map_rva(MENU_STATE)),
                   input_policy='F1 always; visible menu accepts native navigation; long-reader bypasses mode gate only for Up/Down',
                   wheel_policy='menu ImGui IO +140; otherwise active long-reader wheel; otherwise original game callback',
                   focus_policy='show/center/client-clip on open, native capture restore on close; focus loss releases clip',

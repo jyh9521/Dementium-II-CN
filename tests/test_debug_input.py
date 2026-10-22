@@ -28,6 +28,8 @@ SIZE = 0xb10000
 class NativeDebugInputTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        from native_replay import require_native_fixture
+        require_native_fixture(SOURCE)
         import pefile
         cls.original = SOURCE.read_bytes()
         if hashlib.sha256(cls.original).hexdigest() != SOURCE_SHA:

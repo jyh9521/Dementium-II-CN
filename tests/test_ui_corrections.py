@@ -40,8 +40,8 @@ class UiCorrectionTests(unittest.TestCase):
         report=audit(View(),View(),{'images':[dict(resource=name,labels=labels)]})
         self.assertEqual(report['result'],'FAIL');self.assertEqual(report['images'][0]['gaps'],[2,0])
 
-    def test_version_remains_user_selected_100(self):
-        self.assertEqual(verify_version(ROOT),'1.0.0')
+    def test_version_matches_explicit_user_requested_110(self):
+        self.assertEqual(verify_version(ROOT),'1.1.0')
         policy=json.loads((ROOT/'assets/release-policy.json').read_text(encoding='utf-8'))
         self.assertTrue(policy['version_changes_require_explicit_user_request'])
 

@@ -17,7 +17,9 @@ class SupportedBuildTests(unittest.TestCase):
         identity = json.loads((ROOT/'assets/supported-build.json').read_text())
         settings = json.loads((ROOT/'locales/zh-CN/installer.json').read_text(encoding='utf-8'))
         self.assertEqual(settings['build_label'], '2026 build '+identity['buildid'])
-        self.assertIn('BuildLabel.Text=" 2026 · 资源级补丁"', (ROOT/'installer/MaterialWindow.xaml.cs').read_text(encoding='utf-8'))
+        self.assertEqual(settings['supported_builds'], '26099941 / 26123896')
+        self.assertIn('payload.Settings.supported_builds', (ROOT/'installer/MaterialWindow.xaml.cs').read_text(encoding='utf-8'))
+        self.assertIn('已验证支持', (ROOT/'installer/MaterialWindow.xaml').read_text(encoding='utf-8'))
 
 
 if __name__ == '__main__':

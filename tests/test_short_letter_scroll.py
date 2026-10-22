@@ -9,6 +9,10 @@ EXE=Path(os.environ.get('DEMENTIUM_UI_TEST_EXE',ROOT/'build/full-zh-CN/Dementium
 ROM=Path(os.environ.get('DEMENTIUM_PREVIEW_ROM',ROOT/'build/full-zh-CN/rom.zar'))
 
 class ShortLetterScrollTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from native_replay import require_native_fixture
+        require_native_fixture(EXE)
     def test_four_and_two_visible_lines_do_not_scroll_over_trailing_padding(self):
         for resource,visible in [('EN/EXAMINE.092',4),('EN/EXAMINE.093',2)]:
             with self.subTest(resource=resource):

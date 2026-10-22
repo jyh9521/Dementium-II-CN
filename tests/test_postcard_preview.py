@@ -11,6 +11,10 @@ ROM=Path(os.environ.get('DEMENTIUM_PREVIEW_ROM',ROOT/'build/full-zh-CN/rom.zar')
 
 @unittest.skipUnless(EXE.is_file() and ROM.is_file(),'locally supplied built assets required')
 class PostcardPreviewDrawTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from native_replay import require_native_fixture
+        require_native_fixture(EXE)
     def test_field_card_native_setup_reaches_visible_glyph_submissions(self):
         r=replay(EXE,ROM)
         print('FIELD_CARD glyphs=%d flag_at_renderer=%s sentinel_preserved=%s' %

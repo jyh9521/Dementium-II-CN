@@ -1,4 +1,5 @@
 """Guarded x64 relative hooks and a shared RX section; no RWX or new imports."""
+from native_profile import rva as map_rva, guard
 import re
 import struct
 import pefile
@@ -31,6 +32,7 @@ def assemble(text,address,symbols=None):
     return bytes(code)
 
 def guarded_write(out,pe,rva,expected,replacement):
+    expected=guard(expected,rva)
     pos=pe.get_offset_from_rva(rva)
     if bytes(out[pos:pos+len(expected)])!=expected:raise ValueError('Native UI byte guard mismatch at '+hex(rva))
     if len(expected)!=len(replacement):raise ValueError('Native hook length mismatch')
@@ -56,10 +58,10 @@ def prepare_ui_section(data):
     struct.pack_into('<I',out,pe.OPTIONAL_HEADER.get_field_absolute_offset('SizeOfImage'),align(va+size,pe.OPTIONAL_HEADER.SectionAlignment))
     struct.pack_into('<I',out,pe.OPTIONAL_HEADER.get_field_absolute_offset('SizeOfCode'),pe.OPTIONAL_HEADER.SizeOfCode+size)
     section=next(s for s in pe.sections if s.Name.rstrip(b'\0')==b'.data')
-    if section.VirtualAddress+section.Misc_VirtualSize!=READER_STATE:raise ValueError('Native data tail differs')
+    if section.VirtualAddress+section.Misc_VirtualSize!=map_rva(READER_STATE):raise ValueError('Native data tail differs')
     nextva=min(s.VirtualAddress for s in pe.sections if s.VirtualAddress>section.VirtualAddress)
-    if nextva!=0xa69000 or section.Characteristics&0x20000000:raise ValueError('Writable state reservation differs')
+    if nextva!=map_rva(0xa69000) or section.Characteristics&0x20000000:raise ValueError('Writable state reservation differs')
     # Newly declared zero-fill space only: never repurpose existing engine data.
     struct.pack_into('<I',out,section.get_field_absolute_offset('Misc_VirtualSize'),nextva-section.VirtualAddress)
     out.extend(b'\0'*(raw-len(out)));out.extend(b'\xcc'*size)
-    return bytes(out),dict(code_rva=va,code_size=size,reader_state=READER_STATE,menu_state=MENU_STATE)
+    return bytes(out),dict(code_rva=va,code_size=size,reader_state=map_rva(READER_STATE),menu_state=map_rva(MENU_STATE))

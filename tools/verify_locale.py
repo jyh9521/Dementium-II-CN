@@ -24,8 +24,8 @@ def main():
         rows = extract(source)
         # Actually run the no-translation import and full resource-preserving rebuild.
         assert source.rebuild(import_text(source, rows)) == original
-        assert len(rows)==676
-        print('BASELINE records=676 archive=BYTE_IDENTICAL sha256='+digest(original)+' result=PASS')
+        assert len(rows) == len(json.loads((root/'locales/zh-CN/smoke.json').read_text(encoding='utf-8')))
+        print('BASELINE records=%d archive=BYTE_IDENTICAL sha256=%s result=PASS' % (len(rows), digest(original)))
         return
     modified = (args.build/'rom.zar').read_bytes()
     patch = json.loads((args.build/'patch.json').read_text(encoding='utf-8'))
@@ -94,8 +94,8 @@ def main():
         assert exe_patch==json.loads((args.build/'exe-patch.json').read_text(encoding='utf-8'))
         assert apply_executable_patch(expected_exe,exe_patch,True)==original_exe
         executable_labels=len(recipe['entries'])
-    print('MODIFIED records=676 translated=%d glyphs=%d fallback=%d title_rows=5 replaced_latin=%d preserved=%d images=%d exe_labels=%d vfs=PASS reextract=PASS delta=PASS sha256=%s result=PASS' %
-          (sum(r['target']!=r['source'] for r in records),info['added_glyphs'],len(info['body_fallback_codes']),len(replaced),info['original_glyphs_preserved'],len(image_changes),executable_labels,digest(modified)))
+    print('MODIFIED records=%d translated=%d glyphs=%d fallback=%d title_rows=5 replaced_latin=%d preserved=%d images=%d exe_labels=%d vfs=PASS reextract=PASS delta=PASS sha256=%s result=PASS' %
+          (len(records),sum(r['target']!=r['source'] for r in records),info['added_glyphs'],len(info['body_fallback_codes']),len(replaced),info['original_glyphs_preserved'],len(image_changes),executable_labels,digest(modified)))
 
 
 if __name__ == '__main__':

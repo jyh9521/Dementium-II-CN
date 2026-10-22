@@ -4,6 +4,7 @@ Text-only EXAMINE pages retain their original font and full UTF-8 source. A
 visible-line window is drawn through the existing renderer; illustrated cards,
 short notes and the letter puzzle keep the original path. Never launches game.
 """
+from native_profile import rva as map_rva, guard
 import struct
 import pefile
 from keystone import Ks, KS_ARCH_X86, KS_MODE_64
@@ -23,7 +24,7 @@ def native_render_flag_rva(base=0x140000000):
     import capstone
     md=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_64);md.detail=True
     stores=[]
-    for ins in md.disasm(HOOK_BYTES,base+HOOK_RVA):
+    for ins in md.disasm(guard(HOOK_BYTES,map_rva(HOOK_RVA)),base+map_rva(HOOK_RVA)):
         if ins.mnemonic=='mov' and ins.operands and ins.operands[0].type==capstone.x86.X86_OP_MEM:
             op=ins.operands[0]
             if op.mem.base==capstone.x86.X86_REG_RIP:
@@ -33,7 +34,7 @@ def native_render_flag_rva(base=0x140000000):
 
 
 def build_reader_code(code_rva,base=0x140000000,inventory=False):
-    state=base+STATE_RVA
+    state=base+map_rva(STATE_RVA)
     def mem(field): return hex(state+STATE_FIELDS[field])
     # All pointers use RIP-relative LEA/load: preferred image base is only an
     # assembly-time coordinate, never an absolute runtime pointer.
@@ -284,7 +285,7 @@ def build_reader_code(code_rva,base=0x140000000,inventory=False):
         popfq
         INVENTORY_RESTORE
         RENDER_FLAG
-        jmp {hex(base+(0x123383 if inventory else HOOK_RVA+len(HOOK_BYTES)))}
+        jmp {hex(base+(map_rva(0x123383) if inventory else map_rva(HOOK_RVA)+len(HOOK_BYTES)))}
     """
     classify=("mov r10d,[rdi+0x1d0]" if inventory else "movsx r10d,word ptr [rdi+0x128]")+f"""
         cmp r10d,535
@@ -373,11 +374,11 @@ def build_reader_code(code_rva,base=0x140000000,inventory=False):
     # Fixed-width placeholder instruction encodings allow every label to be
     # assembled once; then replace only tagged RIP displacements.
     placeholders={
-        'PAD_CONNECTED':('cmp byte ptr [rip+0x12345673],0',0x12345673,base+0xa314f0),
-        'WINDOW_POINTER':('mov rax,[rip+0x12345674]',0x12345674,base+0xa312b0),
+        'PAD_CONNECTED':('cmp byte ptr [rip+0x12345673],0',0x12345673,base+map_rva(0xa314f0)),
+        'WINDOW_POINTER':('mov rax,[rip+0x12345674]',0x12345674,base+map_rva(0xa312b0)),
         'STATE_LEA':('lea r11,[rip+0x12345678]',0x12345678,state),
-        'MENU_VISIBLE':('cmp byte ptr [rip+0x12345677],0',0x12345677,base+0x4a2f1d),
-        'INPUT_POINTER':('mov rax,[rip+0x12345676]',0x12345676,base+0x4c2228),
+        'MENU_VISIBLE':('cmp byte ptr [rip+0x12345677],0',0x12345677,base+map_rva(0x4a2f1d)),
+        'INPUT_POINTER':('mov rax,[rip+0x12345676]',0x12345676,base+map_rva(0x4c2228)),
         'RENDER_FLAG':('mov byte ptr [rip+0x12345675],1',0x12345675,base+native_render_flag_rva(base))}
     for tag,(ins,_,_) in placeholders.items():text=text.replace(tag,ins)
     code=bytearray(assemble(text,base+code_rva))
@@ -393,7 +394,7 @@ def build_reader_code(code_rva,base=0x140000000,inventory=False):
 
 
 def reset_code(address,resume,displaced,base=0x140000000,clear_reader_arrows=False):
-    state=base+STATE_RVA
+    state=base+map_rva(STATE_RVA)
     # No general-purpose register or flags changes; initialization and closing
     # both clear the shared active/wheel/owner/scroll state before original code.
     result=bytearray()
@@ -405,7 +406,7 @@ def reset_code(address,resume,displaced,base=0x140000000,clear_reader_arrows=Fal
         result.extend(bytes.fromhex('83 3d')+struct.pack('<i',state-(here+7))+b'\0')
         result.extend(bytes.fromhex('74 15'))
         here=address+len(result)
-        result.extend(bytes.fromhex('48 8b 05')+struct.pack('<i',base+0x4c2228-(here+7)))
+        result.extend(bytes.fromhex('48 8b 05')+struct.pack('<i',base+map_rva(0x4c2228)-(here+7)))
         result.extend(bytes.fromhex('48 85 c0 74 09 66 c7 80 2d 02 00 00 00 00 58 9d'))
     for offset in [0,4,8,12,16,20,24,28,32,36,40,44,48]:
         here=address+len(result)
@@ -420,9 +421,10 @@ def patch_document_reader(data):
     pe=pefile.PE(data=data)
     base=pe.OPTIONAL_HEADER.ImageBase
     # Bind axis index 3 / pad 0 and connection gate to audited native consumers.
-    for rva,expected in [(0x1557a5,bytes.fromhex('f3 45 0f 10 81 cc 02 00 00')),
-                         (0x2ed4d,bytes.fromhex('f3 41 0f 11 9c 89 c0 02 00 00')),
-                         (0x31ad26,bytes.fromhex('41 80 bc bc f0 14 a3 00 00'))]:
+    for rva,expected in [(map_rva(0x1557a5),bytes.fromhex('f3 45 0f 10 81 cc 02 00 00')),
+                         (map_rva(0x2ed4d),bytes.fromhex('f3 41 0f 11 9c 89 c0 02 00 00')),
+                         (map_rva(0x31ad26),bytes.fromhex('41 80 bc bc f0 14 a3 00 00'))]:
+        expected=guard(expected,rva)
         if pe.get_data(rva,len(expected))!=expected:
             raise ValueError('Reader gamepad axis/connection guard mismatch at '+hex(rva))
     section=next((s for s in pe.sections if s.Name.rstrip(b'\0')==b'.locui'),None)
@@ -434,15 +436,15 @@ def patch_document_reader(data):
     code=build_reader_code(start,base)
     entries={'render':start}
     body=bytearray(code)
-    hooks=[(HOOK_RVA,HOOK_BYTES,start)]
+    hooks=[(map_rva(HOOK_RVA),HOOK_BYTES,start)]
     while len(body)%16:body.append(0xcc)
     inventory_entry=start+len(body);entries['inventory_render']=inventory_entry
     body.extend(build_reader_code(inventory_entry,base,True))
-    hooks.append((0x123379,bytes.fromhex('44 2b c1 41 81 c0 a0 00 00 00'),inventory_entry))
-    for key,rva,expected in [('open',0x11a7b0,bytes.fromhex('44 88 4c 24 20')),
-                             ('close',0x11af80,bytes.fromhex('40 53 48 83 ec 20')),
-                             ('inventory_open',0x121e50,bytes.fromhex('48 89 5c 24 10')),
-                             ('inventory_close',0x122a10,bytes.fromhex('48 83 ec 28 48 8b 89 c8 01 00 00'))]:
+    hooks.append((map_rva(0x123379),bytes.fromhex('44 2b c1 41 81 c0 a0 00 00 00'),inventory_entry))
+    for key,rva,expected in [('open',map_rva(0x11a7b0),bytes.fromhex('44 88 4c 24 20')),
+                             ('close',map_rva(0x11af80),bytes.fromhex('40 53 48 83 ec 20')),
+                             ('inventory_open',map_rva(0x121e50),bytes.fromhex('48 89 5c 24 10')),
+                             ('inventory_close',map_rva(0x122a10),bytes.fromhex('48 83 ec 28 48 8b 89 c8 01 00 00'))]:
         while len(body)%16:body.append(0xcc)
         entry=start+len(body);entries[key]=entry
         body.extend(reset_code(base+entry,base+rva+len(expected),expected,base,clear_reader_arrows=True))
@@ -450,6 +452,7 @@ def patch_document_reader(data):
     if len(body)>0x1000:raise ValueError('Reader code exceeds reserved shared RX page')
     out=bytearray(data)
     for rva,expected,target in hooks:
+        expected=guard(expected,rva)
         pos=pe.get_offset_from_rva(rva)
         if out[pos:pos+len(expected)]!=expected:
             raise ValueError('Native reader instruction guard mismatch at '+hex(rva))
@@ -458,13 +461,13 @@ def patch_document_reader(data):
     if any(b not in (0,0xcc) for b in out[position:position+len(body)]):raise ValueError('Reader RX reservation is not empty')
     out[position:position+len(body)]=body
     dat=next(s for s in pe.sections if s.Name.rstrip(b'\0')==b'.data')
-    end=STATE_RVA+STATE_SIZE
+    end=map_rva(STATE_RVA)+STATE_SIZE
     next_rva=min(s.VirtualAddress for s in pe.sections if s.VirtualAddress>dat.VirtualAddress)
-    if not(dat.VirtualAddress+dat.SizeOfRawData<=STATE_RVA and end<=next_rva):
+    if not(dat.VirtualAddress+dat.SizeOfRawData<=map_rva(STATE_RVA) and end<=next_rva):
         raise ValueError('Reader state is outside audited .data zero-fill tail')
     struct.pack_into('<I',out,dat.get_field_absolute_offset('Misc_VirtualSize'),max(dat.Misc_VirtualSize,end-dat.VirtualAddress))
     report=dict(code_rva=hex(start),code_bytes=len(body),entries={k:hex(v) for k,v in entries.items()},
-                state={k:STATE_RVA+v for k,v in STATE_FIELDS.items()},state_size=STATE_SIZE,native_render_flag_rva=hex(native_render_flag_rva(base)),
+                state={k:map_rva(STATE_RVA)+v for k,v in STATE_FIELDS.items()},state_size=STATE_SIZE,native_render_flag_rva=hex(native_render_flag_rva(base)),
                 gamepad_scroll={'axis':'input+0x2cc (pad 0 right Y)', 'deadzone':0.35,'lines_per_notch':3,'repeat_delay_frames':24,'repeat_interval_frames':12,'gates':['overflow reader','menu hidden','window active/focused','valid input','pad 0 connected'],'preserves':['axis values','gameplay input mode','ordinary look']},
                 viewport=[0,24,256,176],illustrated_letter_viewports={'field':[0,104,256,176],'collection':[0,88,256,160]},font_scale=1,applies_to='overflow text-only EXAMINE plus illustrated letters 78/90..93 in field and collection readers, except letter puzzle 535',
                 postcard_collection='12 postcard resources and their original branches unchanged; illustrated letters scroll only over nonblank content extent',

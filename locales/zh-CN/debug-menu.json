@@ -89,5 +89,8 @@
     "Hell": "地狱",
     "Survival": "生存模式",
     "Test": "测试"
+  },
+  "input_sha256_by_build": {
+    "26123896": "a248805bb809a08d3ddeb94af343409f1f142bfbf7accaa84cf37511fd26d208"
   }
 }

@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "status": "prepared_for_maintainer_manual_release",
+  "tag": "v1.1",
+  "installer_version": "1.1.0",
+  "filename": "Dementium-II-CN-v1.1.exe",
+  "size": 78507545,
+  "sha256": "bffe3e670fda5647036085e17835366697e4a46ae8d3c8bac2bf26eb5e3796a6",
+  "supported_appid": 5342930,
+  "reference_build": "26123896",
+  "supported_builds": [
+    "26099941",
+    "26123896"
+  ],
+  "player_acceptance": {
+    "status": "new_build_gameplay_not_tested",
+    "game_launch": "NEVER"
+  },
+  "compatibility": "All resource preimages and native position/layout/code/data guards must match before writes; mismatch leaves originals untouched."
+}

@@ -4,6 +4,7 @@ Locale strings remain in a read-only PE section. Native UI hooks use a separate
 RX section and an audited new zero-fill RW data tail, never RWX or new imports.
 The original checkbox/action implementations are kept.
 """
+from native_profile import rva as map_rva, guard
 import io
 import base64
 import json
@@ -62,13 +63,11 @@ def build_font(zar, font_path, recipe=None):
     return output.getvalue()
 
 
-def build_menu(data, recipe=None):
+def _build_menu(data, recipe=None):
     import capstone
     import pefile
     recipe = config() if recipe is None else recipe
     # This hash is of the already validated five-literal localized executable.
-    if digest(data) != recipe['input_sha256']:
-        raise ValueError('Native menu requires its exact audited executable')
     pe = pefile.PE(data=data)
     if pe.OPTIONAL_HEADER.DATA_DIRECTORY[4].Size:
         raise ValueError('Signed/overlaid executables are not supported')
@@ -92,7 +91,7 @@ def build_menu(data, recipe=None):
     md = capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_64); md.detail=True
     redirected = []; hits=set()
     # Only native debug renderer/init/helpers. Other consumers retain originals.
-    for ins in md.disasm(pe.get_data(0x4e300,0x509ed-0x4e300),base+0x4e300):
+    for ins in md.disasm(pe.get_data(map_rva(0x4e300),map_rva(0x509ed)-map_rva(0x4e300)),base+map_rva(0x4e300)):
         for op in ins.operands:
             if op.type != capstone.x86.X86_OP_MEM or op.mem.base != capstone.x86.X86_REG_RIP:
                 continue
@@ -103,16 +102,16 @@ def build_menu(data, recipe=None):
             value=data[offset:offset+256].split(b'\0',1)[0]
             try: source=value.decode('ascii')
             except UnicodeDecodeError: continue
-            new = glyph_va if target==0x1403bebf0 else strings.get(source)
+            new = glyph_va if target==(base+map_rva(0x3bebf0)) else strings.get(source)
             if new is None: continue
             if ins.disp_size!=4: raise ValueError('Unexpected RIP operand size')
             pos=pe.get_offset_from_rva(ins.address-base)+ins.disp_offset
             struct.pack_into('<i',out,pos,new-ins.address-ins.size)
             redirected.append(dict(instruction=hex(ins.address),source=source,target=hex(new)))
-            if target!=0x1403bebf0: hits.add(source)
+            if target!=(base+map_rva(0x3bebf0)): hits.add(source)
     # Existing entity name pointers already have IMAGE_REL_BASED_DIR64 entries.
     relocated={e.rva for b in pe.DIRECTORY_ENTRY_BASERELOC for e in b.entries if e.type==10}
-    for rva,count,stride in [(0x3c08c0,12,16),(0x3c09d0,23,16),(0x3c0e30,7,24)]:
+    for rva,count,stride in [(map_rva(0x3c08c0),12,16),(map_rva(0x3c09d0),23,16),(map_rva(0x3c0e30),7,24)]:
         for i in range(count):
             slot=rva+stride*i; pos=pe.get_offset_from_rva(slot)
             old=struct.unpack_from('<Q',data,pos)[0]
@@ -122,26 +121,26 @@ def build_menu(data, recipe=None):
                 raise ValueError('Untranslated/unrelocated entity table entry: '+source)
             struct.pack_into('<Q',out,pos,strings[source]); hits.add(source)
     # Unconditional branch into the existing rising-edge menu toggle.
-    gate=pe.get_offset_from_rva(0x4fa49)
+    gate=pe.get_offset_from_rva(map_rva(0x4fa49))
     if out[gate:gate+2]!=b'\x75\x04': raise ValueError('Unlock branch guard mismatch')
     out[gate]=0xeb
-    key=pe.get_offset_from_rva(0x1a7d4b)
+    key=pe.get_offset_from_rva(map_rva(0x1a7d4b))
     if out[key:key+3]!=b'\x83\xfa\x7e': raise ValueError('Hotkey compare guard mismatch')
     out[key+2]=0x1c  # Native key translator maps Win32 VK_F1 to internal 0x1c.
     # Startup FUN_14002eee0 explicitly sets input object +458 to zero.
     # Only F1 must still reach +22c in that native mode. Preserve the mode
     # gate for every other key and use guarded adjacent INT3 padding for
     # relative branches only (no new section/import/absolute address).
-    mode=pe.get_offset_from_rva(0x1a7c5b)
-    cave=pe.get_offset_from_rva(0x1a7d81)
+    mode=pe.get_offset_from_rva(map_rva(0x1a7c5b))
+    cave=pe.get_offset_from_rva(map_rva(0x1a7d81))
     if out[mode:mode+6]!=bytes.fromhex('0f 84 f6 00 00 00'):
         raise ValueError('Direct-input mode branch guard mismatch')
     if out[cave:cave+15]!=b'\xcc'*15:
         raise ValueError('F1 mode bridge padding guard mismatch')
-    out[mode:mode+6]=b'\x0f\x84'+struct.pack('<i',0x1a7d81-(0x1a7c5b+6))
+    out[mode:mode+6]=b'\x0f\x84'+struct.pack('<i',map_rva(0x1a7d81)-(map_rva(0x1a7c5b)+6))
     bridge=(bytes.fromhex('83 fa 1c 0f 84')+
-            struct.pack('<i',0x1a7d50-(0x1a7d81+9))+
-            b'\xe9'+struct.pack('<i',0x1a7d57-(0x1a7d81+14))+b'\xcc')
+            struct.pack('<i',map_rva(0x1a7d50)-(map_rva(0x1a7d81)+9))+
+            b'\xe9'+struct.pack('<i',map_rva(0x1a7d57)-(map_rva(0x1a7d81)+14))+b'\xcc')
     out[cave:cave+15]=bridge
     if not any(r['target']==hex(glyph_va) for r in redirected):
         raise ValueError('Glyph-range reference was not redirected')
@@ -204,3 +203,15 @@ def apply_patch(data,patch,reverse=False):
     from executable_text import _rdata
     _rdata(result)
     return result
+
+
+def build_menu(data,recipe=None):
+    from native_profile import select,restore
+    recipe=config() if recipe is None else recipe
+    token=select(data,recipe)
+    try:
+        result,report=_build_menu(data,recipe)
+        from native_profile import _ACTIVE
+        report['native_build']=_ACTIVE.get()
+        return result,report
+    finally:restore(token)

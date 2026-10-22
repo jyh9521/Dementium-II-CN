@@ -14,6 +14,10 @@ ROM = Path(os.environ.get('DEMENTIUM_PREVIEW_ROM', ROOT / 'build/full-zh-CN/rom.
 
 @unittest.skipUnless(EXE.is_file() and ROM.is_file(), 'local built PE and archive required')
 class CollectionScrollInventoryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from native_replay import require_native_fixture
+        require_native_fixture(EXE)
     def test_every_existing_native_collection_text_resource(self):
         report = audit(EXE, ROM)
         self.assertEqual(report['native_id_range'], [41, 99])

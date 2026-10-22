@@ -37,6 +37,8 @@ class NativeMenuLocaleTests(unittest.TestCase):
 class NativeMenuPeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        from native_replay import require_native_fixture
+        require_native_fixture(SOURCE)
         import pefile
         cls.original = SOURCE.read_bytes()
         cls.literal_recipe = json.loads((ROOT / 'locales/zh-CN/executable-text.json').read_text(encoding='utf8'))
