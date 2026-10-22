@@ -18,7 +18,7 @@ namespace LocalizationInstaller {
   readonly Payload payload;
   bool busy;
   public MaterialWindow(Payload data,string selected=null,bool preview=false) {
-   payload=data;InitializeComponent();BuildLabel.Text=" build "+(payload.Settings.supported_builds ?? payload.Settings.build_label)+" · v1.1";
+   payload=data;InitializeComponent();BuildLabel.Text=" build "+(payload.Settings.supported_builds ?? payload.Settings.build_label)+" · v1.1.1";
    ArchivePath.TextChanged+=delegate {if(!busy)Ready();};
    Closing+=delegate(object s,System.ComponentModel.CancelEventArgs e){if(busy){e.Cancel=true;Status.Text="正在处理文件，请等待完成后再关闭";}};
    Loaded+=async delegate {

@@ -101,7 +101,7 @@ def main():
                  VERIFICATION=out/'VERIFICATION.txt', ROLLBACK=rollback)
     lines = ['Changed fields: ResourceEngine versioned named members; exact native profiles and complete PE/code/data hash guards before writes;',
              'Install enabled directly on path selection; optional resource check; original filenames in cn-backup and receipts; verified full restore deletes backup folder.',
-             'Version 1.1.0; supported builds 26099941 / 26123896; unknown version mismatch stops before any file replacement.',
+             'Version 1.1.1; supported builds 26099941 / 26123896; unknown version mismatch stops before any file replacement.',
              'New HEAD BOB translated; original in-game logo and company name preserved.',
              'Original input hashes='+json.dumps(original),
              'Installer bytes='+str(exe.stat().st_size)+' SHA256='+digest(exe),

@@ -3,10 +3,10 @@
   "payloads": [
     {
       "buildid": "26099941",
-      "path": "build/installer/old-v1.0/resource-patches.gz",
-      "sha256": "e19b48d8f9aefce875b6e5e76a415df224f320d2e6d6fcc23bc0f667f481babb",
+      "path": "build/installer/compatibility-v1.1.1/resource-patches.gz",
+      "sha256": "99fdd079146a0f4955011a50bc90511f4a3ece4798b5b1d4fd06b166f1f99f57",
       "exe_sha256": "ea68364b72c7c1ef5b84d24990ddcab6090eedff752736d3ef3c634733351e56",
-      "origin": "Verified v1.0 installer embedded sparse resource payload; no full game files"
+      "origin": "Verified v1.0 resource recipe with native menu rebuilt from the verified 26099941 executable and current locale labels; no full game files"
     }
   ]
 }

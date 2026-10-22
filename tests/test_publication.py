@@ -34,9 +34,9 @@ class PublicationTests(unittest.TestCase):
   self.assertRegex(r['sha256'],r'^[0-9a-f]{64}$');self.assertEqual(r['size'],78500889);self.assertEqual(r['player_acceptance']['status'],'full_playthrough_completed')
  def test_player_instructions_use_gui_not_python_install(self):
   s=self.read('docs/PLAYER_README.md');self.assertIn('Dementium-II-CN-v1.1.exe',s);self.assertIn('cn-backup',s);self.assertNotIn('install_patch.py install',s)
- def test_v11_identity_matches_current_policy_and_manual_release(self):
-  r=json.loads(self.read('assets/releases/v1.1.json'));b=json.loads(self.read('assets/supported-build.json'));p=json.loads(self.read('assets/release-policy.json'))
-  self.assertEqual(r['reference_build'],b['buildid']);self.assertEqual(r['installer_version'],p['installer_version'])
+ def test_v11_historical_identity_and_manual_release(self):
+  r=json.loads(self.read('assets/releases/v1.1.json'));b=json.loads(self.read('assets/supported-build.json'))
+  self.assertEqual(r['reference_build'],b['buildid']);self.assertEqual(r['installer_version'],'1.1.0')
   self.assertEqual(r['supported_builds'],['26099941','26123896'])
   self.assertEqual(r['status'],'prepared_for_manual_release')
   self.assertEqual(r['player_acceptance']['game_launch'],'NEVER')

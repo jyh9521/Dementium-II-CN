@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "status": "prepared_for_manual_release",
+  "tag": "v1.1.1",
+  "installer_version": "1.1.1",
+  "filename": "Dementium-II-CN-v1.1.1.exe",
+  "size": 78509081,
+  "sha256": "ae11b5dcf964f37482ad71f6756e32b18021a51d126b69166563b0eb244c216a",
+  "supported_appid": 5342930,
+  "reference_build": "26123896",
+  "supported_builds": [
+    "26099941",
+    "26123896"
+  ],
+  "player_acceptance": {
+    "status": "new_build_gameplay_not_tested",
+    "game_launch": "NEVER"
+  },
+  "compatibility": "All resource preimages and native position/layout/code/data guards must match before writes; mismatch leaves originals untouched.",
+  "changes": {
+    "Skeleton Key": "骷髅钥匙",
+    "Fumigator": "驱虫烟雾器"
+  }
+}

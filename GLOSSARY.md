@@ -50,9 +50,9 @@
 | Adrenaline Syringe | 肾上腺素注射器 | 文本审校完成；查看说明完整名称 |
 | Adrenaline | 肾上腺素 | 文本审校完成；GUI 与物品表沿用原文简称 |
 | Keycard | 门禁卡 | 文本审校完成 |
-| Skeleton Key | 万能钥匙 | 文本审校完成 |
+| Skeleton Key | 骷髅钥匙 | 文本审校完成 |
 | Shovel | 铲子 | 文本审校完成 |
-| Fumigator | 熏蒸器 | 文本审校完成 |
+| Fumigator | 驱虫烟雾器 | 文本审校完成 |
 | Red Book | 红色书籍 | 文本审校完成 |
 | Acid Neutralizer | 酸性中和剂 | 文本审校完成 |
 | Soul Vessel | 灵魂容器 | 文本审校完成 |

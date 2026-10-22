@@ -407,7 +407,7 @@
     "text_type": "narrative"
   },
   "EN/EXAMINE.079:0000": {
-    "target": "\n这是一把\u0002万能钥匙\u0001\n\n\n",
+    "target": "\n这是一把\u0002骷髅钥匙\u0001\n\n\n",
     "status": "text-reviewed",
     "text_type": "ui"
   },
@@ -432,7 +432,7 @@
     "text_type": "ui"
   },
   "EN/EXAMINE.084:0000": {
-    "target": "\r\n这是一台\u0002熏蒸器\u0001\r\n\r\n\r\n",
+    "target": "\r\n这是一台\u0002驱虫烟雾器\u0001\r\n\r\n\r\n",
     "status": "text-reviewed",
     "text_type": "ui"
   },
