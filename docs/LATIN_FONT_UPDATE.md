@@ -12,11 +12,11 @@
 
 ## 本地产物
 
-- 修改资源：`C:/Users/noway/Downloads/Dementium-II-CN/build/zh-CN/rom.zar`
-- 差分：`C:/Users/noway/Downloads/Dementium-II-CN/build/zh-CN/patch.json`
-- 精确命令、输入、标准输出、退出码：`C:/Users/noway/Downloads/Dementium-II-CN/build/zh-CN/VERIFICATION.txt`
-- 可执行回滚脚本：`C:/Users/noway/Downloads/Dementium-II-CN/tools/ROLLBACK_LOCALE.sh`
-- 中英文实际图集离线预览：`C:/Users/noway/Downloads/Dementium-II-CN/build/zh-CN/mixed-preview.png`
-- 调整前副本：`C:/Users/noway/Downloads/Dementium-II-CN/build/latin-original-baseline/`
+- 修改资源：`./build/zh-CN/rom.zar`
+- 差分：`./build/zh-CN/patch.json`
+- 精确命令、输入、标准输出、退出码：`./build/zh-CN/VERIFICATION.txt`
+- 可执行回滚脚本：`./tools/ROLLBACK_LOCALE.sh`
+- 中英文实际图集离线预览：`./build/zh-CN/mixed-preview.png`
+- 调整前副本：`./build/latin-original-baseline/`
 
 本次没有启动或操作游戏。之前的主菜单截图只验证调整前字体，不作为新版英文的实机验收。游戏标题美术图像未改。本次没有重新生成旧技术实验ZIP，不能用旧ZIP验收新版字体。

@@ -34,6 +34,9 @@ def main():
              '--logical',str(out/'text.json'),'--output',str(out/'text-layout-audit.json')],
             ['tools/audit_image_alignment.py','--original',str(game/'rom.zar'),
              '--archive',str(out/'rom.zar'),'--output',str(out/'image-layout-audit.json')]]
+    audits.append(['tools/audit_body_fallback.py','--archive',str(out/'rom.zar'),
+                   '--report',str(out/'font-report.json'),'--logical',str(out/'text.json'),
+                   '--output',str(out/'body-fallback-audit.json')])
     audits.append(['tools/audit_ui_corrections.py','--original',str(game/'rom.zar'),
                    '--archive',str(out/'rom.zar'),'--output',str(out/'ui-correction-audit.json')])
     for command in audits:

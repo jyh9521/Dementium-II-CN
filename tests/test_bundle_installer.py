@@ -42,7 +42,7 @@ class BundleInstallerTests(unittest.TestCase):
         (self.game/'Dementium II.exe').write_bytes(b'UNKNOWN')
         with self.assertRaises(ValueError):self.operate('install')
         self.assertEqual((self.game/'rom.zar').read_bytes(),self.rom)
-        self.assertFalse((self.game/'.dementium-locale').exists())
+        self.assertFalse((self.game/'cn-backup').exists())
 
     def test_unknown_archive_rejected_before_any_write(self):
         (self.game/'rom.zar').write_bytes(b'UNKNOWN')
@@ -51,14 +51,14 @@ class BundleInstallerTests(unittest.TestCase):
 
     def test_tampered_backup_rejected(self):
         self.operate('install')
-        (self.game/'.dementium-locale/original.exe').write_bytes(b'UNKNOWN')
+        (self.game/'cn-backup/Dementium II.exe').write_bytes(b'UNKNOWN')
         with self.assertRaises(ValueError):self.operate('uninstall')
         self.assertEqual((self.game/'rom.zar').read_bytes(),self.modified_rom)
 
     def test_modified_without_backup_rejected(self):
         (self.game/'Dementium II.exe').write_bytes(self.modified_exe)
         with self.assertRaises(ValueError):self.operate('install')
-        self.assertFalse((self.game/'.dementium-locale').exists())
+        self.assertFalse((self.game/'cn-backup').exists())
 
     def test_interrupted_mixed_state_can_be_completed(self):
         self.operate('install')

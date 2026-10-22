@@ -23,6 +23,36 @@ def atomic_write(path, data):
             os.unlink(tmp)
 
 
+def backup_path(game, name, old_name):
+    current = game / 'cn-backup' / name
+    legacy = game / '.dementium-locale' / old_name
+    return legacy if not current.exists() and legacy.exists() else current
+
+
+def remove_backup_folder(game, folder):
+    path = game / folder
+    if not path.exists():
+        return
+    if path.resolve().parent != game.resolve() or path.is_symlink() or path.is_junction():
+        raise ValueError('Unexpected backup folder path')
+    for root, dirs, files in os.walk(path, followlinks=False):
+        for name in dirs + files:
+            child = Path(root) / name
+            if child.is_symlink() or child.is_junction():
+                raise ValueError('Backup contains a link; recovery files retained')
+    shutil.rmtree(path)
+
+
+def finish_restore(game, plans):
+    # Called only after every selected component is committed and hash-verified.
+    # A ROM-only invocation must retain any executable recovery backup.
+    for folder, exe in [('cn-backup', 'Dementium II.exe'), ('.dementium-locale', 'original.exe')]:
+        if len(plans) == 1 and (game / folder / exe).exists():
+            continue
+        if all(filehash(p['path']) == p['desired'] for p in plans):
+            remove_backup_folder(game, folder)
+
+
 def operate(game, identity, patch, action):
     game = game.resolve(strict=True)
     exe, archive = game / 'Dementium II.exe', game / 'rom.zar'
@@ -33,16 +63,19 @@ def operate(game, identity, patch, action):
     current = filehash(archive)
     expected = patch['original_sha256'] if action == 'install' else patch['modified_sha256']
     destination = patch['modified_sha256'] if action == 'install' else patch['original_sha256']
-    backup = game / '.dementium-locale' / 'original.zar'
+    backup = backup_path(game, 'rom.zar', 'original.zar')
     if current == destination:
         if action == 'install' and (not backup.exists() or filehash(backup) != patch['original_sha256']):
             raise ValueError('Installed archive has no verified recovery backup')
+        if action == 'uninstall':
+            finish_restore(game, [dict(path=archive, desired=destination)])
         return 'ALREADY_' + ('INSTALLED' if action == 'install' else 'RESTORED')
     if current != expected:
         raise ValueError('Archive version/hash mismatch; no files changed')
     if action == 'install':
         if backup.exists() and filehash(backup) != current:
             raise ValueError('Existing recovery backup mismatch')
+        backup = game / 'cn-backup' / 'rom.zar'
         backup.parent.mkdir(parents=True, exist_ok=True)
         if not backup.exists():
             # Exclusive creation preserves any concurrent operator-created backup.
@@ -63,6 +96,8 @@ def operate(game, identity, patch, action):
     atomic_write(archive, result)
     if filehash(archive) != destination:
         raise ValueError('Written archive verification failed')
+    if action == 'uninstall':
+        finish_restore(game, [dict(path=archive, desired=destination)])
     return 'INSTALLED' if action == 'install' else 'RESTORED'
 
 
@@ -90,7 +125,7 @@ def operate_bundle(game, identity, patch, executable_patch, action):
         if current not in (delta['original_sha256'],delta['modified_sha256']):
             raise ValueError('Unknown component state: '+name)
         desired = delta['modified_sha256'] if action=='install' else delta['original_sha256']
-        backup = game/'.dementium-locale'/backup_name
+        backup = backup_path(game, name, backup_name)
         if backup.exists() and filehash(backup)!=delta['original_sha256']:
             raise ValueError('Recovery backup mismatch: '+name)
         if current==delta['modified_sha256'] and not backup.exists():
@@ -100,6 +135,8 @@ def operate_bundle(game, identity, patch, executable_patch, action):
             raise ValueError('Component result mismatch: '+name)
         plans.append(dict(path=path,backup=backup,before=before,after=after,current=current,desired=desired))
     if all(p['current']==p['desired'] for p in plans):
+        if action == 'uninstall':
+            finish_restore(game, plans)
         return 'ALREADY_INSTALLED' if action=='install' else 'ALREADY_RESTORED'
     if action=='install':
         for p in plans:
@@ -124,6 +161,8 @@ def operate_bundle(game, identity, patch, executable_patch, action):
         for p in reversed(written):
             atomic_write(p['path'],p['before'])
         raise
+    if action == 'uninstall':
+        finish_restore(game, plans)
     return 'INSTALLED' if action=='install' else 'RESTORED'
 
 

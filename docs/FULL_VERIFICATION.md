@@ -36,7 +36,7 @@
 
 ## 本地交付和保留
 
-项目根为`C:/Users/noway/Downloads/Dementium-II-CN`。
+命令在仓库根目录执行。
 
 - MODIFIED_FILE：`build/full-zh-CN/rom.zar`，同目录有完整EXE及依赖，供用户手动启动。
 - DIFF_FILE：`build/full-zh-CN/patch.json`；原生显示常量另见`exe-patch.json`。

@@ -20,7 +20,7 @@ BASE = 0x140000000
 VISIBLE = 0x4a2f1d
 ALLOW = 0x4a2f1c
 PREVIOUS = 0xa34527
-SIZE = 0xa35000
+SIZE = 0xb10000
 
 
 @unittest.skipUnless(os.name == 'nt' and platform.machine().lower() in ('amd64', 'x86_64') and SOURCE.is_file(),
@@ -110,7 +110,7 @@ class NativeDebugInputTests(unittest.TestCase):
         self.assertEqual({vk: key(vk) for vk in (0x70, 0x56, 0x25, 0x26, 0x27, 0x28)},
                          {0x70: 0x1c, 0x56: 0x7e, 0x25: 0xe, 0x26: 0xf, 0x27: 0x10, 0x28: 0x11})
 
-    def test_f1_field_updates_and_inactive_input_ignored(self):
+    def test_f1_field_updates_and_other_inactive_input_ignored(self):
         code = bytearray(self.source_bytes(0x1a7c50, 0x1a7d81))
         relative = 0x1a7d4b - 0x1a7c50
         self.assertEqual(code[relative:relative + 3], bytes.fromhex('83 fa 7e'))

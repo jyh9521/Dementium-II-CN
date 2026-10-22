@@ -1,8 +1,8 @@
 """Audited native debug-menu unlock and locale data, locked to one shipped PE.
 
-No injected executable code, imports or absolute-address assumptions: new strings
-are in a read-only PE section; existing RIP displacements and relocated table
-pointers are redirected. The original checkbox/action implementations are kept.
+Locale strings remain in a read-only PE section. Native UI hooks use a separate
+RX section and an audited new zero-fill RW data tail, never RWX or new imports.
+The original checkbox/action implementations are kept.
 """
 import io
 import base64
@@ -128,6 +128,21 @@ def build_menu(data, recipe=None):
     key=pe.get_offset_from_rva(0x1a7d4b)
     if out[key:key+3]!=b'\x83\xfa\x7e': raise ValueError('Hotkey compare guard mismatch')
     out[key+2]=0x1c  # Native key translator maps Win32 VK_F1 to internal 0x1c.
+    # Startup FUN_14002eee0 explicitly sets input object +458 to zero.
+    # Only F1 must still reach +22c in that native mode. Preserve the mode
+    # gate for every other key and use guarded adjacent INT3 padding for
+    # relative branches only (no new section/import/absolute address).
+    mode=pe.get_offset_from_rva(0x1a7c5b)
+    cave=pe.get_offset_from_rva(0x1a7d81)
+    if out[mode:mode+6]!=bytes.fromhex('0f 84 f6 00 00 00'):
+        raise ValueError('Direct-input mode branch guard mismatch')
+    if out[cave:cave+15]!=b'\xcc'*15:
+        raise ValueError('F1 mode bridge padding guard mismatch')
+    out[mode:mode+6]=b'\x0f\x84'+struct.pack('<i',0x1a7d81-(0x1a7c5b+6))
+    bridge=(bytes.fromhex('83 fa 1c 0f 84')+
+            struct.pack('<i',0x1a7d50-(0x1a7d81+9))+
+            b'\xe9'+struct.pack('<i',0x1a7d57-(0x1a7d81+14))+b'\xcc')
+    out[cave:cave+15]=bridge
     if not any(r['target']==hex(glyph_va) for r in redirected):
         raise ValueError('Glyph-range reference was not redirected')
     missing=set(recipe['labels'])-hits
@@ -142,9 +157,16 @@ def build_menu(data, recipe=None):
     result=bytes(out)
     parsed=pefile.PE(data=result)
     assert parsed.sections[-1].Characteristics==0x40000040
-    return result,dict(labels=len(hits),rip_references=len(redirected),entity_names=35,section_groups=7,
+    from menu_input import patch_menu_input
+    from document_reader import patch_document_reader
+    result,input_report=patch_menu_input(result)
+    result,reader_report=patch_document_reader(result)
+    from pause_layout import patch_pause_layout
+    result,pause_report=patch_pause_layout(result)
+    return result,dict(input=input_report,document_reader=reader_report,pause_layout=pause_report,labels=len(hits),rip_references=len(redirected),entity_names=35,section_groups=7,
                        glyphs=len(set(glyph_text(recipe))),unlock_branch='0x14004fa49: 7504 -> eb04',
-                       hotkey='F1 (VK 0x70 -> internal 0x1c)',
+                       hotkey='F1 (VK 0x70 -> internal 0x1c), including native direct-input-disabled mode',
+                       mode_bridge='0x1401a7c5b -> 0x1401a7d81; F1-only bypass of +458',
                        new_section='.locmenu read-only non-executable',references=redirected)
 
 
@@ -155,7 +177,6 @@ def make_patch(original, modified):
 
 def apply_patch(data,patch,reverse=False):
     if patch.get('format')!=FORMAT: raise ValueError('Not a native-menu PE patch')
-    import pefile
     before='modified' if reverse else 'original'
     after='original' if reverse else 'modified'
     if len(data)!=patch[before+'_size'] or digest(data)!=patch[before+'_sha256']:
@@ -178,5 +199,8 @@ def apply_patch(data,patch,reverse=False):
     result=bytes(out)
     if len(result)!=patch[after+'_size'] or digest(result)!=patch[after+'_sha256']:
         raise ValueError('Native-menu patch result identity differs')
-    pefile.PE(data=result,fast_load=True)
+    # Applying a prebuilt delta must remain standard-library-only for the
+    # portable installer. Validate its existing PE section table defensively.
+    from executable_text import _rdata
+    _rdata(result)
     return result

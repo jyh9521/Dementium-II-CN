@@ -57,19 +57,28 @@ class NativeMenuPeTests(unittest.TestCase):
             build_menu(bytes(broken))
 
     def test_readonly_new_section_mapping_and_existing_sections(self):
-        self.assertEqual(len(self.after.sections), len(self.before.sections) + 1)
+        self.assertEqual(len(self.after.sections), len(self.before.sections) + 2)
         for old, new in zip(self.before.sections, self.after.sections):
-            self.assertEqual(old.__pack__(), new.__pack__())
-        section = self.after.sections[-1]
+            if old.Name.rstrip(b'\0')==b'.data':
+                self.assertEqual(new.VirtualAddress+new.Misc_VirtualSize,0xa69000)
+                self.assertEqual(old.PointerToRawData,new.PointerToRawData)
+                self.assertEqual(old.SizeOfRawData,new.SizeOfRawData)
+                self.assertEqual(old.Characteristics,new.Characteristics)
+            else:
+                self.assertEqual(old.__pack__(), new.__pack__())
+        section = self.after.sections[-2]
         self.assertEqual(section.Name.rstrip(b'\0'), b'.locmenu')
         self.assertEqual(section.Characteristics, 0x40000040)
         self.assertFalse(section.Characteristics & (0x20000000 | 0x80000000))
         self.assertEqual(section.PointerToRawData % self.after.OPTIONAL_HEADER.FileAlignment, 0)
         self.assertEqual(section.VirtualAddress % self.after.OPTIONAL_HEADER.SectionAlignment, 0)
-        self.assertEqual(section.PointerToRawData + section.SizeOfRawData, len(self.modified))
+        ui = self.after.sections[-1]
+        self.assertEqual(ui.Name.rstrip(b'\0'),b'.locui')
+        self.assertEqual(ui.Characteristics,0x60000020)
+        self.assertEqual(ui.PointerToRawData+ui.SizeOfRawData,len(self.modified))
         self.assertEqual(self.after.get_offset_from_rva(section.VirtualAddress), section.PointerToRawData)
         self.assertGreaterEqual(self.after.OPTIONAL_HEADER.SizeOfImage,
-                                section.VirtualAddress + section.Misc_VirtualSize)
+                                ui.VirtualAddress + ui.Misc_VirtualSize)
 
     def read_string(self, pe, data, address):
         offset = pe.get_offset_from_rva(address - pe.OPTIONAL_HEADER.ImageBase)
@@ -81,7 +90,7 @@ class NativeMenuPeTests(unittest.TestCase):
         md.detail = True
         self.assertGreater(self.report['rip_references'], 40)
         self.assertEqual(self.report['labels'], len(self.recipe['labels']))
-        section = self.after.sections[-1]
+        section = self.after.sections[-2]
         base = self.after.OPTIONAL_HEADER.ImageBase
         glyph_hits = 0
         for ref in self.report['references']:
@@ -108,6 +117,11 @@ class NativeMenuPeTests(unittest.TestCase):
         md.detail = True
         base = self.before.OPTIONAL_HEADER.ImageBase
         allowed = {0x4ee49, 0x1a714d}
+        allowed.update(range(self.before.get_offset_from_rva(0x1a7c5b), self.before.get_offset_from_rva(0x1a7c61)))
+        allowed.update(range(self.before.get_offset_from_rva(0x1a7d81), self.before.get_offset_from_rva(0x1a7d90)))
+        for rva,size in [(0x1a7c54,7),(0x2ee30,6),(0x1a7d90,11),(0x15587b,7),(0x2f3236,11),(0x2f537c,10),(0x2f5a8,7),(0x2f39cc,6),(0x2f3a3e,7),(0x2de833,7),(0x2f4ad,6),(0x4fa66,8),(0x11b4f7,10),(0x11a7b0,5),(0x11af80,6),(0x123379,10),(0x121e50,5),(0x122a10,11),(0x126da7,10)]:
+            offset=self.before.get_offset_from_rva(rva)
+            allowed.update(range(offset,offset+size))
         for ref in self.report['references']:
             address = int(ref['instruction'], 16)
             instruction = next(md.disasm(self.before.get_data(address - base, 15), address))

@@ -251,8 +251,8 @@ def build_mixed(zar, records, profile):
     rows = []
     ybase = old.height + 1
     for role, codes in [('body', body_codes), ('fallback', fallback_codes), ('title', title_codes)]:
-        cell = profile['fonts']['title' if role == 'fallback' else role]['pixel_size']
-        cell_height = (17 if replaced_codes else 15) if role == 'body' else 16
+        cell = profile['fonts']['body' if role == 'fallback' else role]['pixel_size']
+        cell_height = (17 if replaced_codes else 15) if role in ('body', 'fallback') else 16
         cols = width // (cell + 2)
         for i, c in enumerate(codes):
             rows.append((role, c, 1 + (i % cols) * (cell + 2), ybase + (i // cols) * (cell_height + 2), cell))
@@ -262,12 +262,14 @@ def build_mixed(zar, records, profile):
     atlas = Image.new('RGBA', (width, ybase))
     atlas.paste(old, (0, 0))
     fonts = {role: ImageFont.truetype(str(path), profile['fonts'][role]['pixel_size']) for role, path in paths.items()}
-    fonts['fallback'] = fonts['title']
+    # Use the fallback face, not its title role's size or vertical origin.
+    fonts['fallback'] = ImageFont.truetype(str(paths['title']), profile['fonts']['body']['pixel_size'])
+    fallback_shift = fonts['body'].getmetrics()[0] - fonts['fallback'].getmetrics()[0]
     for role, c, x, y, size in rows:
         font = fonts[role]
-        height = 15 if role == 'body' else 16
+        height = 15 if role in ('body', 'fallback') else 16
         bounds = font.getbbox(chr(c))
-        shift = 0
+        shift = fallback_shift if role == 'fallback' else 0
         if role == 'body' and c in replaced_codes:
             # Preserve the shared baseline, including accents above it and cedillas below.
             shift = max(0, -bounds[1])
@@ -284,7 +286,7 @@ def build_mixed(zar, records, profile):
         atlas.paste(glyph, (x, y))
         key = aliases[c] if role == 'title' else c
         meta['glyphs'][str(key)] = dict(w=size, h=height, logw=round(font.getlength(chr(c))), xo=0,
-                                      yo=-2 if role != 'body' else -shift, tx=x, ty=y)
+                                      yo=-2 if role == 'title' else (-shift if role == 'body' else 0), tx=x, ty=y)
     meta['linefeed'] = profile['linefeed']
     runtime = copy.deepcopy(records)
     layouts = []
@@ -311,7 +313,9 @@ def build_mixed(zar, records, profile):
     buffer = io.BytesIO(); atlas.save(buffer, format='PNG')
     changes = {name+'.JSON': (json.dumps(meta,ensure_ascii=False,indent=2)+'\n').encode(), name+'.PNG': buffer.getvalue()}
     report = dict(repaired_blank_codes=sorted(blank_existing), added_glyphs=len(rows), body_added=len(body_codes), title_added=len(title_codes),
-                  body_fallback_codes=fallback_codes, body_fallback_native_pixels=16,
+                  body_fallback_codes=fallback_codes, body_fallback_native_pixels=profile['fonts']['title']['pixel_size'],
+                  body_fallback_pixels=profile['fonts']['body']['pixel_size'],
+                  body_fallback_baseline_shift=fallback_shift,
                   original_glyphs_preserved=len(original_glyphs)-len(replaced_codes),
                   replaced_original_codes=replaced_codes, original_pixels_preserved=True,
                   atlas_size=list(atlas.size), rgba_bytes=width*ybase*4,

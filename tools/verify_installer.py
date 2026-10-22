@@ -62,7 +62,11 @@ def main():
         target = out/('resource-older-'+uuid.uuid4().hex[:12])
         run('RESOURCE_OLDER_INSTALL_RESTORE', [sdk, tests, '--resource-real', args.older_game.resolve(), target],
             'Different real game build, archive/EXE hashes and EXE offsets')
-    run('PYTHON_UNIT', ['python', '-X', 'utf8', '-m', 'unittest', 'discover', '-s', 'tests', '-q'], 'Repository test suite')
+    test_env = dict(os.environ, DEMENTIUM_MODIFIED_EXE=str(root/'build/full-zh-CN/Dementium II.exe'),
+                    DEMENTIUM_UI_TEST_EXE=str(root/'build/full-zh-CN/Dementium II.exe'),
+                    DEMENTIUM_PREVIEW_ROM=str(root/'build/full-zh-CN/rom.zar'))
+    run('PYTHON_UNIT', ['python', '-X', 'utf8', '-m', 'unittest', 'discover', '-s', 'tests', '-q'],
+        'Repository test suite; every configurable UI/PE/archive target bound to current full-zh-CN output', test_env)
     run('STEAM_READ_ONLY', [sdk, tests, '--detect'], 'Registry Steam roots + libraryfolders.vdf + appmanifest_5342930.acf')
     environment = dict(os.environ, DOTNET_ROOT=str(out/'no-installed-runtime'), DOTNET_MULTILEVEL_LOOKUP='0',
                        HTTP_PROXY='http://127.0.0.1:9', HTTPS_PROXY='http://127.0.0.1:9')
@@ -96,14 +100,14 @@ def main():
     paths = dict(MODIFIED_FILE=exe, DIFF_FILE=out/'resource-patches.gz',
                  VERIFICATION=out/'VERIFICATION.txt', ROLLBACK=rollback)
     lines = ['Changed fields: ResourceEngine named archive members and dynamic .rdata literal search; no build/container hash allow-list;',
-             'Install enabled directly on path selection; optional resource check; content-addressed original backups and receipts.',
+             'Install enabled directly on path selection; optional resource check; original filenames in cn-backup and receipts; verified full restore deletes backup folder.',
              'Version remains 1.0.0; supplied logo/icon, Material Design motion and requested links unchanged.',
              'Text/image game delta unchanged; original in-game logo and company name preserved.',
              'Original input hashes='+json.dumps(original),
              'Installer bytes='+str(exe.stat().st_size)+' SHA256='+digest(exe),
              'ZIP bytes='+str(archive.stat().st_size)+' SHA256='+digest(archive),
              'OS actually tested='+platform.platform(), 'game_launch=NEVER',
-             'Restored behavior/status: original ROM+EXE byte identical; backups retained; modified build and installer retained.',
+             'Restored behavior/status: original ROM+EXE byte identical; backup folder removed; modified build and installer retained.',
              'Previous installer preserved='+str(out/'previous/Setup.exe')]
     if (out/'previous/Setup.exe').exists():
         lines += ['Previous installer SHA256='+digest(out/'previous/Setup.exe')]

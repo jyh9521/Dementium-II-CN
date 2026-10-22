@@ -86,9 +86,16 @@ def main():
             raise ValueError('Preview reopen size differs')
     environment = dict(os.environ, DEMENTIUM_SOURCE_EXE=str((args.game / 'Dementium II.exe').resolve()),
                        DEMENTIUM_SOURCE_ROM=str((args.game / 'rom.zar').resolve()),
-                       DEMENTIUM_MODIFIED_EXE=str(modified_path.resolve()))
+                       DEMENTIUM_MODIFIED_EXE=str(modified_path.resolve()),
+                       DEMENTIUM_UI_TEST_EXE=str(modified_path.resolve()),
+                       DEMENTIUM_PREVIEW_EXE=str(modified_path.resolve()),
+                       DEMENTIUM_PREVIEW_ROM=str((args.build/'rom.zar').resolve()),
+                       DEMENTIUM_RESTART_TEST_EXE=str(modified_path.resolve()),
+                       DEMENTIUM_RESTART_TEST_ROM=str((args.build/'rom.zar').resolve()),
+                       DEMENTIUM_PAUSE_TEST_EXE=str(modified_path.resolve()),
+                       DEMENTIUM_PAUSE_TEST_ROM=str((args.build/'rom.zar').resolve()))
     commands = []
-    for script in ('tests/test_debug_input.py', 'tests/test_debug_menu.py'):
+    for script in ('tests/test_debug_input.py', 'tests/test_debug_menu.py', 'tests/test_debug_dispatch.py', 'tests/test_menu_focus.py', 'tests/test_document_reader.py', 'tests/test_menu_pointer_dispatch.py', 'tests/test_pause_layout.py', 'tests/test_menu_widget_activation.py', 'tests/test_postcard_preview.py', 'tests/test_restart_lifecycle.py', 'tests/test_reader_key_lifecycle.py', 'tests/test_menu_message_path.py', 'tests/test_menu_full_frame.py', 'tests/test_reader_transition_audit.py', 'tests/test_menu_transition_audit.py', 'tests/test_input_boundary_audit.py', 'tests/test_input_transition_matrix.py', 'tests/test_short_letter_scroll.py', 'tests/test_collection_scroll_inventory.py', 'tests/test_reader_gamepad.py'):
         command = [sys.executable, '-X', 'utf8', str(ROOT / script)]
         result = subprocess.run(command, cwd=ROOT, env=environment, text=True, capture_output=True)
         commands.append(dict(command=command, input=dict(source_exe=environment['DEMENTIUM_SOURCE_EXE'],
@@ -100,7 +107,7 @@ def main():
     result = dict(schema=1, original_sha256=digest(original), baseline_literal_sha256=digest(baseline),
                   modified_sha256=digest(actual), rollback_sha256=digest(restored),
                   baseline='Native gate requires allow-opening; isolated CPU replay passed',
-                  modified='F1 toggle/debounce, menu-visible game input/cursor gates, native health mask and two ammo decrement blocks replayed; PE/ASLR/font checks passed',
+                  modified='F1 toggle/debounce, cursor ownership/coordinates/focus loss, native WM wheel normalization, raw wheel consumption, both keyboard modes, document windows and reader action isolation replayed; health/ammo and PE/ASLR/font checks passed',
                   rollback='Exact original executable bytes/hash and locked gate restored in isolated copy',
                   font_sha256=digest(packaged_font), glyphs=len(required), missing_glyphs=[],
                   labels=len(labels), menu_report=report, commands=commands,
@@ -109,7 +116,7 @@ def main():
     write_json(output / 'verification.json', result)
     reopened = json.loads((output / 'verification.json').read_text(encoding='utf8'))
     assert reopened['modified_sha256'] == digest(actual)
-    print('NATIVE_MENU_VERIFY labels=%d glyphs=%d missing=0 input_cpu=PASS health_ammo_cpu=PASS pe_aslr=PASS font=PASS rollback=EXACT game_launch=NEVER result=PASS' %
+    print('NATIVE_MENU_VERIFY labels=%d glyphs=%d missing=0 input_cpu=PASS focus_wheel_reader_cpu=PASS health_ammo_cpu=PASS pe_aslr=PASS font=PASS rollback=EXACT game_launch=NEVER result=PASS' %
           (len(labels), len(required)))
 
 

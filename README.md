@@ -1,38 +1,62 @@
-# Dementium II（2026 Steam）简体中文汉化工程
+# 《病房2》简体中文汉化
 
-Steam AppID **5342930**，构建参考 build **26099941**（归档按资源匹配，F1原生菜单程序精确匹配该版本），不适用于 2013 HD 版。
+Dementium II（2026 Steam版）的简体中文汉化补丁与可重建工具，包含文本、像素字库、图片文字、中文F1菜单及文档阅读体验修正。
 
-## 当前实际状态（2026-10-21）
+## 支持版本与当前状态
 
-**本地可识别文本已全部翻译并完成对照审校；全流程实机验收单列。**
+已发布 **v1.0**，适用于 **Steam 2026版（AppID 5342930）**，以 **build 26099941** 为重建与原生程序补丁基线。**不适用于2013年的《Dementium II HD》。**
 
-- 已审计全部3471个原包成员；179个英文资源、676条记录，520条中文译文，156条专名/谜题/技术数据有理由保留，空译文0。
-- 补译此前遗漏的10条开门/门禁卡交互；27条已有完整中文但仍需实机场景确认语境。
-- 41张位图187个文字标签及5个PC菜单固定字面量完成配方重建。
-- 剧情正常用句号；设置、物体说明和操作提示的无内部标点单句不加句末句号。既有译文已追溯调整。
-- 正文和英文采用 Fusion Pixel12，章节中文采用 ChillBitmap16。
-- 明信片4行/72px门禁与离线遮挡回归通过；174项Python与71项安装器测试通过，另有实际文件、安装和双组件恢复验证。
-- 用户已提供中文主菜单与明信片实机截图，修复后明信片仍待实机验收。
-- 不自动启动游戏；安装前保留原版备份，不创建未经授权的正式 Release。
+维护者已于 **2026-10-22 完整通关，报告本次流程未发现问题**。当前没有已确认、尚未修复的补丁故障。发布身份与验证摘要见[当前状态](docs/STATUS.md)，显示差异与反馈说明见[已知问题](docs/KNOWN_ISSUES.md)。
 
-## 入口
+## 下载 / 安装
 
-- **图形安装器**：本地`dist/Dementium-II-zh-CN-Setup.exe`，自动检测Steam库或选择自己的`rom.zar`，可直接安装；归档按资源匹配，包含F1原生菜单的EXE精确校验版本，支持有可信记录的旧汉化升级；Material Design 3含动画、自包含运行时，不打包完整游戏、不要求另装.NET/Python。详见[安装器说明](docs/GUI_INSTALLER.md)。
-- 安装器使用用户确认的41张精修工作图，26张不可辨/未核实图保持原版；英文LOGO和公司名不改。
+**[v1.0 发布页](https://github.com/jyh9521/Dementium-II-CN/releases/tag/v1.0)** · **[下载安装器](https://github.com/jyh9521/Dementium-II-CN/releases/download/v1.0/Dementium-II-CN-v1.0.exe)**
 
-- [技术报告](docs/TECHNICAL_ANALYSIS.md)、[进度](docs/PROGRESS.md)。
-- [构建与发行](docs/BUILD_AND_RELEASE.md)、[测试清单](docs/TESTING_CHECKLIST.md)。
-- [玩家说明](docs/PLAYER_README.md)、[安装与恢复](docs/INSTALLATION_GUIDE.md)。
-- [全文覆盖与保留依据](docs/TEXT_COVERAGE_AUDIT.md)、[独立文本QA](docs/FINAL_TEXT_QA.md)。
-- [文件地图](docs/FILEMAP.md)、[术语](GLOSSARY.md)、[更新日志](CHANGELOG.md)。
+1. 准备Steam版游戏并退出运行。
+2. 运行 `Dementium-II-CN-v1.0.exe`，使用自动检测到的游戏路径；未检测到时，手动选择游戏目录中的 `rom.zar`。
+3. 安装完成后，从Steam正常启动游戏。
+4. 恢复原版时，在同一个安装器中选择恢复。安装期间请保留游戏目录里的 `cn-backup`；完整恢复并校验后，安装器会自动清理该目录。
 
-Python3.11+，依赖requirements.txt。本地完整副本位于 `build/full-zh-CN/`，由用户手动启动其中EXE。
-当前玩家测试包 `dist/Dementium-II-zh-CN-preview.zip` 只含差分、脚本和许可证，不包含完整游戏文件。
-不以离线通过冒充通关稳定性验收。“全文”不将调试控制台、平台覆盖层、品牌原画、按键/谜题标识和不可辨微字伪称为已替换中文。
-历史重复构建统一存放于忽略的 `build/archive/`，原件、恢复资料和既有验收副本保留。
+安装器为Windows x64自包含程序，**无需另装Python或.NET**，不包含游戏本体，不修改玩家存档。支持带可信备份记录的旧汉化升级。详细步骤见[安装与恢复](docs/INSTALLATION_GUIDE.md)。
 
-仓库：https://github.com/jyh9521/Dementium-II-CN
+## 汉化与功能
 
-## 原生作弊菜单与图像修复（2026-10-21）
+- 菜单、交互提示、字幕、文档及图片文字；专名、字母谜题、按键标识与不可辨认原画按清单保留。
+- 正文与英文采用Fusion Pixel12px，章节中文采用ChillBitmap16px；补字按正文尺寸和基线生成。
+- 长文保留原分段，可用上下键、滚轮或右摇杆滚动阅读；短文与明信片保持独立排版。
+- F1打开原生中文菜单，支持鼠标、滚轮和键盘操作；包含可取消的持续选项与一次性操作按钮。
 
-本轮完整构建使用F1开关原生中文作弊菜单。持续作弊可随时取消勾选，原生一次性操作保持按钮语义。详见[使用及验证](docs/NATIVE_CHEAT_MENU.md)、[操作图修复](docs/NATIVE_UI_IMAGE_REPAIR.md)、[死亡图配对色调](docs/IMAGE_VARIANT_TONES.md)。
+原图中不可辨认的微缩字样不作猜译，英文LOGO与公司名保留。更多操作见[玩家说明](docs/PLAYER_README.md)。
+
+## 从源码重建
+
+需要匹配的原版游戏、Python 3.11+及按哈希锁定的两套字体；构建图形安装器还需.NET 10 SDK与单独提供的品牌输入。完整输入与命令见[BUILDING.md](BUILDING.md)。
+
+```powershell
+python -m pip install -r requirements.txt
+python -X utf8 tools/build_locale.py --game "D:/Games/Dementium II Original"
+```
+
+输出位于 `build/full-zh-CN/`，安装器与压缩包生成至 `dist/`。构建工具不启动游戏。仓库只保存源码、结构化译文、补丁配方与文档，不提交完整游戏资源。
+
+## 仓库结构与文档
+
+| 路径 | 内容 |
+| --- | --- |
+| `locales/zh-CN/` | 结构化译文、字体及图片文字配置 |
+| `tools/` | 提取、校验、字体、资源重建、差分与打包工具 |
+| `installer/` | WPF图形安装器与原生安装/恢复测试 |
+| `tests/` | 合成资源测试与可选本地原生指令回放 |
+| `assets/` | 游戏版本、发布身份与第三方许可记录 |
+| `docs/` | 玩家说明、技术调查、验收与历史记录 |
+| `build/`、`dist/`、`work/` | 本地生成物与工作资料，Git忽略 |
+
+- [文档索引](docs/README.md) · [发布与验收状态](docs/STATUS.md)
+- [构建说明](BUILDING.md) · [技术说明](TECHNICAL.md) · [技术陷阱](docs/PITFALLS.md)
+- [翻译规范](TRANSLATING.md) · [术语表](GLOSSARY.md) · [更新日志](CHANGELOG.md)
+
+## 来源与许可
+
+感谢原游戏开发与发行团队，以及Fusion Pixel、ChillBitmap、Pillow、fontTools和MaterialDesignInXamlToolkit等项目的作者与贡献者。
+
+项目自编工具采用MIT，原创译文采用CC BY-SA 4.0；字体及第三方组件各遵循自身许可。游戏原文和商业资源仍归原权利人所有。详见[许可与来源](LICENSING.md)及[制作与致谢](CREDITS.md)。

@@ -45,7 +45,7 @@
 
 ## 产物与恢复
 
-新独立副本：`C:/Users/noway/Downloads/Dementium-II-CN/build/postcard-fix/`。
+新独立副本：`./build/postcard-fix/`。
 用户可手动运行其中的 `Dementium II.exe`，进入同一明信片检查图片、第一行及底部拾取提示互不重叠；
 再检查后续明信片、收藏回看和含匕首变量的045。现有存档由游戏沿用，本次没有操作或覆盖存档。
 

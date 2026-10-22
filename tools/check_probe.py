@@ -41,7 +41,8 @@ def main():
             raise RuntimeError('Packaged installer test failed')
     assert filehash(target / 'rom.zar') == filehash(args.game / 'rom.zar')
     assert filehash(target / 'Dementium II.exe') == filehash(args.game / 'Dementium II.exe')
-    assert filehash(target / '.dementium-locale/original.zar') == identity['rom_sha256']
+    assert not (target / 'cn-backup').exists()
+    assert not (target / '.dementium-locale').exists()
     write_json(test / 'results.json', results)
     print('PACKAGE_TEST install=PASS idempotence=PASS uninstall=PASS restore=BYTE_IDENTICAL game_launch=NEVER result=PASS')
 

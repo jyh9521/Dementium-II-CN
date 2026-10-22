@@ -97,8 +97,8 @@ namespace LocalizationInstaller {
                 throw new InvalidDataException("请选择名为 "+payload.Settings.archive_file+" 的游戏资源文件");
             string dir=System.IO.Path.GetDirectoryName(path),backup=System.IO.Path.Combine(dir,payload.Settings.backup_folder);
             var result=new Inspection();
-            result.Components.Add(new Component { Path=path,Backup=System.IO.Path.Combine(backup,"original.zar"),Delta=payload.Archive });
-            if(includeExecutable) result.Components.Add(new Component {Path=System.IO.Path.Combine(dir,payload.Settings.executable_file),Backup=System.IO.Path.Combine(backup,"original.exe"),Delta=payload.Executable});
+            result.Components.Add(new Component { Path=path,Backup=System.IO.Path.Combine(backup,payload.Settings.archive_file),Delta=payload.Archive });
+            if(includeExecutable) result.Components.Add(new Component {Path=System.IO.Path.Combine(dir,payload.Settings.executable_file),Backup=System.IO.Path.Combine(backup,payload.Settings.executable_file),Delta=payload.Executable});
             int step=0;
             foreach(var c in result.Components) {
                 if(!File.Exists(c.Path)) throw new FileNotFoundException("未找到文件："+System.IO.Path.GetFileName(c.Path));
@@ -116,6 +116,18 @@ namespace LocalizationInstaller {
             return result;
         }
         public string Operate(string selected,bool includeExecutable,bool restore) {
+            string result=OperateCore(selected,includeExecutable,restore);
+            if(restore) {
+                string dir=System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(selected));
+                string cache=System.IO.Path.Combine(dir,payload.Settings.backup_folder);
+                if(Directory.Exists(cache) && Hash(System.IO.Path.Combine(dir,payload.Settings.archive_file))==payload.Archive.original_sha256 &&
+                   (!File.Exists(System.IO.Path.Combine(cache,payload.Settings.executable_file)) || Hash(System.IO.Path.Combine(dir,payload.Settings.executable_file))==payload.Executable.original_sha256)) {
+                    ResourceEngine.CheckFolder(dir,cache);Directory.Delete(cache,true);
+                }
+            }
+            return result;
+        }
+        string OperateCore(string selected,bool includeExecutable,bool restore) {
             Inspection inspection=Inspect(selected,includeExecutable);
             if(restore ? !inspection.CanRestore : !inspection.CanInstall) return restore?"ALREADY_RESTORED":"ALREADY_INSTALLED";
             string dir=System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(selected));

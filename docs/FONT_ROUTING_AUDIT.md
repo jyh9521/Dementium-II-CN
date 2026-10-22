@@ -78,11 +78,18 @@ BMP PUA 三字节编码会走同一条查字/测宽路径；Chill 字形配置 l
 
 ### 字库覆盖例外
 
-构建器允许 Fusion 缺字而 Chill 已覆盖时，按真实 Unicode 码点追加原生 16px Chill 字形作为正文回退，
-不缩小重采样、不改变原文或译文汉字。此回退与标题 PUA 映射分别报告；
-`body_fallback_codes` 必须列出准确码点，两个字体都缺字时构建失败。
-回退字形仍有 16px 正文混排高度风险，须与行距和真实长文框一起验收。
-合成测试用项目原创矩形 TTF 单独证明该分支、缺字拒绝和 16px 元数据，不借用游戏字体资产。
+构建器允许 Fusion 缺字而 Chill 已覆盖时，按真实 Unicode 码点追加正文回退，与标题 PUA 映射分开。
+2026-10-22 已修复旧实现把原生 16px、yo=-2 标题字形直接混进正文的问题。
+当前所有正文补字按 body.pixel_size=12 栅格化，w/logw=12、h=15、xo/yo=0；
+按 body ascent - fallback ascent 在字形格内部补偿，本机 13-11=2px，使字形基线一致，
+并保留原正文行距 16px。独立标题 PUA 仍使用 16px、yo=-2，不缩小标题。
+当前全部 676 条文本、预览及额外 UI 字符扫描发现仅 U+8F98 辘、U+9AB6 骶 两个正文补字。
+两个字体都缺字或按共同基线移位后越格时构建失败，不裁掉字形、不替换译文。
+`body_fallback_native_pixels` 记录来源标题角色的原始规格；`body_fallback_pixels` 才是正文实际栅格尺寸。
+`body_fallback_baseline_shift` 记录格内基线补偿，不是运行时 yo。
+合成 TTF 回归包含非零 ascent 差和逐像素一致性；完整构建自动调用 audit_body_fallback.py，
+复核全部补字的字库覆盖、元数据、实际 PNG alpha 以及逐条文本来源，并输出图集直取预览。
+离线证据见 build/fallback-font-fix/VERIFICATION.txt；不等同于游戏内画面验收。
 
 ## 4. 全局度量与换行边界
 

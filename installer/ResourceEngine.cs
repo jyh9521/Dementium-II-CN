@@ -226,7 +226,7 @@ namespace LocalizationInstaller {
   }
   public ResourceInspection Inspect(string selected,bool includeExe=true) {
    string path=Path.GetFullPath(selected);if(!String.Equals(Path.GetFileName(path),legacy.Settings.archive_file,StringComparison.OrdinalIgnoreCase))throw new InvalidDataException("请选择 rom.zar");
-   string dir=Path.GetDirectoryName(path),cache=Path.Combine(dir,legacy.Settings.backup_folder);var state=ReadState(cache);var result=new ResourceInspection {NativeExecutable=includeExe && data.native_executable!=null};
+   string dir=Path.GetDirectoryName(path),cache=ExistingCache(dir);var state=ReadState(cache);var result=new ResourceInspection {NativeExecutable=includeExe && data.native_executable!=null};
    foreach(string name in includeExe?new[]{legacy.Settings.archive_file,legacy.Settings.executable_file}:new[]{legacy.Settings.archive_file}) {
     string file=Path.Combine(dir,name);report("检查资源定位："+name,5);
     if(!File.Exists(file))throw new FileNotFoundException("缺少游戏文件："+name);
@@ -254,7 +254,7 @@ namespace LocalizationInstaller {
      }
     } else {
      c.original=current;
-     c.backup=Path.Combine(cache,"original-"+current+(archive?".zar":".exe"));
+     c.backup=Path.Combine(cache,name);
     }
     if(File.Exists(c.backup) && Engine.Hash(c.backup)!=c.original)throw new InvalidDataException("备份损坏："+Path.GetFileName(c.backup));
     if(c.installed && !File.Exists(c.backup))throw new InvalidDataException("缺少恢复备份："+name);
@@ -262,7 +262,70 @@ namespace LocalizationInstaller {
    }
    return result;
   }
+  string ExistingCache(string dir) {
+   string current=Path.Combine(dir,legacy.Settings.backup_folder),old=Path.Combine(dir,".dementium-locale");
+   return legacy.Settings.backup_folder=="cn-backup" && !Directory.Exists(current) && Directory.Exists(old)?old:current;
+  }
+  // Resolve the exact game-root child, and never follow directory junctions during cleanup.
+  internal static void CheckFolder(string dir,string folder) {
+   string root=Path.GetFullPath(dir),path=Path.GetFullPath(folder);
+   if(!String.Equals(Path.GetDirectoryName(path),root,StringComparison.OrdinalIgnoreCase) ||
+      (Directory.Exists(path) && (File.GetAttributes(path)&FileAttributes.ReparsePoint)!=0))throw new IOException("备份目录路径异常");
+   if(Directory.Exists(path)) {
+    var pending=new Stack<string>();pending.Push(path);
+    while(pending.Count>0)foreach(string item in Directory.EnumerateFileSystemEntries(pending.Pop())) {
+     var attributes=File.GetAttributes(item);if((attributes&FileAttributes.ReparsePoint)!=0)throw new IOException("备份目录含链接，已保留备份");
+     if((attributes&FileAttributes.Directory)!=0)pending.Push(item);
+    }
+   }
+  }
+  string MigrateBackup(string dir,ResourceInspection inspection) {
+   string target=Path.Combine(dir,legacy.Settings.backup_folder),source=ExistingCache(dir);
+   CheckFolder(dir,target);
+   if(source==target) {
+    string old=Path.Combine(dir,".dementium-locale");
+    if(legacy.Settings.backup_folder!="cn-backup" || !Directory.Exists(old))return null;
+    CheckFolder(dir,old);var previous=ReadState(old);var current=ReadState(target);
+    if(previous.files.Count==0)throw new IOException("旧备份目录缺少迁移记录，已保留");
+    foreach(var f in previous.files) {
+     var next=current.files.FirstOrDefault(n=>n.name==f.name && n.original==f.original);
+     if(next==null || Engine.Hash(Path.Combine(old,f.backup))!=f.original || Engine.Hash(Path.Combine(target,next.backup))!=f.original)
+      throw new IOException("新旧备份冲突，已保留备份");
+    }
+    return old;
+   }
+   CheckFolder(dir,source);CheckFolder(dir,target);
+   using var gate=new FileStream(Path.Combine(source,"operation.lock"),FileMode.OpenOrCreate,FileAccess.ReadWrite,FileShare.None,1,FileOptions.DeleteOnClose);
+   var state=ReadState(source);
+   // Older fixed-delta installs did not have a receipt; adopt only already verified components.
+   foreach(var c in inspection.components.Where(c=>c.installed))if(!state.files.Any(f=>f.name==Path.GetFileName(c.path)))
+    state.files.Add(new SavedComponent {name=Path.GetFileName(c.path),backup=Path.GetFileName(c.backup),original=c.original,installed=c.current});
+   string stage=Path.Combine(dir,".cn-backup-migration-"+Guid.NewGuid().ToString("N"));
+   Directory.CreateDirectory(stage);
+   try {
+    foreach(var f in state.files) {
+     if(f.name!=legacy.Settings.archive_file && f.name!=legacy.Settings.executable_file)throw new IOException("备份记录文件名异常");
+     string old=Path.Combine(source,f.backup);VerifySourceBackup(old,f.original,f.name==legacy.Settings.archive_file);
+     string copy=Path.Combine(stage,f.name);File.Copy(old,copy);if(Engine.Hash(copy)!=f.original)throw new IOException("备份迁移校验失败");f.backup=f.name;
+    }
+    File.WriteAllText(Path.Combine(stage,Receipt),JsonSerializer.Serialize(state,Json));
+    Directory.Move(stage,target);return source;
+   } finally {if(Directory.Exists(stage)){CheckFolder(dir,stage);Directory.Delete(stage,true);}}
+  }
+  bool AllRestored(string dir,string cache) {
+   var state=ReadState(cache);if(state.files.Count==0)return !Directory.EnumerateFileSystemEntries(cache).Any();
+   return state.files.All(f=>File.Exists(Path.Combine(dir,f.name)) && Engine.Hash(Path.Combine(dir,f.name))==f.original);
+  }
   public string Operate(string selected,bool includeExe,bool restore) {
+   var inspection=Inspect(selected,includeExe);string dir=Path.GetDirectoryName(Path.GetFullPath(selected));
+   string migrated=MigrateBackup(dir,inspection),cache=Path.Combine(dir,legacy.Settings.backup_folder);
+   string result=OperateCore(selected,includeExe,restore);
+   // No transaction or lock is alive here. Partial archive-only restores retain EXE recovery.
+   if(migrated!=null){CheckFolder(dir,migrated);Directory.Delete(migrated,true);}
+   if(restore && Directory.Exists(cache) && AllRestored(dir,cache)){CheckFolder(dir,cache);Directory.Delete(cache,true);}
+   return result;
+  }
+  string OperateCore(string selected,bool includeExe,bool restore) {
    var inspection=Inspect(selected,includeExe);
    if(restore?!inspection.CanRestore:!inspection.CanInstall)return restore?"ALREADY_RESTORED":"ALREADY_INSTALLED";
    string cache=Path.Combine(Path.GetDirectoryName(Path.GetFullPath(selected)),legacy.Settings.backup_folder);

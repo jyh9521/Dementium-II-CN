@@ -76,7 +76,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.042": {
       "leading_lines": 0,
@@ -92,7 +93,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.043": {
       "leading_lines": 0,
@@ -108,7 +110,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.045": {
       "leading_lines": 0,
@@ -124,7 +127,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.046": {
       "leading_lines": 0,
@@ -140,7 +144,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.047": {
       "leading_lines": 0,
@@ -156,7 +161,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.048": {
       "leading_lines": 0,
@@ -172,7 +178,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.049": {
       "leading_lines": 0,
@@ -188,7 +195,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.050": {
       "leading_lines": 0,
@@ -204,7 +212,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.051": {
       "leading_lines": 0,
@@ -220,7 +229,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.052": {
       "leading_lines": 0,
@@ -236,7 +246,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     },
     "EN/EXAMINE.053": {
       "leading_lines": 0,
@@ -252,7 +263,8 @@
       "width": 228,
       "pane_height": 72,
       "line_spacing": 0,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": false
     }
   },
   "extra_texts": [
@@ -265,94 +277,94 @@
   "image_config": "image-text.json",
   "prose_layouts": {
     "EN/EXAMINE.501": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.502": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.504": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.505": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.515": {
-      "soft_lines": true,
-      "keep_first_line": false,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.539": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.540": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.541": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.542": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.543": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.544": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.546": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.547": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.548": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.554": {
-      "soft_lines": true,
-      "keep_first_line": false,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.568": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.569": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.572": {
-      "soft_lines": true,
-      "keep_first_line": true,
-      "min_tail_width": 52
+      "min_tail_width": 52,
+      "preserve_whitespace": true,
+      "preserve_authored_breaks": true
     },
     "EN/EXAMINE.530": {
       "preserve_whitespace": true,
@@ -360,7 +372,19 @@
     }
   },
   "document_defaults": {
-    "min_tail_width": 52
+    "min_tail_width": 52,
+    "preserve_whitespace": true
   },
-  "debug_menu_font": true
+  "debug_menu_font": true,
+  "reader_layout": {
+    "viewport_height": 152,
+    "viewport_top": 24,
+    "scroll_step_lines": 1,
+    "wheel_step_lines": 3,
+    "font_scale": 1,
+    "excluded_resources": [
+      "EN/EXAMINE.535"
+    ],
+    "policy": "Preserve authored hard lines, blank paragraphs and indentation; wrap only within each original line. Native scrolling applies to overflow text-only examination pages and illustrated letters 78/90..93 in both field and collection readers. The 12 postcards, other illustrated items and puzzle pages keep their original paths."
+  }
 }

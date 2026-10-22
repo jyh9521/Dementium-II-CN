@@ -30,7 +30,7 @@ namespace LocalizationInstaller {
    };
   }
   void Ready() {
-   string path=ArchivePath.Text.Trim();Install.IsEnabled=File.Exists(path);Restore.IsEnabled=Install.IsEnabled && Directory.Exists(Path.Combine(Path.GetDirectoryName(path),payload.Settings.backup_folder));
+   string path=ArchivePath.Text.Trim();Install.IsEnabled=File.Exists(path);Restore.IsEnabled=Install.IsEnabled && (Directory.Exists(Path.Combine(Path.GetDirectoryName(path),payload.Settings.backup_folder)) || Directory.Exists(Path.Combine(Path.GetDirectoryName(path),".dementium-locale")));
    Status.Text=Install.IsEnabled?"可直接安装，或检查资源兼容性（不校验整包版本）":"请检测或选择 rom.zar";
   }
   void Append(string message,int percentage=0) {
@@ -69,7 +69,7 @@ namespace LocalizationInstaller {
    // Lock UI before opening a dialog: no concurrent operations or path changes.
    busy=true;ArchivePath.IsEnabled=Browse.IsEnabled=Detect.IsEnabled=Verify.IsEnabled=Install.IsEnabled=Restore.IsEnabled=false;
    try {
-    if(restore.HasValue && !await Confirm(restore.Value?"恢复原版":"安装汉化",restore.Value?"将恢复 rom.zar 和同目录游戏程序。存档与设置不变，原版备份保留。":"将备份 rom.zar 和同目录游戏程序，并安装汉化。存档与设置不变，不会启动游戏。")) {Status.Text="操作已取消，请重新验证";return;}
+    if(restore.HasValue && !await Confirm(restore.Value?"恢复原版":"安装汉化",restore.Value?"将恢复 rom.zar 和同目录游戏程序。存档与设置不变；恢复校验成功后删除 cn-backup 备份文件夹。":"将原文件名备份至游戏目录的 cn-backup 文件夹，并安装汉化。存档与设置不变，不会启动游戏。")) {Status.Text="操作已取消，请重新验证";return;}
     var engine=new ResourceEngine(payload,ResourcePayload.Load(),Append);
     Status.Text=restore.HasValue?(restore.Value?"正在恢复…":"正在安装…"):"正在验证…";
     if(restore.HasValue)Append(await Task.Run(()=>engine.Operate(path,true,restore.Value)));

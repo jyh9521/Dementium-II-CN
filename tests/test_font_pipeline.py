@@ -128,7 +128,7 @@ class LayoutTests(unittest.TestCase):
         self.assertEqual(route_titles('第一章', aliases, True), '\ue000一\ue001')
 
 
-def tiny_font(path, characters):
+def tiny_font(path, characters, ascent=1000):
     """Generate original rectangle outlines, not a copy of any commercial font."""
     from fontTools.fontBuilder import FontBuilder
     from fontTools.pens.ttGlyphPen import TTGlyphPen
@@ -148,7 +148,7 @@ def tiny_font(path, characters):
         glyphs[name] = pen.glyph()
     builder.setupGlyf(glyphs)
     builder.setupHorizontalMetrics({name: (1000, 0) for name in names})
-    builder.setupHorizontalHeader(ascent=1000, descent=0)
+    builder.setupHorizontalHeader(ascent=ascent, descent=0)
     builder.setupNameTable({'familyName': 'Synthetic Pipeline Fixture', 'styleName': 'Regular',
                             'uniqueFontIdentifier': 'SyntheticPipelineFixture', 'fullName': 'Synthetic Pipeline Fixture',
                             'psName': 'SyntheticPipelineFixture', 'version': 'Version 1.000'})
@@ -270,18 +270,28 @@ class SyntheticAtlasTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'font.*(missing|coverage)'):
             build_mixed(self.zar, self.records, self.profile)
 
-    def test_missing_body_glyph_uses_native_title_font_fallback(self):
+    def test_missing_body_glyph_uses_body_sized_baseline_aligned_fallback(self):
         title = Path(self.temp.name) / 'title.ttf'
-        tiny_font(title, 'A一第章节开始甲乙，无 ')
+        tiny_font(title, 'A一第章节开始甲乙，无 ', ascent=800)
         self.records[1]['target'] = '无'
+        self.profile['title_resources'] = []
+        self.profile['previews']['title'] = []
         with patch('font_pipeline.resolve_fonts', return_value={'body': self.font, 'title': title}):
             changes, runtime, report = build_mixed(self.zar, self.records, self.profile)
         meta = json.loads(changes['FONTS/D2FONT_12X15.JSON'])
         glyph = meta['glyphs'][str(ord('无'))]
-        self.assertEqual((glyph['w'], glyph['h'], glyph['logw']), (16, 16, 16))
+        self.assertEqual((glyph['w'], glyph['h'], glyph['logw'], glyph['yo']), (12, 15, 12, 0))
         self.assertEqual(runtime[1]['target'], '无')
         self.assertEqual(report['body_fallback_codes'], [ord('无')])
         self.assertEqual(report['body_fallback_native_pixels'], 16)
+        self.assertEqual(report['body_fallback_pixels'], 12)
+        self.assertEqual(report['body_fallback_baseline_shift'], 2)
+        from PIL import Image
+        atlas = Image.open(io.BytesIO(changes['FONTS/D2FONT_12X15.PNG'])).convert('RGBA')
+        def alpha(c):
+            g = meta['glyphs'][str(ord(c))]
+            return atlas.crop((g['tx'], g['ty'], g['tx']+g['w'], g['ty']+g['h'])).getchannel('A').tobytes()
+        self.assertEqual(alpha('无'), alpha('甲'))
         self.assertIn(ord('无'), report['coverage']['body']['missing'])
         self.assertNotIn(ord('无'), report['coverage']['title']['missing'])
 

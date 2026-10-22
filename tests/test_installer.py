@@ -28,17 +28,17 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(operate(self.root, self.identity, self.patch, 'uninstall'), 'RESTORED')
         self.assertEqual((self.root / 'rom.zar').read_bytes(), self.original)
         self.assertEqual(operate(self.root, self.identity, self.patch, 'uninstall'), 'ALREADY_RESTORED')
-        self.assertEqual((self.root / '.dementium-locale/original.zar').read_bytes(), self.original)
+        self.assertFalse((self.root / 'cn-backup').exists())
 
     def test_reject_wrong_game_and_patch(self):
         for field in ['appid', 'exe_sha256', 'rom_sha256']:
             ident = self.identity.copy(); ident[field] = 'wrong'
             with self.subTest(field=field), self.assertRaises(ValueError): operate(self.root, ident, self.patch, 'install')
-        self.assertFalse((self.root / '.dementium-locale').exists())
+        self.assertFalse((self.root / 'cn-backup').exists())
 
     def test_reject_changed_archive_and_backup(self):
         operate(self.root, self.identity, self.patch, 'install')
-        (self.root / '.dementium-locale/original.zar').write_bytes(b'WRONG')
+        (self.root / 'cn-backup/rom.zar').write_bytes(b'WRONG')
         with self.assertRaises(ValueError): operate(self.root, self.identity, self.patch, 'uninstall')
         self.assertEqual((self.root / 'rom.zar').read_bytes(), self.modified)
         (self.root / 'rom.zar').write_bytes(self.modified + b'WRONG')

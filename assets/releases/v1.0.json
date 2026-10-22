@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "tag": "v1.0",
+  "url": "https://github.com/jyh9521/Dementium-II-CN/releases/tag/v1.0",
+  "installer_version": "1.0.0",
+  "filename": "Dementium-II-CN-v1.0.exe",
+  "size": 78500889,
+  "sha256": "6986bf2e92f58917379dfd5fa3bdb84c2ba6e5633d96859065c171f95048e971",
+  "download_url": "https://github.com/jyh9521/Dementium-II-CN/releases/download/v1.0/Dementium-II-CN-v1.0.exe",
+  "supported_appid": 5342930,
+  "reference_build": "26099941",
+  "player_acceptance": {
+    "date": "2026-10-22",
+    "status": "full_playthrough_completed",
+    "result": "no_issues_reported",
+    "source": "maintainer report"
+  }
+}

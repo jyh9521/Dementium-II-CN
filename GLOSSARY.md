@@ -35,6 +35,7 @@
 | Pelf Village / Pelf | 佩尔夫村 / 佩尔夫 | 场景待核对（已有译文）；地名音译待语音审校 |
 | Redmoor | 雷德穆尔 | 文本审校完成 |
 | Plane of Anguish | 苦痛位面 | 文本审校完成 |
+| D.R. | 死囚区 | 用户明确确认并要求恢复；SIGN_02标牌，禁止后续审计回退英文 |
 | Point Mine | 波因特矿井 | 场景待核对（已有译文）；Point 暂按专名音译，非已确认地名解释 |
 | Point Passage | 波因特通道 | 场景待核对（已有译文）；与 Point Mine 暂统一 |
 | The Colossus | 巨像 | 场景待核对（已有译文）；待核对首领造型及称谓 |

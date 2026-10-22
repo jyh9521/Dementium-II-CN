@@ -43,7 +43,7 @@
 | 合计 | **41** | **187 个物理标签**，包含多平台重复标签 |
 
 大字 Pelf 已按术语表译为“佩尔夫”，不是以“专名”为由漏译地点。
-商号中的人名/姓氏、Dementium 品牌、按键字母、数字和未知含义缩写 `D.R.` 保留原有身份或符号；未把 `D.R.` 猜成诊室。
+商号中的人名/姓氏、Dementium 品牌、按键字母、数字保留原有身份或符号；`D.R.` 按用户明确要求译作“死囚区”，不再恢复英文。
 `TEXTURES/OPTIONS/EN/PAGERIGHT_PCMOUSE.PNG` 只有 X 键帽与箭头，没有应翻译的词。
 
 ### 位图不变量
@@ -101,7 +101,7 @@
 ## 复现与检查
 
 ```powershell
-python -X utf8 tools/image_text.py build 'C:\Program Files (x86)\Steam\steamapps\common\Dementium II\rom.zar' locales/zh-CN/image-text.json build/audit --font 'C:\Users\noway\AppData\Local\Microsoft\Windows\Fonts\fusion-pixel-12px-proportional-zh_hans.ttf'
+python -X utf8 tools/image_text.py build 'C:\Program Files (x86)\Steam\steamapps\common\Dementium II\rom.zar' locales/zh-CN/image-text.json build/audit --font 'D:/Fonts/fusion-pixel-12px-proportional-zh_hans.ttf'
 python -X utf8 -m unittest discover -s tests -p test_image_text.py -v
 ```
 
