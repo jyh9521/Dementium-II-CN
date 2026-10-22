@@ -49,7 +49,7 @@ def main():
             args.game.resolve() if stage=='baseline' else root/'build/full-zh-CN')
     run('NATIVE_UNIT', [sdk, tests, out/'material-unit-fixtures'], 'Synthetic fixtures + embedded real payload')
     run('SOURCE_READ_ONLY_INSPECT', [sdk, tests, '--inspect', args.game.resolve()/'rom.zar'],
-        'Actual user-selected source directory; inspect only, no writes')
+        'Actual selected source directory; inspect only, no writes')
     target = out/('real-fixture-'+uuid.uuid4().hex[:12])
     run('REAL_NATIVE_INSTALL_RESTORE', [sdk, tests, '--real', args.game.resolve(), target],
         'Copies of original ROM+EXE; target='+str(target))

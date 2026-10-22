@@ -38,7 +38,7 @@ class PublicationTests(unittest.TestCase):
   r=json.loads(self.read('assets/releases/v1.1.json'));b=json.loads(self.read('assets/supported-build.json'));p=json.loads(self.read('assets/release-policy.json'))
   self.assertEqual(r['reference_build'],b['buildid']);self.assertEqual(r['installer_version'],p['installer_version'])
   self.assertEqual(r['supported_builds'],['26099941','26123896'])
-  self.assertEqual(r['status'],'prepared_for_maintainer_manual_release')
+  self.assertEqual(r['status'],'prepared_for_manual_release')
   self.assertEqual(r['player_acceptance']['game_launch'],'NEVER')
  def test_history_retains_findings_and_explains_old_paths(self):
   s=self.read('docs/history/FIXED_ISSUES.md');self.assertIn('历史',s);self.assertIn('现场明信片',s)
@@ -46,4 +46,32 @@ class PublicationTests(unittest.TestCase):
  def test_current_entrypoints_have_no_local_machine_paths(self):
   for name in CURRENT:
    s=self.read(name);self.assertNotRegex(s,r'(?i)[cC]:[\\/]Users[\\/]noway')
+ def assert_objective_wording(self,text,name):
+  self.assertNotRegex(text,r'维护者|用户|玩家|开发者|我们|本人|(?i:\bmaintainers?\b|\busers?\b)',name)
+ def test_project_documentation_uses_objective_wording(self):
+  paths=list(ROOT.glob('*.md'))+list((ROOT/'docs').rglob('*.md'))+list((ROOT/'docs').glob('*.txt'))
+  self.assertGreater(len(paths),40)
+  for path in paths:
+   self.assert_objective_wording(path.read_text('utf-8-sig'),str(path.relative_to(ROOT)))
+ def test_review_metadata_uses_objective_wording(self):
+  def visit(value,path):
+   if isinstance(value,dict):
+    for key,item in value.items():visit(item,path+'/'+key)
+   elif isinstance(value,list):
+    for index,item in enumerate(value):visit(item,path+'/'+str(index))
+   elif isinstance(value,str):self.assert_objective_wording(value,path)
+  visit(json.loads(self.read('assets/releases/v1.0.json')),'v1.0')
+  visit(json.loads(self.read('assets/releases/v1.1.json')),'v1.1')
+  def reviews(value,path):
+   if isinstance(value,dict):
+    for key,item in value.items():
+     if key in ('review','reason','workflow','prompt'):visit(item,path+'/'+key)
+     elif isinstance(item,(dict,list)):reviews(item,path+'/'+key)
+   elif isinstance(value,list):
+    for index,item in enumerate(value):reviews(item,path+'/'+str(index))
+  reviews(json.loads(self.read('locales/zh-CN/image-text.json')),'image-text')
+ def test_readme_limits_playthrough_claim_to_historical_version(self):
+  s=self.read('README.md')
+  self.assertIn('v1.0已有完整通关记录',s)
+  self.assertIn('尚无新版完整通关记录',s)
 if __name__=='__main__':unittest.main()

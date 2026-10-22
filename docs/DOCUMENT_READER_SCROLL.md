@@ -2,7 +2,7 @@
 
 ## 库存短信末尾填充不应触发滚动（2026-10-22）
 
-用户截图中的EXAMINE.092实际是4行可见正文加1个末尾空行，EXAMINE.093是2行正文加3个末尾空行。旧库存图文信件路径把原生计数5行均作为有效内容，以80px判断超过72px窗口，导致两封完整可见的短信也启用滚动。
+实机截图中的EXAMINE.092实际是4行可见正文加1个末尾空行，EXAMINE.093是2行正文加3个末尾空行。旧库存图文信件路径把原生计数5行均作为有效内容，以80px判断超过72px窗口，导致两封完整可见的短信也启用滚动。
 
 仅库存078、090..093的溢出判定和滚动上限改为最后一个非空白内容所在行；扫描忽略尾部空格、Tab、CR/LF及强调切换控制码，不改原文缓冲区，不合并内部空段。实际内容不溢出时reader_active=0，滚轮/Down不改变文字窗口；若仅原生填充造成旧溢出，继续保持原窗口y88锚点，避免回退原生原始行数坐标后文字上移8px与图片重叠。原本不溢出的原生短内容仍保留其坐标。
 
@@ -89,6 +89,6 @@ Steam build26099941的查看初始化为0x14011a7b0，逐帧渲染为0x14011b000
 
 新增state+44方向、+48重复计数，均位于原预留状态区；新owner/resource、open/close、active转inactive、菜单/失焦/失连门禁均清除或重新开始计时。读取轴但不写轴，不改原生+0x458、键盘借用字段、普通视角、左摇杆或收藏翻页；原滚轮/上下键可继续使用。短文、明信片及535谜题仍保留原路径。原native输入与连接检查的机器码增加构建守卫；代码仍限于.locui第二RX页，不加导入或RWX。
 
-`python -X utf8 tests/test_reader_gamepad.py`以`DEMENTIUM_UI_TEST_EXE`选择实际PE，覆盖现场/收藏上下、长按反向、死区/异常值、边界/最后一行、短文/卡片/谜题、菜单/窗口/空指针/断开、关闭/换文档、轴与普通键字段保持，以及实际XInput归一化/原生axis setter。默认unittest和verify_debug_menu均包含它。证据见build/right-stick-scroll/verification/VERIFICATION.txt。未启动游戏；手柄真实设备的滚动速度与手感留给玩家复验。
+`python -X utf8 tests/test_reader_gamepad.py`以`DEMENTIUM_UI_TEST_EXE`选择实际PE，覆盖现场/收藏上下、长按反向、死区/异常值、边界/最后一行、短文/卡片/谜题、菜单/窗口/空指针/断开、关闭/换文档、轴与普通键字段保持，以及实际XInput归一化/原生axis setter。默认unittest和verify_debug_menu均包含它。证据见build/right-stick-scroll/verification/VERIFICATION.txt。未启动游戏；手柄真实设备的滚动速度与手感仍待实机复验。
 
 REA辅助证据：ev_8fbbe0b58fc467cafee016f704ef13a0b12a38def79ebdb33704c138b153018a（原生动作轴消费）；ev_233a7ade2848bfb28aca8662e12f4ab775fa3d466b36c9d82b0d425bc945d994及ev_e2fdaf31c3f240be9d9129218bdc725335f1d8bbf448721bf5f8815ee8acdb66（平台回调引用链）。证据为静态分析；PE控制回放另见测试记录，不等同于真实设备事件。

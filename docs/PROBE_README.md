@@ -21,7 +21,7 @@ python -X utf8 ./install_patch.py uninstall --game "D:/Dementium-II-test" --allo
 工具先检查 EXE 和资源包的版本哈希，首次安装备份到
 `.dementium-locale/original.zar`，然后原子替换目标文件。重复执行返回已有状态。
 卸载保留备份，并拒绝覆盖被其他补丁或 Steam 更新过的文件。
-任何真实安装目录操作与游戏启动都由用户明确决定，工具不会代为启动。
+真实安装目录操作与游戏启动均需手动确认，工具不会代为启动。
 语言需保持英语，因为本实验替换 `EN/` 资源，不增加语言选择项。
 
 ## 许可证

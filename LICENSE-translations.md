@@ -64,7 +64,7 @@ CC BY-SA 4.0 are satisfied.
 
 ## ShareAlike
 
-If you adapt or redistribute project-owned translation text, derivative
+For adaptations or redistribution of project-owned translation text, derivative
 translation content must be distributed under CC BY-SA 4.0 or a compatible
 license where permitted by the license terms.
 

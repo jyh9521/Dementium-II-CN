@@ -5350,7 +5350,7 @@
         428,
         240
       ],
-      "review": "User-requested two-line wording: 你已咽下 / 最后一口气; no other text",
+      "review": "Reviewed two-line wording: 你已咽下 / 最后一口气; no other text",
       "ink_alignments": [
         {
           "label": "最后一口气",
@@ -5459,7 +5459,7 @@
         428,
         240
       ],
-      "review": "User-requested two-line wording: 你已咽下 / 最后一口气; no other text",
+      "review": "Reviewed two-line wording: 你已咽下 / 最后一口气; no other text",
       "ink_alignments": [
         {
           "label": "最后一口气",
@@ -5784,7 +5784,7 @@
         1254,
         1254
       ],
-      "review": "2026-10-21 user correction: D.R. is 死囚区; imagegen bounded import, numeric centering and unchanged surrounding pixels",
+      "review": "2026-10-21 terminology correction: D.R. is 死囚区; imagegen bounded import, numeric centering and unchanged surrounding pixels",
       "ink_alignments": [
         {
           "label": "办公室",
@@ -5908,15 +5908,15 @@
             128
           ]
         ],
-        "workflow": "user-approved PNG import; native-size export; no generation",
-        "prompt": "User approved the manual-review image set. Exact PNG import and native-size export only; no image generation or added text."
+        "workflow": "reviewed PNG import; native-size export; no generation",
+        "prompt": "The image set passed manual review. Exact PNG import and native-size export only; no image generation or added text."
       },
       "approved_png_sha256": "3f54e346190497ea958a97f0f4956bc52855b8f0fd1d8df10214d0b3483d7700",
       "approved_working_size": [
         1254,
         1254
       ],
-      "review": "User confirmed 图片没问题，文本暂时先这样 before requesting the installer",
+      "review": "Image review passed; text was retained for installer preparation",
       "ink_alignments": [
         {
           "label": "东北翼",
@@ -6517,15 +6517,15 @@
             128
           ]
         ],
-        "workflow": "user-approved PNG import; native-size export; no generation",
-        "prompt": "User approved the manual-review image set. Exact PNG import and native-size export only; no image generation or added text."
+        "workflow": "reviewed PNG import; native-size export; no generation",
+        "prompt": "The image set passed manual review. Exact PNG import and native-size export only; no image generation or added text."
       },
       "approved_png_sha256": "c55b18d744b0eb560dcee9ecf094a41d5d10d82be0225429219a01a178e871e5",
       "approved_working_size": [
         1254,
         1254
       ],
-      "review": "User confirmed 图片没问题，文本暂时先这样 before requesting the installer",
+      "review": "Image review passed; text was retained for installer preparation",
       "ink_alignments": [
         {
           "label": "佩尔夫",
@@ -6744,107 +6744,107 @@
   "preserve_original_images": {
     "TEX/AMMO_NG.PNG": {
       "source_sha256": "8089f600ff64480c497fc642525c4740355f04c2247458a9d7c72d934a17665c",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/BIBLE.PNG": {
       "source_sha256": "ee65a530a170876c0cc644f66bf2df7e17d8b443c80d4abd1628eaaff46ef2e9",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/BOOKS04.PNG": {
       "source_sha256": "2421910ec82f46af824605c4b2c13df616e7f49480a14f973e4c56c620e1e156",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/BOXES_01.PNG": {
       "source_sha256": "cfcf6d9da6d8c882a7bcb4a70206aa6c4d650742c89d03df634741dc481be637",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/BROCHURE.PNG": {
       "source_sha256": "6cf48cad8b862127fb123652de3518960844bab59214ab6978304a6ceb87483c",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/BULLETIN.PNG": {
       "source_sha256": "0ba4cdaaf7c758a82d3896287ca7850fc870140f090958211e6f41e2d0b3d28a",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/MEMO01.PNG": {
       "source_sha256": "b2697eb49a144ae6b440b9e0f994a4483cfe4c382ea4b7d498104d05ed2c27cb",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/NOTES01.PNG": {
       "source_sha256": "974e1977ad72d88d752b3475df82c8d05bde853428834283f67580581314540d",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/PAGE01.PNG": {
       "source_sha256": "f1d635b0f5c30c7796ecd7a3c0341989ffdb0de841da6624b965dbc1980fed16",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/PAPER002.PNG": {
       "source_sha256": "b62040af847fcdd36eb012b827c98bcff15f3f11e278882aac058b69c465511f",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/PAPER_01.PNG": {
       "source_sha256": "3df9444d7837a5dd667e0ad87a338d8d4ef80c3023e1ca226653b7bfb36e60d6",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/PIC_02.PNG": {
       "source_sha256": "9986c0eedba98ae454fc9c0ba39a8775ca75c14215dd40aed6800d988343d79f",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/PLETTER.PNG": {
       "source_sha256": "48588f2a03b8cb586faf4426044ebefbaba01fc260b538b3609f4d26a4bdb8a1",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/HEALTH01.PNG": {
       "source_sha256": "69c0b544cc9ac31bc7d9c0281f1715d5a5c7919ceb7d56c6bcae21112aa3d614",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/P_HLTH01.PNG": {
       "source_sha256": "69c0b544cc9ac31bc7d9c0281f1715d5a5c7919ceb7d56c6bcae21112aa3d614",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/P_HLTH02.PNG": {
       "source_sha256": "ac8803f1359648c54a0a8798cda5d666fa9061bd199749c6a54734ef939fd0f1",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/PILLS.PNG": {
       "source_sha256": "a77ae61b37212fa05000d5674a3c010f5fd14b2904dd366c9d6f37830ebb2cef",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/TOETAG01.PNG": {
       "source_sha256": "a8e2ac71195f2473079259519458912ee1d7f4c395370d422f41d1f55e5299b9",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/WBOARD01.PNG": {
       "source_sha256": "753f4145937b662ccb95fa9ab969d5cb6750222c2fe57a2a9c3f7d0b91cf6415",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/W_TNT.PNG": {
       "source_sha256": "25194c5dcd4d5ec3dff1a64df9beaa78acb301d2c147d6b054410207ae77f4e0",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/BAR_01.PNG": {
       "source_sha256": "f950a162702af28d7ddf05e030bbc45271e1838247f34f1c35c208ba39082440",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/BAR_02.PNG": {
       "source_sha256": "1b5f4ee63ef9b1eaf82055baf61b64f300ba0be0ed84eefcb6e403e7b3fc6785",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/BATTERY1.PNG": {
       "source_sha256": "1ad2f5b67515353ce20788fddc7c3a2f4f9d3504ea77bcde97092a753552d490",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/CANS_01.PNG": {
       "source_sha256": "b78beb6f75629af28aa01970bbd75b3cb4f06e9f9d58187aa8267e478e09dfb4",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/AMMO_REV.PNG": {
       "source_sha256": "ecd47e5f64e604df3640011f45f44ec6d91b9e26b592ae1773a76c749e0b1c32",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     },
     "TEX/SODA01.PNG": {
       "source_sha256": "196fa164e969483d79f5dca34ce16f7c93974bcfd9315ed7108280e8248c1166",
-      "reason": "用户明确要求：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
+      "reason": "原画保留规则：源图文字不可辨或未核实，不生成补写；保留原始PNG字节"
     }
   }
 }

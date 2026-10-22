@@ -2,10 +2,10 @@
 
 # Material Design 自包含差分安装器
 
-## 玩家入口
+## 安装入口
 
 `dist/Dementium-II-zh-CN-Setup.exe` 是 Windows x64 单文件，内置 .NET 10.0.13 / WPF 和 MaterialDesignThemes 5.3.2。
-用户不需要安装 Python、.NET、WebView2，也不在启动时下载运行依赖。
+安装器运行无需另装 Python、.NET、WebView2，也不在启动时下载运行依赖。
 主程序增加内置运行时后体积高于旧版约1.2MB，但仍不包含约579MB的完整游戏归档。
 目标系统 Windows 10 1809及以上 / Windows 11；仅当前Windows主机实际执行验证，不宣称所有系统通过。
 
@@ -29,7 +29,7 @@
 
 使用真正的MaterialDesignInXamlToolkit，而不是WinForms仿色按钮。
 Material Design 3 主题、统一圆角/表面/字体/输入框、按钮Ripple状态、DialogHost确认动画、240–280ms入场动画。
-中央中文LOGO、用户指定图标；不显示EXE选项、额外底部说明和线性进度条。
+中央中文LOGO、固定图标；不显示EXE选项、额外底部说明和线性进度条。
 底部左侧仅版本信息，Steam链接到指定商店；右侧伯翎飞云链接到指定博客。
 后台任务更新状态和日志，操作期间禁用路径与按钮、禁止中途关闭；不修改游戏菜单LOGO。
 
@@ -41,19 +41,19 @@ Material Design 3 主题、统一圆角/表面/字体/输入框、按钮Ripple�
 - installer/Installer.csproj / Installer.lock.json：固定工具包和运行时版本
 - installer/licenses/：第三方许可，随EXE/ZIP分发
 
-开发端需.NET 10 SDK（本次10.0.402）、Python和现有归档构建依赖；玩家端不需要这些工具。
-品牌输入由用户提供，位于忽略目录 `installer/branding/logo.png` 和 `app.ico`，身份记于branding-inputs.json。
-图标是用户256×256 PNG原字节包装ICO，LOGO保持原PNG，不重绘、不猜字。
+开发端需.NET 10 SDK（本次10.0.402）、Python和现有归档构建依赖；安装端无需这些工具。
+品牌输入单独提供，位于忽略目录 `installer/branding/logo.png` 和 `app.ico`，身份记于branding-inputs.json。
+图标由既有256×256 PNG原字节包装为ICO，LOGO保持原PNG，不重绘、不猜字。
 为避免提交原版封面图片，这两个完整品牌资产不进入Git；重新构建须提供相同输入。
 设置环境变量DOTNET_EXE指向SDK的dotnet.exe，或使用本地build/toolchain/dotnet/dotnet.exe。
 
 ```powershell
-python -X utf8 tools/build_locale.py --game "用户原版游戏目录"
+python -X utf8 tools/build_locale.py --game "原版游戏目录"
 python -X utf8 tools/build_installer.py
 & $env:DOTNET_EXE build/installer/tests/net10.0-windows10.0.17763.0/InstallerTests.dll build/installer-material-tests
-& $env:DOTNET_EXE build/installer/tests/net10.0-windows10.0.17763.0/InstallerTests.dll --real "用户原版游戏目录" "尚不存在的副本目录"
+& $env:DOTNET_EXE build/installer/tests/net10.0-windows10.0.17763.0/InstallerTests.dll --real "原版游戏目录" "尚不存在的副本目录"
 python -X utf8 tools/package_installer.py
-python -X utf8 tools/verify_installer.py --game "用户原版游戏目录"
+python -X utf8 tools/verify_installer.py --game "原版游戏目录"
 ```
 
 项目差分需原版文件参与；41张已确认图片仍由源依赖的像素差分重建，26张受保护原图和游戏英文LOGO保留。
@@ -76,12 +76,12 @@ JSON/GZip/ZIP规范化；记录SDK、依赖锁定和输入SHA，不将所有SDK/
 
 ## 2026-10-21 原版基线更新：26099941
 
-原安装器基于旧Steam build 26091059；用户指定的现有Steam安装清单为26099941，depot 5342931 manifest 2467892649090529485。
+原安装器基于旧Steam build 26091059；本次使用的Steam安装清单为26099941，depot 5342931 manifest 2467892649090529485。
 新ROM SHA256 97618c6f7935e1214f00c7c35f9f45689d898328f51f1024a054850027657e33，579234304字节。
 新EXE SHA256 ea68364b72c7c1ef5b84d24990ddcab6090eedff752736d3ef3c634733351e56，5522944字节。
 两归档同为3471成员，文本提取结果完全相同，仅TEX/SETTINGS.TSV第391字节由0x33变为0x31；重新构建保留该新版资源，不套回旧文件。
 5个EXE槽重新核对.rdata位置和完整零填充。HI-RES CRT新槽只有12字节，不能沿用旧16字节槽覆盖后面的数字1。
-已保留旧基线元数据于assets/supported-builds/26091059.json，旧构建在忽略的build/archive中；该精确差分作为构建参考；后续资源级安装器不把此整包哈希作为玩家版本白名单。
+已保留旧基线元数据于assets/supported-builds/26091059.json，旧构建在忽略的build/archive中；该精确差分作为构建参考；后续资源级安装器不把此整包哈希作为安装版本白名单。
 界面版本标签及报错改由locale设置读取，构建时强制与supported-build.json一致，防止再次显示旧build。
 验证包含指定实际安装路径的只读Inspect、真实文件副本安装/恢复和新版TSV字节保留；实际安装路径从未执行安装或游戏。
 

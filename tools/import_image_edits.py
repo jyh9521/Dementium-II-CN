@@ -30,11 +30,11 @@ def main():
         if abs((edited.width/edited.height)/(original.width/original.height)-1)>.015:raise ValueError('Artwork aspect ratio changed: '+name)
         source_hash=hashlib.sha256(edited_path.read_bytes()).hexdigest()
         resized=edited.resize(original.size,Image.Resampling.LANCZOS)
-        recipe['art_delta']=capture(original,resized,resource=name,prompt='User approved the manual-review image set. Exact PNG import and native-size export only; no image generation or added text.')
-        recipe['art_delta']['workflow']='user-approved PNG import; native-size export; no generation'
+        recipe['art_delta']=capture(original,resized,resource=name,prompt='The image set passed manual review. Exact PNG import and native-size export only; no image generation or added text.')
+        recipe['art_delta']['workflow']='reviewed PNG import; native-size export; no generation'
         recipe['approved_png_sha256']=source_hash
         recipe['approved_working_size']=list(edited.size)
-        recipe['review']='User confirmed 图片没问题，文本暂时先这样 before requesting the installer'
+        recipe['review']='Image review passed; text was retained for installer preparation'
         if 'YAXIS' in name:recipe['labels']=[dict(source='Y Axis',target='纵轴反转',box=[155,218,207,236])]
         rows.append(dict(resource=name,input_sha256=source_hash,working_size=list(edited.size),native_size=list(original.size)))
     if a.apply:a.config.write_text(json.dumps(config,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

@@ -29,7 +29,7 @@ and `DEMENTIUM_PAUSE_TEST_ROM` to the resulting EXE and archive, then run:
 python -X utf8 -m unittest discover -s tests -p test_pause_layout.py -v
 ```
 
-The same command against `build/reader-input-fix/modified` fails the two user
+The same command against `build/reader-input-fix/modified` fails the two reported
 symptom checks. Tests read the actual PE immediates and archive raster glyphs,
 not source constants or text-box centers. `build/pause-layout-fix/compare.png`
 is a nearest-neighbor offline reconstruction of those exact local pixels,

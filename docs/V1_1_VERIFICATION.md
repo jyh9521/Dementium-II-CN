@@ -8,7 +8,7 @@ Installer `Dementium-II-CN-v1.1.exe`, internal version `1.1.0`, 78,507,545 bytes
 bffe3e670fda5647036085e17835366697e4a46ae8d3c8bac2bf26eb5e3796a6
 ```
 
-Prepared for the maintainer's manual publication; no new GitHub Release or tag is created by this task.
+Prepared for manual publication; no new GitHub Release or tag is created by this task.
 
 - Current reference: Steam AppID 5342930, build 26123896, depot manifest 2475804801624517511.
 - Previous verified build 26099941 is supported through the exact sparse native recipe recovered from the hash-verified v1.0 installer. Its historical playthrough remains historical evidence, not a new playthrough.
@@ -50,4 +50,4 @@ Native address findings, replay doubles and legacy-fixture skip boundaries are d
 
 See [BUILDING.md](../BUILDING.md) for verified legacy payload import, current build and full installer verification commands. Detailed local command/input/stdout/exit records are generated under `build/installer/VERIFICATION.txt` and `build/v1.1-verification/VERIFICATION.txt`. Generated files are not game assets committed to this repository.
 
-Automated verification does not install into the actual Steam directory or launch the game. During final verification the maintainer independently opened the delivered installer and game; that live installation is preserved, and remaining verification uses an isolated copy of its hash-verified original backup. Offline replay, file-copy installation and offscreen installer previews are not a new in-game playthrough or physical controller-device acceptance.
+Automated verification does not install into the actual Steam directory or launch the game. During final verification the delivered installer and game were opened manually; that live installation is preserved, and remaining verification uses an isolated copy of its hash-verified original backup. Offline replay, file-copy installation and offscreen installer previews are not a new in-game playthrough or physical controller-device acceptance.

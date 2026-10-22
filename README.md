@@ -8,16 +8,18 @@ Dementium II（2026 Steam版）的简体中文汉化补丁与可重建工具，�
 
 其他版本会检查待修改资源、EXE修改位置、原始字节及原生代码/数据布局特征；全部匹配才安装。任意检查不匹配时，在写入前停止，保留原文件，不会强行套用旧偏移。整文件哈希未知并不等于兼容。
 
+v1.0已有完整通关记录；v1.1目前完成离线构建、指令回放及副本安装/恢复验证，尚无新版完整通关记录。详见[发布与验收状态](docs/STATUS.md)。
+
 ## 下载 / 安装
 
-**[发布列表](https://github.com/jyh9521/Dementium-II-CN/releases)**：请下载维护者发布的 `Dementium-II-CN-v1.1.exe`。旧v1.0不支持新版build 26123896。
+**[发布列表](https://github.com/jyh9521/Dementium-II-CN/releases)**：下载附件 `Dementium-II-CN-v1.1.exe`。旧v1.0不支持新版build 26123896。
 
 1. 准备Steam版游戏并退出运行。
 2. 运行 `Dementium-II-CN-v1.1.exe`，使用自动检测到的游戏路径；未检测到时，手动选择游戏目录中的 `rom.zar`。
 3. 安装完成后，从Steam正常启动游戏。
 4. 恢复原版时，在同一个安装器中选择恢复。安装期间请保留游戏目录里的 `cn-backup`；完整恢复并校验后，安装器会自动清理该目录。
 
-安装器为Windows x64自包含程序，**无需另装Python或.NET**，不包含游戏本体，不修改玩家存档。支持带可信备份记录的旧汉化升级。详细步骤见[安装与恢复](docs/INSTALLATION_GUIDE.md)。
+安装器为Windows x64自包含程序，**无需另装Python或.NET**，不包含游戏本体，不修改游戏存档。支持带可信备份记录的旧汉化升级。详细步骤见[安装与恢复](docs/INSTALLATION_GUIDE.md)。
 
 ## 汉化与功能
 
@@ -26,7 +28,7 @@ Dementium II（2026 Steam版）的简体中文汉化补丁与可重建工具，�
 - 长文保留原分段，可用上下键、滚轮或右摇杆滚动阅读；短文与明信片保持独立排版。
 - F1打开原生中文菜单，支持鼠标、滚轮和键盘操作；包含可取消的持续选项与一次性操作按钮。
 
-原图中不可辨认的微缩字样不作猜译，英文LOGO与公司名保留。更多操作见[玩家说明](docs/PLAYER_README.md)。
+原图中不可辨认的微缩字样不作猜译，英文LOGO与公司名保留。更多操作见[使用说明](docs/PLAYER_README.md)。
 
 ## 从源码重建
 
@@ -48,7 +50,7 @@ python -X utf8 tools/build_locale.py --game "D:/Games/Dementium II Original"
 | `installer/` | WPF图形安装器与原生安装/恢复测试 |
 | `tests/` | 合成资源测试与可选本地原生指令回放 |
 | `assets/` | 游戏版本、发布身份与第三方许可记录 |
-| `docs/` | 玩家说明、技术调查、验收与历史记录 |
+| `docs/` | 使用说明、技术调查、验收与历史记录 |
 | `build/`、`dist/`、`work/` | 本地生成物与工作资料，Git忽略 |
 
 - [文档索引](docs/README.md) · [发布与验收状态](docs/STATUS.md)

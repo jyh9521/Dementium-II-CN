@@ -1,10 +1,10 @@
 # 启动时字体加载失败：双索引长度修复
 
-## 用户报告与责任边界
+## 启动故障与验证范围
 
-2026-10-21 用户手动运行测试副本，BugSplat 和本地日志均显示：
+2026-10-21 测试副本手动启动后，BugSplat 和本地日志均显示：
 `Failed loading STB Image: /fonts/d2font_12x15.png`。
-此前测试只验证 ZAR TOC 与完整 PNG，漏掉 VFS 的第二份长度目录；这是工程工具遗漏，不是用户安装错误。
+此前测试只验证 ZAR TOC 与完整 PNG，漏掉 VFS 的第二份长度目录；这是工程工具遗漏，并非安装操作错误。
 本次未启动游戏、未改 Steam 原件；修复只更新项目测试副本。
 
 ## 已确认原因（静态代码＋离线重放）
@@ -28,7 +28,7 @@
   Evidence `ev_a00a18658244c542096f87e3112b10bfaa05cf7ce5564a2d8e302d71e322191e`。
 - `FUN_1401bffe0`：读取文件缓冲区时调用 vtable +0x38 获取大小。
   Evidence `ev_98ae8e0c4e5575e6c4427b354c9643f112ec9741cf847f4d8163fde3d8dfdb0b`。
-- `FUN_1401e5bf0 → FUN_1401e5380`：把缓冲区及长度交给内存图像解码；失败时打印用户所见 STB 错误。
+- `FUN_1401e5bf0 → FUN_1401e5380`：把缓冲区及长度交给内存图像解码；失败时打印现场所见 STB 错误。
   Evidence `ev_d9834459ae7940a2450426382fd522fcbd826b3f8b10a5b7c9ffbf2e8bc37d46`、`ev_b126f3986353a205ba0f67bb96ee9bd66e5cd35c2b81182a7684b802711b518f`。
 
 ## 实现与回归
@@ -48,4 +48,4 @@ python -X utf8 ./tools/check_runtime_assets.py ./build/smoke/rom.zar
 ```
 
 重放使用 Python 图像解码器与已确认的 VFS 长度路径，不声称执行了游戏或原生 STB 代码。
-用户应关闭 BugSplat 后重新运行原来的测试副本；中文主菜单及游戏稳定性仍待实际验收。
+复验步骤为关闭 BugSplat 后重新运行原来的测试副本；中文主菜单及游戏稳定性仍待实际验收。

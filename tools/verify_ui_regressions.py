@@ -142,7 +142,7 @@ def main():
                  +'\nSTDOUT: '+rec['stdout']+'\nSTDERR: '+rec['stderr']+'\nEXIT_STATUS: '+str(rec['exit_status'])+'\n\n')
     text += ('RESTORED_STATUS: isolated game files and installer byte-identical to prior fixed release; '
              'selected baseline defects reproduced after rollback. F1, sign, reader hooks and fonts retained.\n'
-             'GAME_LAUNCH: NEVER\nRUNTIME_ACCEPTANCE: PENDING user in-game interaction; native replay is offline.\n'
+             'GAME_LAUNCH: NEVER\nRUNTIME_ACCEPTANCE: PENDING manual in-game interaction; native replay is offline.\n'
              +'MODIFIED_HASHES: '+json.dumps(retained)+'\n')
     (a.output/'VERIFICATION.txt').write_text(text, encoding='utf8')
     assert installer.read_bytes()[:2] == b'MZ'

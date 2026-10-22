@@ -15,5 +15,5 @@
 | `docs/` | 当前说明、专题证据与历史索引 |
 | `build/`、`dist/`、`work/` | 本地生成物和工作资料，Git忽略 |
 
-玩家入口见[README](../README.md)，开发者入口见[BUILDING](../BUILDING.md)。最小实验工具保留作机制回归，不作为玩家安装入口。
+安装入口见[README](../README.md)，构建入口见[BUILDING](../BUILDING.md)。最小实验工具保留作机制回归，不作为正式安装入口。
 本地维护指令、完整游戏、原始图片、字体缓存、SDK、存档及反编译正文不进入Git。

@@ -58,5 +58,5 @@ Optional `DEMENTIUM_RESTART_TEST_EXE` and `DEMENTIUM_RESTART_TEST_ROM` fixture
 selectors are also accepted. All tests are offline. This proves the exact
 invalid loader argument seen in the logs; it does not execute full graphics,
 resource I/O, the complete teardown body, or a Windows crash reporter. A new
-in-game return-to-menu / New Game run remains the final user acceptance step.
+in-game return-to-menu / New Game run remains the final in-game acceptance step.
 Evidence and red/green logs: `build/restart-lifecycle-fix/`.

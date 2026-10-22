@@ -1,9 +1,9 @@
 # 文档索引
 
-## 玩家与发布
+## 安装与发布
 
 - [当前发布与通关](STATUS.md) · [安装与恢复](INSTALLATION_GUIDE.md)
-- [玩家操作](PLAYER_README.md) · [已知问题](KNOWN_ISSUES.md) · [更新日志](../CHANGELOG.md)
+- [操作说明](PLAYER_README.md) · [已知问题](KNOWN_ISSUES.md) · [更新日志](../CHANGELOG.md)
 
 ## 开发与维护
 

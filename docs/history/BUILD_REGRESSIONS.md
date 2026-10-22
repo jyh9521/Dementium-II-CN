@@ -9,9 +9,9 @@
 
 完整构建同时生成`native-menu-pe-v1`程序差分与调试字体字符子集，新增依赖capstone==5.0.7；不复用未知程序版本的代码偏移。语言数据位于`locales/zh-CN/debug-menu.json`，字体仍使用已记录哈希/OFL许可的Fusion来源。详见`docs/NATIVE_CHEAT_MENU.md`。
 
-## 用户固定版本策略
+## 固定版本策略
 
-补丁及安装器版本保持1.0.0，只有用户明确要求时才修改；修复或新增功能不自动递增版本。assets/release-policy.json是构建约束，build_installer.py逐项核对AssemblyVersion/FileVersion/InformationalVersion。
+补丁及安装器版本保持1.0.0，仅在明确版本决策后修改；修复或新增功能不自动递增版本。assets/release-policy.json是构建约束，build_installer.py逐项核对AssemblyVersion/FileVersion/InformationalVersion。
 
 ## D.R./F1回归
 
@@ -49,7 +49,7 @@ python -X utf8 tools/verify_ui_regressions.py --before build/menu-postcard-resta
 python -X utf8 tools/verify_ui_regressions.py --before build/mouse-document-input-fix/baseline --build build/full-zh-CN --installer-before build/mouse-document-input-fix/baseline/Setup.exe --output build/mouse-document-input-fix/verification --test test_reader_key_lifecycle.py --test test_menu_message_path.py --test test_menu_full_frame.py --unchanged-rom --allow-reader-code-change
 ```
 
-`test_menu_full_frame.py`从实际注册WndProc到完整ImGui帧测试长按与两次点击；`test_reader_key_lifecycle.py`检查打开/关闭阅读器后的E松开及动作边沿。纯common-handler内层测试通过不能取代注册入口可达性。`tools/observe_runtime_input.py`是可选的只读、仅前台游戏字段观察辅助，等待玩家手动启动；本次等待期间没有运行中游戏，因此没有采到实时输入，不将该等待记作实机通过。
+`test_menu_full_frame.py`从实际注册WndProc到完整ImGui帧测试长按与两次点击；`test_reader_key_lifecycle.py`检查打开/关闭阅读器后的E松开及动作边沿。纯common-handler内层测试通过不能取代注册入口可达性。`tools/observe_runtime_input.py`是可选的只读、仅前台游戏字段观察辅助，等待手动启动游戏；本次等待期间没有运行中游戏，因此没有采到实时输入，不将该等待记作实机通过。
 
 ### 输入状态转换专项审计
 

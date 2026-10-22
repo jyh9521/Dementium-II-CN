@@ -1,6 +1,6 @@
 # 英文字体调整（2026-10-21）
 
-用户要求英文也使用两套像素字体之一。本次普通英文、数字、ASCII 标点及 Latin-1 重音字母统一采用已安装的 Fusion Pixel 12px（2026.10.16，Regular）。章节中文仍采用 ChillBitmap 16px。
+英文也统一使用两套像素字体之一。本次普通英文、数字、ASCII 标点及 Latin-1 重音字母统一采用已安装的 Fusion Pixel 12px（2026.10.16，Regular）。章节中文仍采用 ChillBitmap 16px。
 
 ## 实现
 

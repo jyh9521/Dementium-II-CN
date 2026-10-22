@@ -1,4 +1,4 @@
-"""Regression gates for the user's whitespace, long-note and options screenshots."""
+"""Regression gates for the reported whitespace, long-note and options screenshots."""
 import argparse,io,json,re,sys
 from pathlib import Path
 from PIL import Image

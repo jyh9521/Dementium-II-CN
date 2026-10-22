@@ -128,7 +128,7 @@ decompiled/
 # Installed font caches are local build inputs
 assets/fonts/*.ttf
 
-# Installer user-supplied branding and SDK intermediates
+# Installer separately supplied branding and SDK intermediates
 installer/branding/
 installer/obj/
 installer/bin/
