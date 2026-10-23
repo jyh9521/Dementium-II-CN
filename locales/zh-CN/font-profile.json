@@ -272,7 +272,8 @@
     "高清CRT",
     "复古",
     "复古CRT",
-    "高清"
+    "高清",
+    "轻微"
   ],
   "image_config": "image-text.json",
   "prose_layouts": {
@@ -386,5 +387,14 @@
       "EN/EXAMINE.535"
     ],
     "policy": "Preserve authored hard lines, blank paragraphs and indentation; wrap only within each original line. Native scrolling applies to overflow text-only examination pages and illustrated letters 78/90..93 in both field and collection readers. The 12 postcards, other illustrated items and puzzle pages keep their original paths."
-  }
+  },
+  "table_extensions": [
+    {
+      "resource": "EN/OPTIONSNEW.TBL",
+      "source_rows": 48,
+      "rows": [
+        "轻微"
+      ]
+    }
+  ]
 }

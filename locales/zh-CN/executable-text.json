@@ -3,7 +3,7 @@
   "encoding": "utf-8",
   "source_size": 5532672,
   "source_sha256": "1cc03e74444d956acdde25852209b85f9166d068a2468fafb2c002746ccaf1df",
-  "notes": "仅替换已审计的PC菜单/统计固定字符串及紧随其后的零填充；保持CRT技术缩写。原生UTF-8字形通路已验证，新增字形须纳入字体构建。除这些固定槽外，不改代码、指针、PE头或其他语言标签。",
+  "notes": "PC菜单固定字符串使用已审计零填充槽；data_runs仅保存已审计只读表索引的等长替换。完整原EXE哈希、槽与索引原字节均须匹配；不改动作代码、设置值及默认值。",
   "entries": [
     {
       "id": "exe-rdata-4297520",
@@ -101,6 +101,14 @@
       "offset": 4294208,
       "source": "ALTA RES.",
       "reason": "其他内置语言标签，保留原样"
+    }
+  ],
+  "data_runs": [
+    {
+      "id": "head-bob-subtle-row",
+      "offset": 4299412,
+      "old": "29000000",
+      "new": "30000000"
     }
   ]
 }

@@ -1,0 +1,11 @@
+# 行走晃动上下文文本修正
+
+Steam build 26123896的OPTIONSNEW.TBL第41行SUBTLE同时用于小地图与行走晃动。全局译为“半透明”导致后者显示错误。
+
+原生显示函数RVA 0x1251a0：选项7通过RVA 0x41a9f8的[18,41,42]读取小地图显示；选项10通过RVA 0x41aa90的[16,41,18]读取行走晃动显示。修正仅将后一个数组中间值改为48，追加独立中文行“轻微”。原行0至47、设置位及控制流程保持不变。旧build 26099941没有此设置，兼容配方保持原样。
+
+配置位于font-profile.json的table_extensions与executable-text.json的data_runs；通用工具不包含固定语言字符串。扩展行参与字库与布局验证。原版资源记录仍为677条，构建输出新增1条上下文显示行。
+
+`python -X utf8 tools/verify_option_context.py build/full-zh-CN`使用Unicorn执行实际EXE的显示函数，覆盖两项设置各三个状态；不启动游戏，不构成游戏内视觉验收。
+
+当前未发布修正与已发布安装器分别保留，尚未更新发布附件。

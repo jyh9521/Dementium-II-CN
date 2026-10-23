@@ -16,6 +16,8 @@ from font_pipeline import glyph_width
 
 
 def audit(zar, logical, profile):
+    from table_extensions import extension_records
+    logical = [*logical, *extension_records(profile)]
     actual = {r['id']: r for r in extract(zar)}
     meta = json.loads(zar.read('FONTS/D2FONT_12X15.JSON'))
     ledger, issues = [], []
@@ -26,6 +28,8 @@ def audit(zar, logical, profile):
             continue
         entry = actual[key]
         text = entry['source']
+        if row.get('extension') and text != row['target']:
+            issues.append(dict(id=key, code='extension-text-mismatch'))
         document = '/EXAMINE.' in row['resource']
         kind = ('postcard' if row['resource'] in profile.get('document_layouts', {}) else
                 'document' if document else 'subtitle' if row['resource'].endswith('.SUB') else

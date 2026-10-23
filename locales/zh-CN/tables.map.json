@@ -2409,14 +2409,14 @@
   },
   "EN/OPTIONSNEW.TBL:0041": {
     "target": "半透明",
-    "status": "reviewed-context-pending",
-    "notes": "SUBTLE 对应的具体显示效果/设置项尚待菜单核对。",
+    "status": "text-reviewed",
+    "notes": "小地图SUBTLE显示为半透明；行走晃动使用独立扩展行轻微，不修改共享行。",
     "text_type": "ui"
   },
   "EN/OPTIONSNEW.TBL:0042": {
     "target": "不透明",
-    "status": "reviewed-context-pending",
-    "notes": "BOLD 对应的具体显示效果/设置项尚待菜单核对。",
+    "status": "text-reviewed",
+    "notes": "小地图BOLD显示为不透明。",
     "text_type": "ui"
   },
   "EN/OPTIONSNEW.TBL:0043": {

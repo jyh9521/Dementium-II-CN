@@ -39,6 +39,15 @@ class ExecutableTextTests(unittest.TestCase):
         self.assertEqual(apply_executable_patch(data, patch), modified)
         self.assertEqual(apply_executable_patch(modified, patch, True), data)
 
+    def test_guarded_readonly_data_run_and_rollback(self):
+        data, recipe = fixture()
+        recipe['data_runs'] = [dict(id='index', offset=512, old='00000000', new='30000000')]
+        modified, patch = build_executable(data, recipe)
+        self.assertEqual(modified[512:516], b'\x30\0\0\0')
+        self.assertEqual(apply_executable_patch(modified, patch, True), data)
+        recipe['data_runs'][0]['old'] = '29000000'
+        with self.assertRaises(ValueError): build_executable(data, recipe)
+
     def setUp(self):
         self.data, self.recipe = fixture()
 

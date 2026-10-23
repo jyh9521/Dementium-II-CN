@@ -76,7 +76,7 @@
 | BONESAW / Buzz Saw | GUI 暂译“骨锯”；物品与查看说明译“电锯” | 原文不同但疑似同一武器；未见模型证据前不把差异伪装成定论 |
 | Empty | 暂译“空” | 可能为空容器状态，也可能是清空动作 |
 | Weapon Full | 暂译“武器弹药已满” | 需拾取场景确认是否专指弹药 |
-| SUBTLE / BOLD / RETRO | 暂译“轻微 / 强烈 / 复古” | 设置值对应的具体选项尚待界面确认 |
+| SUBTLE / BOLD / RETRO | 小地图“半透明 / 不透明”；行走晃动SUBTLE“轻微”；RETRO“复古” | 按设置上下文区分共享原文 |
 | Lift / Drop / Release / Turn / Toggle | 暂译“抬起 / 放下 / 松开 / 转动 / 切换” | 需核对交互对象 |
 | It's spreading / Final passage | 章标题暂译“蔓延 / 最后的通道” | 代词指代与 passage 双关尚待剧情场景审校 |
 

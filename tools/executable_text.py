@@ -74,8 +74,12 @@ def build_executable(data, recipe):
         if data[offset:offset+capacity] != old:
             raise ValueError('Literal/source zero-padding guard mismatch')
         changes.append(dict(id=entry['id'], offset=offset, old=old.hex(), new=new.hex()))
+    changes.extend(recipe.get("data_runs", []))
+    changes.sort(key=lambda run: run["offset"])
     out = bytearray(data)
     for offset, old, new in _ranges(data, changes):
+        if data[offset:offset+len(old)] != old:
+            raise ValueError("Executable data/source guard mismatch")
         out[offset:offset+len(old)] = new
     modified = bytes(out)
     patch = dict(schema=1, format='fixed-slot-utf8-v1',

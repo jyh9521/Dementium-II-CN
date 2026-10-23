@@ -371,6 +371,9 @@ def main():
             profile = json.loads(args.profile.read_text(encoding='utf-8'))
             mixed_fonts, records, mixed_info = build_mixed(zar, records, profile)
         changes = import_text(zar, records)
+        if args.profile:
+            from table_extensions import extend_tables
+            changes = extend_tables(zar, changes, profile)
         info = {'added_glyphs': 0}
         if args.profile:
             changes.update(mixed_fonts)
