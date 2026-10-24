@@ -2,7 +2,7 @@ param([switch]$Apply)
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $build = Join-Path $root 'build'
-$keep = @('build/full-zh-CN/rom.zar', 'build/text-layout-fix/original/rom.zar')
+$keep = @('build/full-zh-CN/rom.zar', 'build/original/rom.zar', 'build/text-layout-fix/original/rom.zar')
 $tracked = @{}
 git -C $root ls-files | ForEach-Object { $tracked[$_.Replace('\','/')] = $true }
 # Never traverse junctions or operate outside this checkout.
@@ -12,8 +12,9 @@ $files = @(Get-ChildItem -LiteralPath $build -Recurse -File -Force)
 $targets = @($files | Where-Object {
     $rel = $_.FullName.Substring($root.Length + 1).Replace('\','/')
     -not $tracked.ContainsKey($rel) -and $rel -notin $keep -and
-    $rel -notlike 'build/toolchain/dotnet/*' -and
-    $rel -notlike 'build/maintenance/release-cleanup/*' -and (
+    $rel -notlike 'build/archive/*' -and
+    $rel -notlike 'build/maintenance/*' -and (
+        $rel -like 'build/toolchain/*' -or
         $_.Extension -eq '.zar' -or
         ($_.Length -gt 20MB -and $_.Extension -in @('.exe','.zip')) -or
         $rel -match '^build/(installer/(bin|obj|Installer-obj|Tests-obj|test-obj|publish)/|backup-layout-fix/(bin|obj)/)' )
@@ -48,6 +49,5 @@ $empty = @(Get-ChildItem -LiteralPath $build -Directory -Recurse -Force | Sort-O
 foreach ($directory in $empty) {
     $path = [IO.Path]::GetFullPath($directory.FullName)
     if (-not $path.StartsWith($build + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw "Outside build: $path" }
-    if ($path.StartsWith((Join-Path $build 'toolchain/dotnet'), [StringComparison]::OrdinalIgnoreCase)) { continue }
     if (-not (Get-ChildItem -LiteralPath $path -Force | Select-Object -First 1)) { Remove-Item -LiteralPath $path }
 }
