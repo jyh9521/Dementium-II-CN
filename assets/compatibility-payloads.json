@@ -11,9 +11,9 @@
     {
       "buildid": "26123896",
       "path": "build/installer/compatibility-26123896/resource-patches.gz",
-      "sha256": "ddb5ff8833d33523fb708c2e2862dfe63686c5d0917f36ac1d70bbf6f9db5552",
+      "sha256": "88609ec63054b938c8d3cd7a58c48dcdcd091245f80c465241f50583b1a3729b",
       "exe_sha256": "1cc03e74444d956acdde25852209b85f9166d068a2468fafb2c002746ccaf1df",
-      "origin": "Verified prior full build, including independent head-bob wording; sparse recipe only"
+      "origin": "Rebuilt guarded native context getter and fixed-capacity 48-row resources; actual loader-to-getter replay verified"
     }
   ]
 }

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -183,6 +184,65 @@ static class ResourceTests {
   Console.WriteLine("COMPAT_REJECT section=.text offset="+textOffset+" modified_run=NO unknown_sha256="+badHash+" originals=UNCHANGED backup=ABSENT reason="+reason+" result=PASS");
   Assert(LocalizationInstaller.Engine.Hash(sourceRom)==sourceRomHash && LocalizationInstaller.Engine.Hash(sourceExe)==sourceExeHash,"Source game installation changed");
   Console.WriteLine("COMPAT_REAL cases=2 source_files=UNCHANGED game_launch=NEVER result=PASS");
+ }
+ public static void UpgradeReal(string source,string previousPayload,string targetDir) {
+  Assert(!Directory.Exists(targetDir),"Upgrade output must not exist");
+  var settings=Payload.Load();var corrected=ResourcePayload.Load();ResourcePayload previous;
+  using(var input=File.OpenRead(previousPayload))using(var gzip=new GZipStream(input,CompressionMode.Decompress))using(var memory=new MemoryStream()) {
+   byte[] buffer=new byte[65536];int count;while((count=gzip.Read(buffer,0,buffer.Length))>0){if(memory.Length+count>64*1024*1024)throw new InvalidDataException("Previous payload exceeds loader bound");memory.Write(buffer,0,count);}
+   previous=JsonSerializer.Deserialize<ResourcePayload>(memory.ToArray(),new JsonSerializerOptions {IncludeFields=true});
+  }
+  var oldNative=previous.native_executable;
+  Assert(oldNative.source_sha256==settings.Executable.original_sha256,"Upgrade fixture requires current original executable");
+  Assert(oldNative.target_sha256!=corrected.native_executable.target_sha256,"Upgrade payload still has old native target");
+  var options=previous.members.Single(p=>p.name=="EN/OPTIONSNEW.TBL");
+  var fixedOptions=corrected.members.Single(p=>p.name==options.name);
+  Assert(options.target_sha256!=fixedOptions.target_sha256,"Upgrade payload still has old option-table target");
+  var oldSettings=Payload.Load();oldSettings.Executable=new Delta {format="native-menu-pe-v1",original_size=oldNative.source_size,modified_size=oldNative.target_size,original_sha256=oldNative.source_sha256,modified_sha256=oldNative.target_sha256,runs=oldNative.runs,append=oldNative.tail};
+  string sourceRom=Path.Combine(source,settings.Settings.archive_file),sourceExe=Path.Combine(source,settings.Settings.executable_file);
+  string[] original={LocalizationInstaller.Engine.Hash(sourceRom),LocalizationInstaller.Engine.Hash(sourceExe)};
+  Assert(original[0]==settings.Archive.original_sha256 && original[1]==settings.Executable.original_sha256,"Upgrade source is not verified clean baseline");
+  Directory.CreateDirectory(targetDir);
+  string rom=Path.Combine(targetDir,settings.Settings.archive_file),exe=Path.Combine(targetDir,settings.Settings.executable_file),cache=Path.Combine(targetDir,settings.Settings.backup_folder),receipt=Path.Combine(cache,"resource-state.json");
+  File.Copy(sourceRom,rom);File.Copy(sourceExe,exe);
+  var oldEngine=new ResourceEngine(oldSettings,previous);
+  Assert(oldEngine.Operate(rom,true,false)=="INSTALLED","Old-payload fixture install failed");
+  var oldState=JsonSerializer.Deserialize<ResourceState>(File.ReadAllText(receipt),new JsonSerializerOptions {IncludeFields=true});
+  Assert(oldState.files.Count==2,"Old receipt must contain both original components");
+  using(var archive=new ResourceArchive(rom)) {
+   byte[] table=archive.Read(options.name);
+   Assert(Hash(table)==options.target_sha256,"Old option member identity mismatch");
+   int rows=Encoding.UTF8.GetString(table).Split(new[]{'\r','\n'},StringSplitOptions.RemoveEmptyEntries).Length;
+   Assert(rows==49,"Old-bug fixture must contain exactly 49 option rows");
+  }
+  Assert(LocalizationInstaller.Engine.Hash(exe)==oldNative.target_sha256,"Old native fixture identity mismatch");
+  string oldRom=LocalizationInstaller.Engine.Hash(rom),oldExe=LocalizationInstaller.Engine.Hash(exe);
+  foreach(var saved in oldState.files)Assert(LocalizationInstaller.Engine.Hash(Path.Combine(cache,saved.backup))==saved.original,"Old original backup mismatch");
+  Console.WriteLine("UPGRADE_BASELINE rows=49 old_rom_sha256="+oldRom+" old_exe_sha256="+oldExe+" receipt=VERIFIED backups=ORIGINAL result=PASS");
+  var engine=new ResourceEngine(settings,corrected);var scan=engine.Inspect(rom);
+  Assert(scan.components.Count==2 && scan.components.All(c=>c.installed && c.upgrade),"Old bad installation was not marked for upgrade");
+  Assert(LocalizationInstaller.Engine.Hash(rom)==oldRom && LocalizationInstaller.Engine.Hash(exe)==oldExe,"Upgrade inspect wrote files");
+  Assert(engine.Operate(rom,true,false)=="INSTALLED","Corrected upgrade failed");
+  Assert(LocalizationInstaller.Engine.Hash(rom)==settings.Archive.modified_sha256 && LocalizationInstaller.Engine.Hash(exe)==settings.Executable.modified_sha256,"Corrected upgrade differs from verified build");
+  var newState=JsonSerializer.Deserialize<ResourceState>(File.ReadAllText(receipt),new JsonSerializerOptions {IncludeFields=true});
+  Assert(newState.files.Count==oldState.files.Count,"Upgrade lost receipt components");
+  foreach(var saved in oldState.files) {
+   var current=newState.files.Single(f=>f.name==saved.name);
+   Assert(current.original==saved.original && current.backup==saved.backup,"Upgrade changed original backup identity or path");
+   Assert(LocalizationInstaller.Engine.Hash(Path.Combine(cache,current.backup))==saved.original,"Upgrade overwrote original backup");
+   Assert(current.installed==LocalizationInstaller.Engine.Hash(Path.Combine(targetDir,current.name)),"Upgrade receipt installed identity mismatch");
+  }
+  using(var archive=new ResourceArchive(rom)) {
+   byte[] table=archive.Read(fixedOptions.name);int rows=Encoding.UTF8.GetString(table).Split(new[]{'\r','\n'},StringSplitOptions.RemoveEmptyEntries).Length;
+   Assert(rows==48 && Hash(table)==fixedOptions.target_sha256,"Corrected option table must contain exactly 48 rows");
+  }
+  Assert(engine.Operate(rom,true,false)=="ALREADY_INSTALLED","Corrected upgrade is not idempotent");
+  Console.WriteLine("UPGRADE_MODIFIED rows=48 rom_sha256="+LocalizationInstaller.Engine.Hash(rom)+" exe_sha256="+LocalizationInstaller.Engine.Hash(exe)+" backups=UNCHANGED receipt_original=UNCHANGED idempotence=PASS result=PASS");
+  Assert(engine.Operate(rom,true,true)=="RESTORED","Corrected installation restore failed");
+  Assert(LocalizationInstaller.Engine.Hash(rom)==original[0] && LocalizationInstaller.Engine.Hash(exe)==original[1],"Upgrade rollback did not restore initial original bytes");
+  Assert(!Directory.Exists(cache),"Upgrade restore retained backup directory");
+  Assert(LocalizationInstaller.Engine.Hash(sourceRom)==original[0] && LocalizationInstaller.Engine.Hash(sourceExe)==original[1],"Upgrade modified source installation");
+  Console.WriteLine("UPGRADE_ROLLBACK files=2 restored=BYTE_IDENTICAL backup=REMOVED source_files=UNCHANGED game_launch=NEVER result=PASS");
  }
  public static void Real(string source,string targetDir) {
   Assert(!Directory.Exists(targetDir),"Real output must not exist");Directory.CreateDirectory(targetDir);

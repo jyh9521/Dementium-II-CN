@@ -1,3 +1,5 @@
+> 当前HEAD BOB方案已更正：使用原生48行表与独立只读显示字符串，见[固定容量修复](HEAD_BOB_RUNTIME_FIX.md)。下文早期索引48及旧产物身份只作为适配过程记录；当前安装器身份以assets/releases/v1.1.2.json为准。
+
 # Native build 26152271 (game 1.0.3 / patch v1.1.2)
 
 ## Shipped identity and preserved update

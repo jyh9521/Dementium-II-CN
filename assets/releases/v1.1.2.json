@@ -4,8 +4,8 @@
   "tag": "v1.1.2",
   "installer_version": "1.1.2",
   "filename": "Dementium-II-CN-v1.1.2.exe",
-  "size": 78511641,
-  "sha256": "1446c9ec7ea40da3ece14db0032e93b9a34321f79f179d9aab604ab78b527250",
+  "size": 78512153,
+  "sha256": "3e4791eb8619818a13cb48afef1ca7c4408042a6e4e423dd184510355ebbea09",
   "supported_appid": 5342930,
   "reference_build": "26152271",
   "supported_builds": [
@@ -21,7 +21,7 @@
   "changes": [
     "Port to Steam build 26152271 / game 1.0.3",
     "Retain updated maps and simulationhz=60",
-    "Independent head-bob subtle label; minimap and setting values unchanged",
-    "Versioned native F1 and controller input replay; three-build installer recipes"
+    "Versioned native F1 and controller input replay; three-build installer recipes",
+    "Use independent read-only head-bob context literals; actual native 48-row loader replay; retain minimap and inversion labels"
   ]
 }

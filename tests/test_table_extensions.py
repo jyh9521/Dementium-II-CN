@@ -37,7 +37,7 @@ class OptionContextReplayTests(unittest.TestCase):
             self.skipTest('Built executable and archive not selected')
         from verify_option_context import labels
         self.assertEqual(labels(Path(exe).read_bytes(), Path(rom).read_bytes()),
-                         {'head_bob': ['普通', '轻微', '关'], 'minimap': ['关', '半透明', '不透明']})
+                         {'head_bob': ['普通', '轻微', '关闭'], 'minimap': ['关', '半透明', '不透明']})
 
 
 if __name__ == '__main__': unittest.main()

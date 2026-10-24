@@ -14,6 +14,8 @@
 
 ## 专题调查与回归
 
+- [HEAD BOB真实加载器修复](HEAD_BOB_RUNTIME_FIX.md)
+
 - [游戏1.0.3适配](UPDATE_26152271.md) · [build 26152271原生回放](NATIVE_BUILD_26152271.md)
 
 - [早期技术分析](TECHNICAL_ANALYSIS.md) · [VFS字体截断](STARTUP_FONT_FIX.md)

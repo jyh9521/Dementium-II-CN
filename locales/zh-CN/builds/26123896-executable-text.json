@@ -103,12 +103,11 @@
       "reason": "其他内置语言标签，保留原样"
     }
   ],
-  "data_runs": [
-    {
-      "id": "head-bob-subtle-row",
-      "offset": 4299412,
-      "old": "29000000",
-      "new": "30000000"
+  "data_runs": [],
+  "context_literals": {
+    "head_bob": {
+      "1": "轻微",
+      "2": "关闭"
     }
-  ]
+  }
 }

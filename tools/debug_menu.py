@@ -87,6 +87,13 @@ def _build_menu(data, recipe=None):
         payload.extend(target.encode('utf-8')+b'\0')
     glyph_va = base+va+len(payload)
     payload.extend(glyph_text(recipe).encode('utf-8')+b'\0')
+    from option_context import configured_literals,patch_context_literals
+    context_pointers={}
+    for context,values in configured_literals().items():
+        context_pointers[context]={}
+        for key,value in values.items():
+            context_pointers[context][key]=base+va+len(payload)
+            payload.extend(value.encode('utf8')+b'\0')
     out = bytearray(data)
     md = capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_64); md.detail=True
     redirected = []; hits=set()
@@ -164,7 +171,8 @@ def _build_menu(data, recipe=None):
     result,reader_report=patch_document_reader(result)
     from pause_layout import patch_pause_layout
     result,pause_report=patch_pause_layout(result)
-    return result,dict(input=input_report,document_reader=reader_report,pause_layout=pause_report,labels=len(hits),rip_references=len(redirected),entity_names=35,section_groups=7,
+    result,context_report=patch_context_literals(result,context_pointers)
+    return result,dict(input=input_report,document_reader=reader_report,pause_layout=pause_report,option_contexts=context_report,labels=len(hits),rip_references=len(redirected),entity_names=35,section_groups=7,
                        glyphs=len(set(glyph_text(recipe))),unlock_branch=hex(base+map_rva(0x4fa49))+': '+unlock.hex()+' -> eb'+unlock[1:].hex(),
                        hotkey='F1 (VK 0x70 -> internal 0x1c), including native direct-input-disabled mode',
                        mode_bridge=hex(base+map_rva(0x1a7c5b))+' -> '+hex(base+map_rva(0x1a7d81))+'; F1-only bypass of +458',
