@@ -424,7 +424,14 @@ def patch_document_reader(data):
     for rva,expected in [(map_rva(0x1557a5),bytes.fromhex('f3 45 0f 10 81 cc 02 00 00')),
                          (map_rva(0x2ed4d),bytes.fromhex('f3 41 0f 11 9c 89 c0 02 00 00')),
                          (map_rva(0x31ad26),bytes.fromhex('41 80 bc bc f0 14 a3 00 00'))]:
-        expected=guard(expected,rva)
+        from native_profile import active_build
+        if active_build()=='26152271' and rva==map_rva(0x31ad26):
+            # 1.0.3 copies controller packets to stack; the native consumer
+            # uses RDX, while reader disconnect gating retains the source flag.
+            expected=bytes.fromhex('80 3a 00')
+            if pe.get_data(0x31df43,7)!=bytes.fromhex('0f 28 05 06 86 71 00') or pe.get_data(0x31df4a,7)!=bytes.fromhex('0f 28 0d 0f 86 71 00'):
+                raise ValueError('Reader controller packet provenance guard mismatch')
+        else:expected=guard(expected,rva)
         if pe.get_data(rva,len(expected))!=expected:
             raise ValueError('Reader gamepad axis/connection guard mismatch at '+hex(rva))
     section=next((s for s in pe.sections if s.Name.rstrip(b'\0')==b'.locui'),None)

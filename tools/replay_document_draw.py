@@ -134,10 +134,10 @@ def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events
 
 def replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events=(),native_profile='26099941'):
     from native_profile import _ACTIVE,restore
-    if native_profile not in ('26099941','26123896'):raise ValueError('Unknown native replay profile')
+    if native_profile not in ('26099941','26123896','26152271'):raise ValueError('Unknown native replay profile')
     pe=pefile.PE(str(executable),fast_load=True)
     data_section=next(s for s in pe.sections if s.Name.rstrip(b'\0')==b'.data')
-    expected={'26099941':0x49f000,'26123896':0x4a1000}[native_profile]
+    expected={'26099941':0x49f000,'26123896':0x4a1000,'26152271':0x4a4000}[native_profile]
     if data_section.VirtualAddress!=expected:raise ValueError('Native replay fixture/profile mismatch')
     token=_ACTIVE.set(native_profile)
     try:return _replay(executable,archive,resource,collection,events)

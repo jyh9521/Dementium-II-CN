@@ -28,6 +28,16 @@ def native_f1_previous_rva(data):
 
 
 def patch_menu_input(data):
+    from native_profile import active_build
+    if active_build()=='26152271':
+        source_pe=pefile.PE(data=data)
+        # Bind native held-key state and the independent key callback to their
+        # actual 1.0.3 consumers, rather than assuming adjacent global shifts.
+        sources=[(0x2dfd5a,bytes.fromhex('41 80 bc 09 b0 5d a3 00 00')),
+                 (0x1a8a55,bytes.fromhex('48 8b 0d 5c 90 88 00'))]
+        for address,expected in sources:
+            if source_pe.get_data(address,len(expected))!=expected:
+                raise ValueError('Native held-key/input provenance guard mismatch')
     data,report=prepare_ui_section(data)
     pe=pefile.PE(data=data);out=bytearray(data);code=BASE+report['code_rva']
     symbols=dict(VISIBLE=BASE+map_rva(0x4a2f1d),INPUT=BASE+map_rva(0x4c2228),IO=BASE+map_rva(0x4c2248),

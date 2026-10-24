@@ -14,6 +14,8 @@
 
 ## 专题调查与回归
 
+- [游戏1.0.3适配](UPDATE_26152271.md) · [build 26152271原生回放](NATIVE_BUILD_26152271.md)
+
 - [早期技术分析](TECHNICAL_ANALYSIS.md) · [VFS字体截断](STARTUP_FONT_FIX.md)
 - [字体路径与补字](FONT_ROUTING_AUDIT.md) · [拉丁字体更新](LATIN_FONT_UPDATE.md)
 - [全文覆盖](TEXT_COVERAGE_AUDIT.md) · [文本排版](FULL_TEXT_LAYOUT_AUDIT.md) · [图片排版](FULL_IMAGE_LAYOUT_AUDIT.md)

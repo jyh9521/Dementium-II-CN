@@ -1,5 +1,6 @@
 """Build source-dependent member deltas, independent of container offsets at install."""
 import base64
+import copy
 import gzip
 import hashlib
 import json
@@ -36,21 +37,46 @@ def native_hash_guards(source, target):
     return guards
 
 
+def _variants(patch):
+    """Flatten imported historical bundles; the installer selects one level."""
+    yield patch
+    for variant in patch.get('source_variants', []):
+        yield from _variants(variant)
+
+
+def _merge_variants(current, previous):
+    seen = {current['source_sha256']}
+    variants = []
+    # Keep the newest recipe for each preimage. Historical bundles may already
+    # carry older versions also listed independently in the compatibility index.
+    for patch in [*current.get('source_variants', []), previous]:
+        for variant in _variants(patch):
+            identity = variant['source_sha256']
+            if identity in seen:
+                continue
+            seen.add(identity)
+            item = copy.deepcopy(variant)
+            item.pop('source_variants', None)
+            variants.append(item)
+    if variants:
+        current['source_variants'] = variants
+
+
 def add_compatibility(payload, previous):
     """Merge independently validated sparse source recipes, never game files."""
     if previous.get('schema') != 1: raise ValueError('Unsupported compatibility payload')
     old = {m['name']: m for m in previous['members']}
     for member in payload['members']:
-        prior=old.pop(member['name'],None)
-        if prior and prior['source_sha256'] != member['source_sha256']:
-            member['source_variants']=[prior]
+        prior = old.pop(member['name'], None)
+        if prior:
+            _merge_variants(member, prior)
     # A resource no longer needing modification must not become mandatory on
     # the new build. A stale old-only recipe requires an explicit migration.
     if old: raise ValueError('Unmapped legacy resources: '+', '.join(sorted(old)))
-    native=previous['native_executable']
+    native = previous['native_executable']
     if native['source_sha256'] == payload['native_executable']['source_sha256']:
         raise ValueError('Compatibility source duplicates current executable')
-    payload['native_executable']['source_variants']=[native]
+    _merge_variants(payload['native_executable'], native)
     return payload
 
 
@@ -79,7 +105,7 @@ def native_executable_payload(build, patch, identity):
         runs=patch['runs'],tail=patch['append'])
 
 
-def make_payload(build, recipe):
+def make_payload(build, recipe, include_native=True):
     modified = (build/'rom.zar').read_bytes()
     manifest = json.loads((build/'patch.json').read_text())
     original = apply_delta(modified, manifest, True)
@@ -106,7 +132,7 @@ def make_payload(build, recipe):
     payload = dict(schema=1, members=members,
                    literals=[dict(source=e['source'], target=e['target'], capacity=e['slot_size']) for e in config['entries']])
     executable_patch = build/'exe-patch.json'
-    if executable_patch.exists():
+    if include_native and executable_patch.exists():
         patch=json.loads(executable_patch.read_text(encoding='utf-8'))
         if patch.get('format')=='native-menu-pe-v1':
             identity=json.loads((Path(__file__).resolve().parents[1]/'assets/supported-build.json').read_text(encoding='utf-8'))

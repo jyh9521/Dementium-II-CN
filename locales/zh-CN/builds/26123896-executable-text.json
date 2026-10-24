@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "encoding": "utf-8",
+  "source_size": 5532672,
+  "source_sha256": "1cc03e74444d956acdde25852209b85f9166d068a2468fafb2c002746ccaf1df",
+  "notes": "PC菜单固定字符串使用已审计零填充槽；data_runs仅保存已审计只读表索引的等长替换。完整原EXE哈希、槽与索引原字节均须匹配；不改动作代码、设置值及默认值。",
+  "entries": [
+    {
+      "id": "exe-rdata-4297520",
+      "offset": 4297520,
+      "source": "Accuracy",
+      "target": "命中率",
+      "status": "text-reviewed",
+      "text_type": "ui",
+      "notes": "容量为原文字节及紧随其后的零填充，不包含下一个非零字节；每次构建核对完整原EXE哈希和全部槽字节。",
+      "slot_size": 12
+    },
+    {
+      "id": "exe-rdata-4299796",
+      "offset": 4299796,
+      "source": "RETRO",
+      "target": "复古",
+      "status": "text-reviewed",
+      "text_type": "ui",
+      "notes": "容量为原文字节及紧随其后的零填充，不包含下一个非零字节；每次构建核对完整原EXE哈希和全部槽字节。",
+      "slot_size": 12
+    },
+    {
+      "id": "exe-rdata-4299752",
+      "offset": 4299752,
+      "source": "RETRO CRT",
+      "target": "复古CRT",
+      "status": "text-reviewed",
+      "text_type": "ui",
+      "notes": "容量为原文字节及紧随其后的零填充，不包含下一个非零字节；每次构建核对完整原EXE哈希和全部槽字节。",
+      "slot_size": 12
+    },
+    {
+      "id": "exe-rdata-4299764",
+      "offset": 4299764,
+      "source": "HI-RES",
+      "target": "高清",
+      "status": "text-reviewed",
+      "text_type": "ui",
+      "notes": "容量为原文字节及紧随其后的零填充，不包含下一个非零字节；每次构建核对完整原EXE哈希和全部槽字节。",
+      "slot_size": 12
+    },
+    {
+      "id": "exe-rdata-4299776",
+      "offset": 4299776,
+      "source": "HI-RES CRT",
+      "target": "高清CRT",
+      "status": "text-reviewed",
+      "text_type": "ui",
+      "notes": "容量为原文字节及紧随其后的零填充，不包含下一个非零字节；每次构建核对完整原EXE哈希和全部槽字节。",
+      "slot_size": 12
+    }
+  ],
+  "preserved_candidates": [
+    {
+      "offset": 4294040,
+      "source": "Debug",
+      "reason": "调试标签，非已确认普通玩家设置文本；不改调试语义"
+    },
+    {
+      "offset": 4294048,
+      "source": "CRT RETRO",
+      "reason": "其他内置语言标签，保留原样"
+    },
+    {
+      "offset": 4294064,
+      "source": "CRT HI-RES",
+      "reason": "其他内置语言标签，保留原样"
+    },
+    {
+      "offset": 4294080,
+      "source": "RETRO (CRT)",
+      "reason": "其他内置语言标签，保留原样"
+    },
+    {
+      "offset": 4294224,
+      "source": "CRT ALTA RES.",
+      "reason": "其他内置语言标签，保留原样"
+    },
+    {
+      "offset": 4294096,
+      "source": "ALTA RIS.",
+      "reason": "其他内置语言标签，保留原样"
+    },
+    {
+      "offset": 4294176,
+      "source": "ALTA RIS. (CRT)",
+      "reason": "其他内置语言标签，保留原样"
+    },
+    {
+      "offset": 4294192,
+      "source": "RETRO-CRT",
+      "reason": "其他内置语言标签，保留原样"
+    },
+    {
+      "offset": 4294208,
+      "source": "ALTA RES.",
+      "reason": "其他内置语言标签，保留原样"
+    }
+  ],
+  "data_runs": [
+    {
+      "id": "head-bob-subtle-row",
+      "offset": 4299412,
+      "old": "29000000",
+      "new": "30000000"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
 import native_profile as profiles
 from native_replay import Replay
-SOURCE=Path(os.environ.get('DEMENTIUM_V11_TEST_EXE',ROOT/'build/full-zh-CN/Dementium II.exe'))
+SOURCE=Path(os.environ.get('DEMENTIUM_V11_TEST_EXE',ROOT/'build/previous-26123896/Dementium II.exe'))
 
 def mapped(value):
     token=profiles._ACTIVE.set('26123896')

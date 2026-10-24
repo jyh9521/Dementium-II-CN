@@ -22,6 +22,7 @@ def main():
     tests = root/'build/installer/tests/net10.0-windows10.0.17763.0/InstallerTests.dll'
     exe = root/'dist/Dementium-II-zh-CN-Setup.exe'
     report = json.loads((out/'build-report.json').read_text(encoding='utf-8'))
+    settings = json.loads((root/'locales/zh-CN/installer.json').read_text(encoding='utf-8'))
     digest = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
     original = {p.name: digest(p) for p in [args.game/'rom.zar', args.game/'Dementium II.exe']}
     records = []
@@ -101,14 +102,14 @@ def main():
                  VERIFICATION=out/'VERIFICATION.txt', ROLLBACK=rollback)
     lines = ['Changed fields: ResourceEngine versioned named members; exact native profiles and complete PE/code/data hash guards before writes;',
              'Install enabled directly on path selection; optional resource check; original filenames in cn-backup and receipts; verified full restore deletes backup folder.',
-             'Version 1.1.1; supported builds 26099941 / 26123896; unknown version mismatch stops before any file replacement.',
+             'Version '+report['installer_version']+'; internal supported builds '+settings['supported_builds']+'; unknown version mismatch stops before any file replacement.',
+             'Visible footer: current '+settings['build_label']+' only; historical build support remains internal.',
              'New HEAD BOB translated; original in-game logo and company name preserved.',
              'Original input hashes='+json.dumps(original),
              'Installer bytes='+str(exe.stat().st_size)+' SHA256='+digest(exe),
              'ZIP bytes='+str(archive.stat().st_size)+' SHA256='+digest(archive),
              'OS actually tested='+platform.platform(), 'game_launch=NEVER',
-             'Restored behavior/status: original ROM+EXE byte identical; backup folder removed; modified build and installer retained.',
-             'Previous installer preserved='+str(out/'previous/Setup.exe')]
+             'Restored behavior/status: original ROM+EXE byte identical; backup folder removed; modified build and installer retained.']
     if (out/'previous/Setup.exe').exists():
         lines += ['Previous installer SHA256='+digest(out/'previous/Setup.exe')]
     lines += [key+'='+str(path) for key, path in paths.items()]

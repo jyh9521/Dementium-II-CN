@@ -122,7 +122,9 @@ def _build_menu(data, recipe=None):
             struct.pack_into('<Q',out,pos,strings[source]); hits.add(source)
     # Unconditional branch into the existing rising-edge menu toggle.
     gate=pe.get_offset_from_rva(map_rva(0x4fa49))
-    if out[gate:gate+2]!=b'\x75\x04': raise ValueError('Unlock branch guard mismatch')
+    from native_profile import active_build
+    unlock=bytes.fromhex('75 08') if active_build()=='26152271' else bytes.fromhex('75 04')
+    if out[gate:gate+2]!=unlock: raise ValueError('Unlock branch guard mismatch')
     out[gate]=0xeb
     key=pe.get_offset_from_rva(map_rva(0x1a7d4b))
     if out[key:key+3]!=b'\x83\xfa\x7e': raise ValueError('Hotkey compare guard mismatch')
@@ -163,9 +165,9 @@ def _build_menu(data, recipe=None):
     from pause_layout import patch_pause_layout
     result,pause_report=patch_pause_layout(result)
     return result,dict(input=input_report,document_reader=reader_report,pause_layout=pause_report,labels=len(hits),rip_references=len(redirected),entity_names=35,section_groups=7,
-                       glyphs=len(set(glyph_text(recipe))),unlock_branch='0x14004fa49: 7504 -> eb04',
+                       glyphs=len(set(glyph_text(recipe))),unlock_branch=hex(base+map_rva(0x4fa49))+': '+unlock.hex()+' -> eb'+unlock[1:].hex(),
                        hotkey='F1 (VK 0x70 -> internal 0x1c), including native direct-input-disabled mode',
-                       mode_bridge='0x1401a7c5b -> 0x1401a7d81; F1-only bypass of +458',
+                       mode_bridge=hex(base+map_rva(0x1a7c5b))+' -> '+hex(base+map_rva(0x1a7d81))+'; F1-only bypass of +458',
                        new_section='.locmenu read-only non-executable',references=redirected)
 
 

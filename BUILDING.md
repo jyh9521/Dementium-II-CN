@@ -5,7 +5,7 @@
 ## 输入与依赖
 
 - Windows、Python 3.11+，依赖版本固定于 `requirements.txt`。
-- Steam 2026版、AppID 5342930、build 26123896的干净原版目录，SHA-256见 `assets/supported-build.json`。不要将已汉化目录作为原版输入。
+- Steam 2026版、AppID 5342930、build 26152271的干净原版目录，SHA-256见 `assets/supported-build.json`。不要将已汉化目录作为原版输入。
 - 系统或当前账户的Fonts目录中的 `fusion-pixel-12px-proportional-zh_hans.ttf` 与 `ChillBitmap_16px.ttf`；身份固定于 `locales/zh-CN/font-profile.json`，字体发现不会自动下载或安装字体。
 - GUI安装器另需.NET 10 SDK及 `installer/branding/logo.png`、`app.ico`，输入SHA见 `installer/branding-inputs.json`。完整品牌图片不随源码分发，详见[安装器说明](docs/GUI_INSTALLER.md)。
 
@@ -23,7 +23,7 @@ python -X utf8 tools/import_legacy_installer.py --installer "D:/Downloads/Dement
 python -X utf8 tools/build_compatibility.py --executable "D:/Games/Dementium II 26099941/Dementium II.exe" --build-id 26099941 --output build/installer/compatibility-v1.1.1/resource-patches.gz
 ```
 
-提取需要7-Zip/NanaZip与`python -m pip install dnfile==0.18.0`，不运行旧安装器。后续GUI构建使用.NET 10 SDK；设置`DOTNET_EXE`可选择SDK。提取输入和稀疏配方哈希分别由`assets/releases/v1.0.json`与`assets/compatibility-payloads.json`约束；配方不包含完整游戏文件。干净旧版基线仍可另行重建；缺少该配方时1.1安装器构建停止，不生成虚假的旧版支持说明。
+提取需要7-Zip/NanaZip与`python -m pip install dnfile==0.18.0`，不运行旧安装器。后续GUI构建使用.NET 10 SDK；设置`DOTNET_EXE`可选择SDK。提取输入和稀疏配方哈希分别由`assets/releases/v1.0.json`与`assets/compatibility-payloads.json`约束；配方不包含完整游戏文件。干净旧版基线仍可另行重建；缺少该配方时安装器构建停止，不生成虚假的旧版支持说明。
 
 ## 完整构建
 
@@ -55,14 +55,14 @@ python -X utf8 tools/verify_installer.py --game "D:/Games/Dementium II Original"
 ```
 
 默认安装器为 `dist/Dementium-II-zh-CN-Setup.exe`，ZIP为 `dist/Dementium-II-zh-CN-Installer.zip`。
-本次交付附件名为 `Dementium-II-CN-v1.1.1.exe`，通过发布页手动上传；旧发布身份保留于 `assets/releases/v1.0.json`。
+本次交付附件名为 `Dementium-II-CN-v1.1.2.exe`，通过发布页手动上传；旧发布身份保留于 `assets/releases/v1.0.json`。
 验证脚本显式绑定当前EXE/ROM，检查真实文件副本安装、幂等、升级、恢复、Steam只读检测、自包含界面与隔离回滚，不启动游戏、不改存档。
 合成测试不需要游戏资产；完整PE/ROM回放还需本地原版与构建输出。历史专项的小型EXE夹具见[保留策略](docs/BUILD_STORAGE.md)。
 
 ## 重现与发布
 
 文本和JSON固定LF，ZIP成员顺序及时间戳固定。`source-inputs.json`与`release-manifest.json`记录输入及生成物身份；资源/差分复现与不同SDK下安装器PE复现分别判断。
-版本由 `assets/release-policy.json`约束，本次明确升级为1.1.1（对外v1.1.1）。
+版本由 `assets/release-policy.json`约束，本次明确升级为1.1.2（对外v1.1.2）。
 源码不含完整游戏、字体、品牌输入及SDK。当前通关结论属于[已发布产物](docs/STATUS.md)，新改动须按实际范围验证。
 
 ## 本地清理
@@ -73,3 +73,15 @@ powershell -ExecutionPolicy Bypass -File tools/clean_generated.ps1 -Apply
 ```
 
 保留当前输出、一个原版基线、SDK、源码、品牌输入、小型回归夹具及证据；删除重复大副本和编译缓存，详见[BUILD_STORAGE.md](docs/BUILD_STORAGE.md)。
+
+## 游戏1.0.3适配
+
+当前基线为build 26152271，保留26099941、26123896版本身份与独立原生地址配方。新ROM必须从当前原版重建，禁止用旧汉化整包覆盖新版地图。适配差异与验证见[UPDATE_26152271.md](docs/UPDATE_26152271.md)。
+
+26123896兼容配方在当前资源构建完成后重建（先完成26099941配方）；原版EXE身份与旧版固定文本配方分别位于 `assets/supported-builds/26123896.json` 和 `locales/zh-CN/builds/26123896-executable-text.json`：
+
+```powershell
+python -X utf8 tools/build_compatibility.py --executable "D:/Games/Dementium II 26123896/Dementium II.exe" --build-id 26123896 --resource-build build/full-zh-CN --output build/installer/compatibility-26123896/resource-patches.gz
+```
+
+兼容配方只读输入，按完整哈希及原字节受守卫重建；生成身份须与 `assets/compatibility-payloads.json` 一致。

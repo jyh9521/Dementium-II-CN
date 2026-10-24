@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "status": "prepared_for_manual_release",
+  "tag": "v1.1.2",
+  "installer_version": "1.1.2",
+  "filename": "Dementium-II-CN-v1.1.2.exe",
+  "size": 78511641,
+  "sha256": "1446c9ec7ea40da3ece14db0032e93b9a34321f79f179d9aab604ab78b527250",
+  "supported_appid": 5342930,
+  "reference_build": "26152271",
+  "supported_builds": [
+    "26099941",
+    "26123896",
+    "26152271"
+  ],
+  "player_acceptance": {
+    "status": "new_build_gameplay_not_tested",
+    "game_launch": "NEVER"
+  },
+  "compatibility": "Each resource preimage and native executable profile is verified before writes; original maps and timing configuration are preserved.",
+  "changes": [
+    "Port to Steam build 26152271 / game 1.0.3",
+    "Retain updated maps and simulationhz=60",
+    "Independent head-bob subtle label; minimap and setting values unchanged",
+    "Versioned native F1 and controller input replay; three-build installer recipes"
+  ]
+}

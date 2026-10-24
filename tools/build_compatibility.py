@@ -3,7 +3,7 @@ import argparse
 import gzip
 import json
 from pathlib import Path
-from build_resource_payload import native_executable_payload, native_hash_guards
+from build_resource_payload import native_executable_payload, native_hash_guards, make_payload, add_compatibility
 from debug_menu import build_menu, make_patch
 from executable_text import build_executable
 from localize import digest
@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--executable',type=Path,required=True)
     parser.add_argument('--build-id',required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--resource-build',type=Path,help='Verified current resource build, required for 26123896')
     args=parser.parse_args()
     identity=json.loads((ROOT/'assets/supported-builds'/f'{args.build_id}.json').read_text('utf-8'))
     original=args.executable.read_bytes()
@@ -25,8 +26,21 @@ def main():
     from import_legacy_installer import RESOURCE_HASH
     if digest(raw)!=RESOURCE_HASH:raise ValueError('Legacy resource recipe identity mismatch')
     payload=json.loads(gzip.decompress(raw))
-    if payload['native_executable']['source_sha256']!=identity['exe_sha256']:
-        raise ValueError('Compatibility recipe source mismatch')
+    if args.build_id == '26099941':
+        if payload['native_executable']['source_sha256']!=identity['exe_sha256']:
+            raise ValueError('Compatibility recipe source mismatch')
+    elif args.build_id == '26123896':
+        if args.resource_build is None:
+            raise ValueError('26123896 requires --resource-build from the current verified resource build')
+        compatibility=json.loads((ROOT/'assets/compatibility-payloads.json').read_text('utf-8'))
+        item=next(p for p in compatibility['payloads'] if p['buildid']=='26099941')
+        raw=(ROOT/item['path']).read_bytes()
+        if digest(raw)!=item['sha256']:
+            raise ValueError('Compatibility payload identity mismatch')
+        previous=json.loads(gzip.decompress(raw))
+        payload=make_payload(args.resource_build,ROOT/'locales/zh-CN/builds'/f'{args.build_id}-executable-text.json',include_native=False)
+    else:
+        raise ValueError('Unsupported compatibility build')
     recipe=json.loads((ROOT/'locales/zh-CN/builds'/f'{args.build_id}-executable-text.json').read_text('utf-8'))
     literal,_=build_executable(original,recipe)
     modified,report=build_menu(literal)
@@ -36,6 +50,8 @@ def main():
     (work/'Dementium II.exe').write_bytes(modified)
     payload['native_executable']=native_executable_payload(work,patch,identity)
     payload['native_executable']['hash_guards']=native_hash_guards(original,modified)
+    if args.build_id == '26123896':
+        add_compatibility(payload,previous)
     (work/'exe-patch.json').write_text(json.dumps(patch,indent=2)+'\n',encoding='utf-8')
     (work/'debug-menu-report.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     output=gzip.compress(json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode('utf-8'),compresslevel=9,mtime=0)
