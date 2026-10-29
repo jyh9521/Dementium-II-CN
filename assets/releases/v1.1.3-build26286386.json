@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "status": "prepared_for_manual_release",
+  "release_id": "v1.1.3-build26286386",
+  "installer_version": "1.1.3",
+  "filename": "Dementium-II-CN-v1.1.3-build26286386.exe",
+  "size": 78519833,
+  "sha256": "d9bf1a073462cc75a1a279285c365c28eb678d38e898ef88a3fa7c8c48d23c17",
+  "supported_appid": 5342930,
+  "reference_build": "26286386",
+  "supported_builds": [
+    "26099941",
+    "26123896",
+    "26152271",
+    "26260428",
+    "26286386"
+  ],
+  "player_acceptance": {
+    "status": "new_build_gameplay_not_tested",
+    "game_launch": "NEVER"
+  },
+  "compatibility": "Exact build 26286386 native profile and 49-row option capacity; four historical native recipes retained; source/code/data/member guards run before writes.",
+  "changes": [
+    "Translate the new MELEE CROSSHAIRS option while preserving its original settings bit and new button strip",
+    "Rebuild guarded F1 menu, document reader, head-bob labels and input hooks for build 26286386",
+    "Retain internal installer version 1.1.3 and use a build-specific delivery suffix; previous release identity is unchanged",
+    "Consolidate the two prior archives into one standalone verified source/input/history archive"
+  ]
+}

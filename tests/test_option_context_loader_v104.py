@@ -12,8 +12,8 @@ class NativeOptionLoaderV104Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.exe=EXE.read_bytes();cls.rom=ROM.read_bytes();cls.pe=pefile.PE(data=cls.exe)
-        data=next(s.VirtualAddress for s in cls.pe.sections if s.Name.rstrip(b'\0')==b'.data')
-        if data!=0x4cd000:raise unittest.SkipTest('requires build 26260428 option fixture')
+        from native_replay import require_native_fixture
+        require_native_fixture(EXE,'26260428')
     def test_same_real_rom_old_49th_index_goes_red_then_context_hook_goes_green(self):
         broken=bytearray(self.exe)
         at=self.pe.get_offset_from_rva(0x12b6fa);broken[at:at+8]=bytes.fromhex('49 63 8c 83 80 0a 44 00')

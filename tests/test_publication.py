@@ -9,7 +9,7 @@ class PublicationTests(unittest.TestCase):
   path=ROOT/name;self.assertTrue(path.is_file(),name+' missing');return path.read_text('utf-8-sig')
  def test_readme_is_player_facing_and_links_published_installer(self):
   s=self.read('README.md')
-  self.assertIn('releases)',s);self.assertIn('Dementium-II-CN-v1.1.3.exe',s);self.assertIn('26123896',s);self.assertIn('不承诺通用所有版本',s)
+  self.assertIn('releases)',s);self.assertIn('Dementium-II-CN-v1.1.3-build26286386.exe',s);self.assertIn('26123896',s);self.assertIn('不承诺通用所有版本',s)
   self.assertIn('完整通关',s);self.assertIn('2013',s);self.assertIn('BUILDING.md',s)
   self.assertNotIn('不创建未经授权的正式 Release',s)
  def test_current_status_distinguishes_playthrough_from_automation(self):
@@ -33,7 +33,7 @@ class PublicationTests(unittest.TestCase):
   self.assertEqual(r['supported_appid'],b['appid']);self.assertEqual(r['reference_build'],b['buildid']);self.assertEqual(r['installer_version'],p['installer_version'])
   self.assertRegex(r['sha256'],r'^[0-9a-f]{64}$');self.assertEqual(r['size'],78500889);self.assertEqual(r['player_acceptance']['status'],'full_playthrough_completed')
  def test_player_instructions_use_gui_not_python_install(self):
-  s=self.read('docs/PLAYER_README.md');self.assertIn('Dementium-II-CN-v1.1.3.exe',s);self.assertIn('cn-backup',s);self.assertNotIn('install_patch.py install',s)
+  s=self.read('docs/PLAYER_README.md');self.assertIn('Dementium-II-CN-v1.1.3-build26286386.exe',s);self.assertIn('cn-backup',s);self.assertNotIn('install_patch.py install',s)
  def test_v11_historical_identity_and_manual_release(self):
   r=json.loads(self.read('assets/releases/v1.1.json'));b=json.loads(self.read('assets/supported-builds/26123896.json'))
   self.assertEqual(r['reference_build'],b['buildid']);self.assertEqual(r['installer_version'],'1.1.0')
@@ -41,19 +41,26 @@ class PublicationTests(unittest.TestCase):
   self.assertEqual(r['status'],'prepared_for_manual_release')
   self.assertEqual(r['player_acceptance']['game_launch'],'NEVER')
  def test_current_release_identity_matches_policy_and_build(self):
-  r=json.loads(self.read('assets/releases/v1.1.3.json'))
-  b=json.loads(self.read('assets/supported-build.json'))
   p=json.loads(self.read('assets/release-policy.json'))
+  r=json.loads(self.read('assets/releases/'+p['current_release']+'.json'))
+  b=json.loads(self.read('assets/supported-build.json'))
   self.assertEqual(r['reference_build'],b['buildid'])
   self.assertEqual(r['installer_version'],p['installer_version'])
-  self.assertEqual(r['supported_builds'],['26099941','26123896','26152271','26260428'])
-  self.assertEqual(r['filename'],'Dementium-II-CN-v1.1.3.exe')
+  self.assertEqual(r['supported_builds'],['26099941','26123896','26152271','26260428','26286386'])
+  self.assertEqual(r['filename'],'Dementium-II-CN-v1.1.3-build26286386.exe')
   self.assertGreater(r['size'],1_000_000)
   self.assertRegex(r['sha256'],r'^[0-9a-f]{64}$')
   self.assertEqual(r['player_acceptance']['game_launch'],'NEVER')
  def test_history_retains_findings_and_explains_old_paths(self):
   s=self.read('docs/history/FIXED_ISSUES.md');self.assertIn('历史',s);self.assertIn('现场明信片',s)
   s=self.read('docs/history/BUILD_REGRESSIONS.md');self.assertIn('历史',s);self.assertIn('verify_ui_regressions.py',s)
+ def test_build_refresh_preserves_previous_release_identity(self):
+  r=json.loads(self.read('assets/releases/v1.1.3.json'))
+  self.assertEqual(r['reference_build'],'26260428')
+  self.assertEqual(r['sha256'],'7971def7d4de44ce24f13f21cb19ce315e4a8f9b6c78ca950e41bd08039bbed8')
+  p=json.loads(self.read('assets/release-policy.json'))
+  self.assertEqual(p['installer_version'],'1.1.3')
+  self.assertEqual(p['current_release'],'v1.1.3-build26286386')
  def test_current_entrypoints_have_no_local_machine_paths(self):
   for name in CURRENT:
    s=self.read(name);self.assertNotRegex(s,r'(?i)[cC]:[\\/]Users[\\/]noway')

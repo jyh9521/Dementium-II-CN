@@ -75,6 +75,7 @@ Thumbs.db
 desktop.ini
 
 # Archives and release packages
+*.bundle
 *.zip
 *.7z
 *.rar

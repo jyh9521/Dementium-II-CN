@@ -14,6 +14,8 @@
 
 ## 专题调查与回归
 
+- [build 26286386适配](UPDATE_26286386.md) · [当前资源差异](RESOURCES_26286386.md) · [当前原生回放](NATIVE_BUILD_26286386.md) · [单一完整归档](ARCHIVE_FULL_20261030.md)
+
 - [游戏1.0.4适配](UPDATE_26260428.md) · [build 26260428原生回放](NATIVE_BUILD_26260428.md) · [20261029增量归档](ARCHIVE_INCREMENT_20261029.md)
 
 - [HEAD BOB真实加载器修复](HEAD_BOB_RUNTIME_FIX.md)

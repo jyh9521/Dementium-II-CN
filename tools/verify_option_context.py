@@ -14,7 +14,8 @@ def main():
     loaded=replay_bytes((a.game/'Dementium II.exe').read_bytes(),(a.game/'rom.zar').read_bytes())
     result={key:loaded[key] for key in ('head_bob','minimap')}
     ok=(result=={'head_bob':['普通','轻微','关闭'],'minimap':['关','半透明','不透明']}
-        and loaded['loader_rows']==loaded['resource_rows']==48
+        and loaded['loader_rows']==loaded['resource_rows']==loaded['native_table_capacity']
+        and loaded['backing_buffer_is_after_rows']
         and loaded['settings_preserved'])
     print('OPTION_CONTEXT '+json.dumps(result,ensure_ascii=False,separators=(',',':'))+' result='+('PASS' if ok else 'FAIL'))
     return int(not ok)

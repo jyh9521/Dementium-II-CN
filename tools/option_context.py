@@ -10,6 +10,7 @@ _PROFILES={
  '26123896':(0x1252ca,0x1252d2,0x41aa90),
  '26152271':(0x12566a,0x125672,0x41cd00),
  '26260428':(0x12b6fa,0x12b702,0x440a80),
+ '26286386':(0x12b6da,0x12b6e2,0x440a70),
 }
 
 def configured_literals():
@@ -34,7 +35,7 @@ def patch_context_literals(data,pointers):
     expected=bytes.fromhex('49 63 8c 83')+struct.pack('<I',indices)
     source=pe.get_offset_from_rva(hook)
     if out[source:source+8]!=expected:raise ValueError('Context getter source guard mismatch')
-    # Index-array values remain the shipped [16,41,18]; slot 48 is not a row.
+    # Index-array values remain the shipped [16,41,18]; no table slot is repurposed.
     if pe.get_data(indices,12)!=struct.pack('<III',16,41,18):
         raise ValueError('Context getter index table guard mismatch')
     section=next(s for s in pe.sections if s.Name.rstrip(b'\0')==b'.locui')
@@ -59,4 +60,4 @@ def patch_context_literals(data,pointers):
     position=pe.get_offset_from_rva(entry-base)
     if out[position:position+len(code)]!=b'\xcc'*len(code):raise ValueError('Context literal reservation overlap')
     out[position:position+len(code)]=code;out[source:source+8]=jump(base+hook,entry,8)
-    return bytes(out),{'contexts':1,'context':'head_bob','getter_hook':hex(hook),'code_rva':hex(entry-base),'code_bytes':len(code),'values':{k:hex(v-base) for k,v in values.items()},'native_table_capacity':48,'settings_writes':0}
+    return bytes(out),{'contexts':1,'context':'head_bob','getter_hook':hex(hook),'code_rva':hex(entry-base),'code_bytes':len(code),'values':{k:hex(v-base) for k,v in values.items()},'native_table_capacity':49 if build=='26286386' else 48,'settings_writes':0}

@@ -21,6 +21,13 @@
       "sha256": "2cd34d0ec3ddd74587306ca61b7db7ce2edc924438a599d88748e708f5f5aab3",
       "exe_sha256": "1d1024c52dbe73ab2d449bb677bbea58ba9a102addd2e6b97393dc7f66b3f93d",
       "origin": "Exact resource bundle extracted read-only from hash-verified published v1.1.2; fixed-capacity native head-bob getter; nested variants deduplicated by source digest"
+    },
+    {
+      "buildid": "26260428",
+      "path": "build/installer/compatibility-26260428/resource-patches.gz",
+      "sha256": "cb26c2e2a5c5b77a0c1d1ec9b0afd53ab7880333aa1cfb5e6ec63f4afabbda98",
+      "exe_sha256": "d8bfc47c991f01dffc352c6d836f8f1f8dedbfc738a50d9c2342d9e1ae46cf87",
+      "origin": "Hash-verified v1.1.3 sparse bundle retained from the 20261029 increment; native guards and resource variants preserved, no complete game files"
     }
   ]
 }

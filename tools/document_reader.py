@@ -16,6 +16,10 @@ STATE_FIELDS={'active':0,'wheel':4,'owner':8,'scroll_line':16,'previous_keys':20
 HOOK_RVA=0x11b4f7
 HOOK_BYTES=bytes.fromhex('44 2b c2 c6 05 fe 6c 3a 00 01')
 HOOK_BYTES_104=bytes.fromhex('c6 05 e9 f0 3c 00 01')
+HOOK_BYTES_26286386=bytes.fromhex('c6 05 a9 f0 3c 00 01')
+
+def current_hook_bytes():
+    return HOOK_BYTES_26286386 if active_build()=='26286386' else HOOK_BYTES_104
 
 def assemble(text,address):
     return bytes(Ks(KS_ARCH_X86,KS_MODE_64).asm(text,addr=address)[0])
@@ -25,7 +29,7 @@ def native_render_flag_rva(base=0x140000000):
     import capstone
     md=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_64);md.detail=True
     stores=[]
-    source=HOOK_BYTES_104 if active_build()=='26260428' else guard(HOOK_BYTES,map_rva(HOOK_RVA))
+    source=current_hook_bytes() if active_build() in ('26260428','26286386') else guard(HOOK_BYTES,map_rva(HOOK_RVA))
     for ins in md.disasm(source,base+map_rva(HOOK_RVA)):
         if ins.mnemonic=='mov' and ins.operands and ins.operands[0].type==capstone.x86.X86_OP_MEM:
             op=ins.operands[0]
@@ -36,8 +40,8 @@ def native_render_flag_rva(base=0x140000000):
 
 
 def build_reader_code(code_rva,base=0x140000000,inventory=False):
-    current=active_build()=='26260428'
-    hook_size=len(HOOK_BYTES_104 if current else HOOK_BYTES)
+    current=active_build() in ('26260428','26286386')
+    hook_size=len(current_hook_bytes() if current else HOOK_BYTES)
     state=base+map_rva(STATE_RVA)
     def mem(field): return hex(state+STATE_FIELDS[field])
     # All pointers use RIP-relative LEA/load: preferred image base is only an
@@ -454,12 +458,13 @@ def patch_document_reader(data):
                          (map_rva(0x2ed4d),bytes.fromhex('f3 41 0f 11 9c 89 c0 02 00 00')),
                          (map_rva(0x31ad26),bytes.fromhex('41 80 bc bc f0 14 a3 00 00'))]:
         from native_profile import active_build
-        if active_build() in ('26152271','26260428') and rva==map_rva(0x31ad26):
+        if active_build() in ('26152271','26260428','26286386') and rva==map_rva(0x31ad26):
             # 1.0.3 copies controller packets to stack; the native consumer
             # uses RDX, while reader disconnect gating retains the source flag.
             expected=bytes.fromhex('80 3a 00')
             sources=[(0x31df43,'0f 28 05 06 86 71 00'),(0x31df4a,'0f 28 0d 0f 86 71 00')]
-            if active_build()=='26260428':sources=[(0x339023,'0f 28 05 a6 6d 82 00'),(0x33902a,'0f 28 0d af 6d 82 00')]
+            if active_build() in ('26260428','26286386'):sources=[(0x339023,'0f 28 05 a6 6d 82 00'),(0x33902a,'0f 28 0d af 6d 82 00')]
+            if active_build()=='26286386':sources=[(0x339063,'0f 28 05 16 6d 82 00'),(0x33906a,'0f 28 0d 1f 6d 82 00')]
             if any(pe.get_data(address,7)!=bytes.fromhex(expected_source) for address,expected_source in sources):
                 raise ValueError('Reader controller packet provenance guard mismatch')
         else:expected=guard(expected,rva)
@@ -474,8 +479,8 @@ def patch_document_reader(data):
     code=build_reader_code(start,base)
     entries={'render':start}
     body=bytearray(code)
-    current=active_build()=='26260428'
-    hooks=[(map_rva(HOOK_RVA),HOOK_BYTES_104 if current else HOOK_BYTES,start)]
+    current=active_build() in ('26260428','26286386')
+    hooks=[(map_rva(HOOK_RVA),current_hook_bytes() if current else HOOK_BYTES,start)]
     while len(body)%16:body.append(0xcc)
     inventory_entry=start+len(body);entries['inventory_render']=inventory_entry
     body.extend(build_reader_code(inventory_entry,base,True))

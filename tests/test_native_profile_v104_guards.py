@@ -8,7 +8,7 @@ from executable_text import build_executable
 from debug_menu import config,build_menu
 from menu_input import patch_menu_input
 from localize import digest
-SOURCE=ROOT/'build/original/Dementium II.exe'
+SOURCE=ROOT/'build/inputs/26260428/Dementium II.exe'
 
 class NativeProfileGuardTests(unittest.TestCase):
     def test_unknown_profile_and_unmapped_address_rejected(self):
@@ -23,7 +23,7 @@ class ShippedNativeGuardTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.original=SOURCE.read_bytes()
-        cls.recipe=json.loads((ROOT/'locales/zh-CN/executable-text.json').read_text(encoding='utf8'))
+        cls.recipe=json.loads((ROOT/'locales/zh-CN/builds/26260428-executable-text.json').read_text(encoding='utf8'))
         cls.localized,_=build_executable(cls.original,cls.recipe)
     def test_unknown_full_source_hash_rejected(self):
         damaged=bytearray(self.original);damaged[-1]^=1

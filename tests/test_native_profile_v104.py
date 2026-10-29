@@ -332,6 +332,8 @@ NewReaderGamepadTests.__unittest_skip__=not SOURCE.is_file()
 import test_pause_layout as pause_tests
 class NewPauseLayoutTests(unittest.TestCase):
     def test_native_immediates_match_real_label_and_status_glyph_ink(self):
+        from native_replay import require_native_fixture
+        require_native_fixture(SOURCE,'26260428')
         import pefile
         from localize import Zar
         archive=Path(os.environ.get('DEMENTIUM_PAUSE_TEST_ROM',ROOT/'build/full-zh-CN/rom.zar'))

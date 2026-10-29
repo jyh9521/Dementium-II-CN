@@ -10,8 +10,8 @@ def require_native_fixture(path,profile='26099941'):
     from pathlib import Path
     if not Path(path).is_file():raise unittest.SkipTest('requires local native build '+profile+' fixture: '+str(path))
     pe=pefile.PE(str(path),fast_load=True)
-    data_section=next(s for s in pe.sections if s.Name.rstrip(b'\0')==b'.data')
-    actual={0x4cd000:'26260428',0x4a4000:'26152271',0x4a1000:'26123896',0x49f000:'26099941'}.get(data_section.VirtualAddress,'unknown')
+    from native_profile import layout_build
+    actual=layout_build(pe)
     if actual!=profile:raise unittest.SkipTest('requires native build '+profile+' fixture; supplied PE is '+actual)
 
 class Replay:

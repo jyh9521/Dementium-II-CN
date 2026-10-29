@@ -60,7 +60,7 @@ def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events
     rsp=STACK+0x80000
     machine.reg_write(UC_X86_REG_RSP,rsp)
     machine.reg_write(UC_X86_REG_RBP,rsp+0x91)
-    current = active_build() == '26260428'
+    current = active_build() in ('26260428','26286386')
     # 1.0.4 owns both views through RSI. The actual prologue below populates
     # RDI/RBX itself; passing former-build register values would bypass it.
     machine.reg_write(UC_X86_REG_RDI,0 if current else OBJECT)
@@ -146,11 +146,10 @@ def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events
 
 def replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events=(),native_profile='26099941'):
     from native_profile import _ACTIVE,restore
-    if native_profile not in ('26099941','26123896','26152271','26260428'):raise ValueError('Unknown native replay profile')
+    if native_profile not in ('26099941','26123896','26152271','26260428','26286386'):raise ValueError('Unknown native replay profile')
     pe=pefile.PE(str(executable),fast_load=True)
-    data_section=next(s for s in pe.sections if s.Name.rstrip(b'\0')==b'.data')
-    expected={'26099941':0x49f000,'26123896':0x4a1000,'26152271':0x4a4000,'26260428':0x4cd000}[native_profile]
-    if data_section.VirtualAddress!=expected:raise ValueError('Native replay fixture/profile mismatch')
+    from native_profile import layout_build
+    if layout_build(pe)!=native_profile:raise ValueError('Native replay fixture/profile mismatch')
     token=_ACTIVE.set(native_profile)
     try:return _replay(executable,archive,resource,collection,events)
     finally:restore(token)

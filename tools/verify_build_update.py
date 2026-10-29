@@ -55,7 +55,7 @@ def main():
     assert original == {name: filehash(game/name) for name in original}
     paths = dict(MODIFIED_FILE=build/'rom.zar', DIFF_FILE=build/'patch.json',
                  VERIFICATION=out/'VERIFICATION.txt', ROLLBACK=rollback)
-    lines = ['Changed fields: supported build '+identity['buildid']+'; guarded native address profile; localized EN/font/image members; ~INDEX sizes; independent head-bob display literals without extending the native 48-row table.',
+    lines = ['Changed fields: supported build '+identity['buildid']+'; guarded native address profile; localized EN/font/image members; ~INDEX sizes; independent head-bob display literals with the shipped option-row capacity preserved.',
              'Preserved: updated maps/config and all unlocalized members; original installed files and save data.',
              'Restored behavior/status: original EXE/ROM byte-identical in rollback-copy; original New Game text; modified output retained; game_launch=NEVER.',
              *[key+'='+str(path) for key, path in paths.items()],

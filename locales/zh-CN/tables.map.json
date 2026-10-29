@@ -2501,5 +2501,11 @@
     "status": "translated",
     "notes": "Steam build 26123896新增HEAD BOB设置，保留原始行号与设置结构。",
     "text_type": "ui"
+  },
+  "EN/OPTIONSNEW.TBL:0048": {
+    "target": "近战准星",
+    "status": "text-reviewed",
+    "notes": "Steam build 26286386新增MELEE CROSSHAIRS设置，保留官方追加的第49行；不复用行走晃动状态文字。",
+    "text_type": "ui"
   }
 }

@@ -217,15 +217,112 @@ _MAP_26260428 = {
     0xa69000: 0xb98000,
 }
 
+# Build 26286386: independently matched functions/references; 49-row native option loader.
+_MAP_26286386 = {
+    0x2ed4d: 0x2ee9d,
+    0x2ee30: 0x2ef80,
+    0x2ee36: 0x2ef86,
+    0x2f4ad: 0x2f5c9,
+    0x2f4b3: 0x2f5cf,
+    0x2f5a8: 0x2f6c4,
+    0x2f5af: 0x2f6cb,
+    0x2f5b5: 0x2f6d1,
+    0x4e300: 0x50b60,
+    0x4fa2e: 0x525b9,
+    0x4fa49: 0x525d4,
+    0x4fa60: 0x52596,
+    0x4fa66: 0x5259c,
+    0x4fa6e: 0x525a4,
+    0x509ed: 0x5334c,
+    0x66e70: 0x6a580,
+    0xb05c0: 0xb6460,
+    0x111800: 0x116b40,
+    0x1118e0: 0x116c20,
+    0x111950: 0x116c90,
+    0x11a7b0: 0x120c45,
+    0x11af80: 0x121380,
+    0x11b450: 0x1218c3,
+    0x11b4f7: 0x12193b,
+    0x11b536: 0x121975,
+    0x121e50: 0x128410,
+    0x122a10: 0x1291c0,
+    0x1232fc: 0x1299ff,
+    0x123379: 0x129a3a,
+    0x123383: 0x129a44,
+    0x1233bf: 0x129a81,
+    0x126da7: 0x12da52,
+    0x126dac: 0x12da57,
+    0x1557a5: 0x15dc45,
+    0x15587b: 0x15dd1b,
+    0x155882: 0x15dd22,
+    0x1a7c50: 0x1b8110,
+    0x1a7c54: 0x1b8114,
+    0x1a7c5b: 0x1b811b,
+    0x1a7c61: 0x1b8121,
+    0x1a7d4b: 0x1b820b,
+    0x1a7d50: 0x1b8210,
+    0x1a7d57: 0x1b8217,
+    0x1a7d81: 0x1b8241,
+    0x1a7d90: 0x1b8250,
+    0x1a7d9b: 0x1b825b,
+    0x2dd940: 0x2f5bf0,
+    0x2de833: 0x2f6b93,
+    0x2de83a: 0x2f6b9a,
+    0x2deb38: 0x2f6e98,
+    0x2f3236: 0x30fba7,
+    0x2f3241: 0x30fbb2,
+    0x2f3250: 0x30fbc1,
+    0x2f34d0: 0x30fe90,
+    0x2f39cc: 0x310a23,
+    0x2f39d2: 0x310a29,
+    0x2f39e3: 0x310a3a,
+    0x2f3a3e: 0x310d42,
+    0x2f3a45: 0x310d4b,
+    0x2f537c: 0x31201c,
+    0x2f5386: 0x312026,
+    0x2f5439: 0x3120d9,
+    0x31ad26: 0x339139,
+    0x37d6f0: 0x3a3738,
+    0x37d748: 0x3a3750,
+    0x37d758: 0x3a3760,
+    0x37d760: 0x3a3768,
+    0x37d7b0: 0x3a37b0,
+    0x37d818: 0x3a3818,
+    0x3bebf0: 0x3e4cd0,
+    0x3c08c0: 0x3e69c0,
+    0x3c09d0: 0x3e6ad0,
+    0x3c0e30: 0x3e6f30,
+    0x49f1a5: 0x4cd1a5,
+    0x4a2f1d: 0x4d0f1d,
+    0x4a4a58: 0x4d1698,
+    0x4c2158: 0x4f0960,
+    0x4c21ff: 0x4f09eb,
+    0x4c2200: 0x4f09ec,
+    0x4c2228: 0x4f0a30,
+    0x4c2248: 0x4f0a50,
+    0xa121a0: 0xa409b0,
+    0xa25e28: 0xb54708,
+    0xa2ca78: 0xb5b2b8,
+    0xa30d20: 0xb5f5d0,
+    0xa312b0: 0xb5fb70,
+    0xa314f0: 0xb5fd80,
+    0xa344f4: 0xb62d94,
+    0xa34522: 0xb62dc7,
+    0xa68980: 0xb97540,
+    0xa68990: 0xb97550,
+    0xa68e80: 0xb97a40,
+    0xa69000: 0xb98000,
+}
+
 def active_build():
     return _ACTIVE.get()
 
 def rva(value):
     build=active_build()
-    if build not in {'26099941','26123896','26152271','26260428'}:
+    if build not in {'26099941','26123896','26152271','26260428','26286386'}:
         raise ValueError('Unknown native build profile: '+build)
     if build=='26099941' or value==0:return value
-    mapping={'26123896':_MAP,'26152271':_MAP_26152271,'26260428':_MAP_26260428}[build]
+    mapping={'26123896':_MAP,'26152271':_MAP_26152271,'26260428':_MAP_26260428,'26286386':_MAP_26286386}[build]
     if value in mapping:return mapping[value]
     if 0xa121a0<=value<0xa121c8:return mapping[0xa121a0]+value-0xa121a0
     if build=='26123896' and value in {0x2ed4d,0x2ee30,0x2ee36,0x2f4ad,0x2f4b3,0x2f5a8,0x2f5af,0x2f5b5,0x4e300,0x509ed,0x4fa2e,0x4fa49,0x4fa60,0x4fa66,0x4fa6e,0x66e70}:return value
@@ -238,17 +335,23 @@ def select(data,recipe):
     elif identity==recipe.get('input_sha256_by_build',{}).get('26123896'):build='26123896'
     elif identity==recipe.get('input_sha256_by_build',{}).get('26152271'):build='26152271'
     elif identity==recipe.get('input_sha256_by_build',{}).get('26260428'):build='26260428'
+    elif identity==recipe.get('input_sha256_by_build',{}).get('26286386'):build='26286386'
     else:raise ValueError('Native menu requires a verified executable profile')
-    # A caller-supplied recipe cannot silently bind one shipped layout to another.
-    pe=struct.unpack_from('<I',data,60)[0]
-    count=struct.unpack_from('<H',data,pe+6)[0]
-    optional=struct.unpack_from('<H',data,pe+20)[0]
-    sections=pe+24+optional
-    actual=next((struct.unpack_from('<I',data,sections+i*40+12)[0]
-                 for i in range(count) if data[sections+i*40:sections+i*40+8].rstrip(b'\0')==b'.data'),None)
-    if actual!={'26099941':0x49f000,'26123896':0x4a1000,'26152271':0x4a4000,'26260428':0x4cd000}[build]:
+    # Full identity chooses the profile; independent PE coordinates also bind it.
+    import pefile
+    if layout_build(pefile.PE(data=data,fast_load=True))!=build:
         raise ValueError('Native executable identity/profile layout mismatch')
     return _ACTIVE.set(build)
+
+def layout_build(pe):
+    """Identify immutable shipped section coordinates (also present after localization)."""
+    data=next((s for s in pe.sections if s.Name.rstrip(b'\0')==b'.data'),None)
+    if data is None:return 'unknown'
+    if data.VirtualAddress==0x4cd000:
+        # Both updates report game 1.0.4; RVA alone would bind the wrong code.
+        return {0x23400:'26260428',0x23200:'26286386'}.get(data.SizeOfRawData,'unknown')
+    return {0x49f000:'26099941',0x4a1000:'26123896',0x4a4000:'26152271'}.get(data.VirtualAddress,'unknown')
+
 
 def restore(token):_ACTIVE.reset(token)
 
@@ -256,7 +359,7 @@ def guard(expected,new_rva):
     """Re-encode displaced RIP/branch targets; every final byte remains guarded."""
     if _ACTIVE.get()=='26099941':return expected
     import capstone
-    mapping={'26123896':_MAP,'26152271':_MAP_26152271,'26260428':_MAP_26260428}[active_build()]
+    mapping={'26123896':_MAP,'26152271':_MAP_26152271,'26260428':_MAP_26260428,'26286386':_MAP_26286386}[active_build()]
     old=next((a for a,b in mapping.items() if b==new_rva),new_rva)
     md=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_64);md.detail=True
     out=bytearray(expected)

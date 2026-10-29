@@ -5,7 +5,7 @@
 ## 输入与依赖
 
 - Windows、Python 3.11+，依赖版本固定于 `requirements.txt`。
-- Steam 2026版、AppID 5342930、build 26260428的干净原版目录，SHA-256见 `assets/supported-build.json`。不要将已汉化目录作为原版输入。
+- Steam 2026版、AppID 5342930、build 26286386的干净原版目录，SHA-256见 `assets/supported-build.json`。不要将已汉化目录作为原版输入。
 - 系统或当前账户的Fonts目录中的 `fusion-pixel-12px-proportional-zh_hans.ttf` 与 `ChillBitmap_16px.ttf`；身份固定于 `locales/zh-CN/font-profile.json`，字体发现不会自动下载或安装字体。
 - GUI安装器另需.NET 10 SDK及 `installer/branding/logo.png`、`app.ico`，输入SHA见 `installer/branding-inputs.json`。完整品牌图片不随源码分发，详见[安装器说明](docs/GUI_INSTALLER.md)。
 
@@ -55,14 +55,14 @@ python -X utf8 tools/verify_installer.py --game "D:/Games/Dementium II Original"
 ```
 
 默认安装器为 `dist/Dementium-II-zh-CN-Setup.exe`，ZIP为 `dist/Dementium-II-zh-CN-Installer.zip`。
-本次交付附件名为 `Dementium-II-CN-v1.1.3.exe`，通过发布页手动上传；旧发布身份保留于 `assets/releases/v1.0.json`。
+本次交付附件名为 `Dementium-II-CN-v1.1.3-build26286386.exe`，通过发布页手动上传；旧发布身份保留于 `assets/releases/v1.0.json`。
 验证脚本显式绑定当前EXE/ROM，检查真实文件副本安装、幂等、升级、恢复、Steam只读检测、自包含界面与隔离回滚，不启动游戏、不改存档。
 合成测试不需要游戏资产；完整PE/ROM回放还需本地原版与构建输出。历史专项的小型EXE夹具见[保留策略](docs/BUILD_STORAGE.md)。
 
 ## 重现与发布
 
 文本和JSON固定LF，ZIP成员顺序及时间戳固定。`source-inputs.json`与`release-manifest.json`记录输入及生成物身份；资源/差分复现与不同SDK下安装器PE复现分别判断。
-版本由 `assets/release-policy.json`约束，本次明确升级为1.1.3（对外v1.1.3）。
+版本由 `assets/release-policy.json`约束，本次保持1.1.3，以build26286386附件后缀区分；`current_release`绑定当前交付身份，不覆盖历史v1.1.3记录。
 源码不含完整游戏、字体、品牌输入及SDK。当前通关结论属于[已发布产物](docs/STATUS.md)，新改动须按实际范围验证。
 
 ## 本地清理
@@ -86,8 +86,12 @@ python -X utf8 tools/build_compatibility.py --executable "D:/Games/Dementium II 
 
 兼容配方只读输入，按完整哈希及原字节受守卫重建；生成身份须与 `assets/compatibility-payloads.json` 一致。
 
-## 游戏1.0.4适配
+## 游戏1.0.4历史适配
 
-当前基线为build 26260428。26152271独立配方来自按完整SHA-256校验的已发布v1.1.2安装器，保留全部三版旧EXE配方。新原版资源从当前Steam目录重建，未改成员与新原版逐字节比较。详见[UPDATE_26260428.md](docs/UPDATE_26260428.md)。
+该阶段基线为build 26260428。26152271独立配方来自按完整SHA-256校验的已发布v1.1.2安装器，保留全部三版旧EXE配方。新原版资源从当前Steam目录重建，未改成员与新原版逐字节比较。详见[UPDATE_26260428.md](docs/UPDATE_26260428.md)。
 
 安装器源码固定 `CETCompat=false`，延续此前兼容版的启动处理；构建后再次检查成品PE标记，并执行自包含界面预览。系统设置与游戏EXE的安全标记不受此构建选项影响。
+
+## Steam build 26286386适配
+
+当前基线为build 26286386，EXE版本字段仍为1.0.4。选项表从48行变为49行，新增“近战准星”；原生配方、容量检查及回放按本次输入独立验证。四版旧EXE稀疏配方保留。适配见[UPDATE_26286386.md](docs/UPDATE_26286386.md)，独立归档恢复见[ARCHIVE_FULL_20261030.md](docs/ARCHIVE_FULL_20261030.md)。
