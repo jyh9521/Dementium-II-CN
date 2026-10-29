@@ -82,7 +82,9 @@ def main():
         assert digest(path) != digest(path.with_name(path.name+'.motion-start.png'))
 
     rollback = out/'ROLLBACK.sh'
-    rollback.write_text('#!/bin/sh\nset -eu\ncd "'+root.as_posix()+'"\nexec "C:/Program Files/Git/bin/bash.exe" tools/ROLLBACK_FULL.sh\n', encoding='utf-8', newline='\n')
+    rollback.write_text('#!/bin/sh\nset -eu\nROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)\n'
+                        'exec sh "$ROOT/tools/ROLLBACK_FULL.sh"\n', encoding='utf-8', newline='\n')
+    os.chmod(rollback, 0o755)
     run('ROLLBACK_SHELL', ['C:/Program Files/Git/bin/bash.exe', rollback], root/'build/full-zh-CN')
     assert original == {p.name: digest(p) for p in [args.game/'rom.zar', args.game/'Dementium II.exe']}
     assert digest(exe) == report['sha256']

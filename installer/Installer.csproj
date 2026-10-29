@@ -5,6 +5,7 @@
     <AssemblyName>Dementium-II-zh-CN-Setup</AssemblyName><GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ApplicationManifest>app.manifest</ApplicationManifest><ApplicationIcon>branding/app.ico</ApplicationIcon>
     <PublishSingleFile>true</PublishSingleFile><SelfContained>true</SelfContained><RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <CETCompat>false</CETCompat>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract><EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <DebugType>none</DebugType><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <NuGetLockFilePath>Installer.lock.json</NuGetLockFilePath>

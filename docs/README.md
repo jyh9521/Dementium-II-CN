@@ -14,6 +14,8 @@
 
 ## 专题调查与回归
 
+- [游戏1.0.4适配](UPDATE_26260428.md) · [build 26260428原生回放](NATIVE_BUILD_26260428.md) · [20261029增量归档](ARCHIVE_INCREMENT_20261029.md)
+
 - [HEAD BOB真实加载器修复](HEAD_BOB_RUNTIME_FIX.md)
 
 - [游戏1.0.3适配](UPDATE_26152271.md) · [build 26152271原生回放](NATIVE_BUILD_26152271.md)

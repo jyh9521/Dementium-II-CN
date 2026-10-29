@@ -1,10 +1,10 @@
 {
   "appid": 5342930,
-  "buildid": "26152271",
+  "buildid": "26260428",
   "depot": "5342931",
-  "manifest": "4367935175811021124",
-  "rom_sha256": "b8e3100b43115a7f87786bc358ef531b8df757b3710022bec035d68041edc087",
-  "rom_size": 579243520,
-  "exe_sha256": "1d1024c52dbe73ab2d449bb677bbea58ba9a102addd2e6b97393dc7f66b3f93d",
-  "exe_size": 5541888
+  "manifest": "9171704422252207103",
+  "rom_sha256": "10344977341d6f0481cbefb05d3bf45ec094459eb9f6419b31663b5551fd90fe",
+  "rom_size": 579286016,
+  "exe_sha256": "d8bfc47c991f01dffc352c6d836f8f1f8dedbfc738a50d9c2342d9e1ae46cf87",
+  "exe_size": 5722112
 }

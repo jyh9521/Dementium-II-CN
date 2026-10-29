@@ -4,7 +4,7 @@ Text-only EXAMINE pages retain their original font and full UTF-8 source. A
 visible-line window is drawn through the existing renderer; illustrated cards,
 short notes and the letter puzzle keep the original path. Never launches game.
 """
-from native_profile import rva as map_rva, guard
+from native_profile import rva as map_rva, guard, active_build
 import struct
 import pefile
 from keystone import Ks, KS_ARCH_X86, KS_MODE_64
@@ -15,6 +15,7 @@ STATE_FIELDS={'active':0,'wheel':4,'owner':8,'scroll_line':16,'previous_keys':20
               'visible_lines':24,'repeat_counter':28,'viewport_height':32,'viewport_top':36,'resource_id':40,'stick_direction':44,'stick_repeat':48,'buffer':64}
 HOOK_RVA=0x11b4f7
 HOOK_BYTES=bytes.fromhex('44 2b c2 c6 05 fe 6c 3a 00 01')
+HOOK_BYTES_104=bytes.fromhex('c6 05 e9 f0 3c 00 01')
 
 def assemble(text,address):
     return bytes(Ks(KS_ARCH_X86,KS_MODE_64).asm(text,addr=address)[0])
@@ -24,7 +25,8 @@ def native_render_flag_rva(base=0x140000000):
     import capstone
     md=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_64);md.detail=True
     stores=[]
-    for ins in md.disasm(guard(HOOK_BYTES,map_rva(HOOK_RVA)),base+map_rva(HOOK_RVA)):
+    source=HOOK_BYTES_104 if active_build()=='26260428' else guard(HOOK_BYTES,map_rva(HOOK_RVA))
+    for ins in md.disasm(source,base+map_rva(HOOK_RVA)):
         if ins.mnemonic=='mov' and ins.operands and ins.operands[0].type==capstone.x86.X86_OP_MEM:
             op=ins.operands[0]
             if op.mem.base==capstone.x86.X86_REG_RIP:
@@ -34,6 +36,8 @@ def native_render_flag_rva(base=0x140000000):
 
 
 def build_reader_code(code_rva,base=0x140000000,inventory=False):
+    current=active_build()=='26260428'
+    hook_size=len(HOOK_BYTES_104 if current else HOOK_BYTES)
     state=base+map_rva(STATE_RVA)
     def mem(field): return hex(state+STATE_FIELDS[field])
     # All pointers use RIP-relative LEA/load: preferred image base is only an
@@ -285,7 +289,7 @@ def build_reader_code(code_rva,base=0x140000000,inventory=False):
         popfq
         INVENTORY_RESTORE
         RENDER_FLAG
-        jmp {hex(base+(map_rva(0x123383) if inventory else map_rva(HOOK_RVA)+len(HOOK_BYTES)))}
+        jmp {hex(base+(map_rva(0x123383) if inventory else map_rva(HOOK_RVA)+hook_size))}
     """
     classify=("mov r10d,[rdi+0x1d0]" if inventory else "movsx r10d,word ptr [rdi+0x128]")+f"""
         cmp r10d,535
@@ -347,6 +351,20 @@ def build_reader_code(code_rva,base=0x140000000,inventory=False):
         xor esi,esi
     extent_nonnegative:
     """ if inventory else '')
+    count_lines='''
+        mov esi,1
+        mov rcx,r12
+    count_lines:
+        mov al,[rcx]
+        inc rcx
+        test al,al
+        je counted_lines
+        cmp al,10
+        jne count_lines
+        inc esi
+        jmp count_lines
+    counted_lines:
+    '''
     text=text.replace('READER_CLASSIFY',classify)
     if inventory:
         text=text.replace('cmp eax,[r11+32]\n        jle inactive',
@@ -365,10 +383,21 @@ def build_reader_code(code_rva,base=0x140000000,inventory=False):
     inactive:""")
         text='push r12\n'+text
         text=text.replace('sub r8d,edx','sub r8d,ecx; add r8d,160; mov r9d,edi; lea rdi,[r14-0x1e0]; mov r12,r14; mov r15,rsi; mov esi,r9d')
+        if current:
+            text=text.replace('sub r8d,ecx; add r8d,160; mov r9d,edi; lea rdi,[r14-0x1e0]; mov r12,r14; mov r15,rsi; mov esi,r9d',
+                'mov r8d,160; sub r8d,[rbp+0x63]; mov r12,r14; mov r15,rdi; mov rdi,rsi; '+count_lines)
         text=text.replace('[r15+0x68]','[r15+0x40]').replace('[r15+0x64]','[r15+0x3c]')
         text=text.replace('INVENTORY_RESULT','mov [rsp+8],r12')
         text=text.replace('INVENTORY_RESTORE','pop r12')
         text=text.replace('RENDER_FLAG','')
+    elif current:
+        # 1.0.4 measures extents in a native helper, so line count is no longer
+        # live in ESI. Normalize its current owner/node/text registers locally,
+        # count explicit runtime lines, and restore every register except the
+        # intended text pointer (RDI) and viewport Y (R8D).
+        text='push r12\n'+text
+        text=text.replace('sub r8d,edx','mov r12,rdi; mov rdi,rsi; mov r15,rbx; '+count_lines)
+        text=text.replace('INVENTORY_RESULT','mov [rsp+48],r12').replace('INVENTORY_RESTORE','pop r12')
     else:
         text=text.replace('INVENTORY_RESULT','').replace('INVENTORY_RESTORE','')
     # Fixed-width placeholder instruction encodings allow every label to be
@@ -425,11 +454,13 @@ def patch_document_reader(data):
                          (map_rva(0x2ed4d),bytes.fromhex('f3 41 0f 11 9c 89 c0 02 00 00')),
                          (map_rva(0x31ad26),bytes.fromhex('41 80 bc bc f0 14 a3 00 00'))]:
         from native_profile import active_build
-        if active_build()=='26152271' and rva==map_rva(0x31ad26):
+        if active_build() in ('26152271','26260428') and rva==map_rva(0x31ad26):
             # 1.0.3 copies controller packets to stack; the native consumer
             # uses RDX, while reader disconnect gating retains the source flag.
             expected=bytes.fromhex('80 3a 00')
-            if pe.get_data(0x31df43,7)!=bytes.fromhex('0f 28 05 06 86 71 00') or pe.get_data(0x31df4a,7)!=bytes.fromhex('0f 28 0d 0f 86 71 00'):
+            sources=[(0x31df43,'0f 28 05 06 86 71 00'),(0x31df4a,'0f 28 0d 0f 86 71 00')]
+            if active_build()=='26260428':sources=[(0x339023,'0f 28 05 a6 6d 82 00'),(0x33902a,'0f 28 0d af 6d 82 00')]
+            if any(pe.get_data(address,7)!=bytes.fromhex(expected_source) for address,expected_source in sources):
                 raise ValueError('Reader controller packet provenance guard mismatch')
         else:expected=guard(expected,rva)
         if pe.get_data(rva,len(expected))!=expected:
@@ -443,15 +474,17 @@ def patch_document_reader(data):
     code=build_reader_code(start,base)
     entries={'render':start}
     body=bytearray(code)
-    hooks=[(map_rva(HOOK_RVA),HOOK_BYTES,start)]
+    current=active_build()=='26260428'
+    hooks=[(map_rva(HOOK_RVA),HOOK_BYTES_104 if current else HOOK_BYTES,start)]
     while len(body)%16:body.append(0xcc)
     inventory_entry=start+len(body);entries['inventory_render']=inventory_entry
     body.extend(build_reader_code(inventory_entry,base,True))
-    hooks.append((map_rva(0x123379),bytes.fromhex('44 2b c1 41 81 c0 a0 00 00 00'),inventory_entry))
+    hooks.append((map_rva(0x123379),bytes.fromhex('41 b8 a0 00 00 00 44 2b 45 63' if current else '44 2b c1 41 81 c0 a0 00 00 00'),inventory_entry))
     for key,rva,expected in [('open',map_rva(0x11a7b0),bytes.fromhex('44 88 4c 24 20')),
                              ('close',map_rva(0x11af80),bytes.fromhex('40 53 48 83 ec 20')),
                              ('inventory_open',map_rva(0x121e50),bytes.fromhex('48 89 5c 24 10')),
                              ('inventory_close',map_rva(0x122a10),bytes.fromhex('48 83 ec 28 48 8b 89 c8 01 00 00'))]:
+        if current and key=='inventory_open':expected=bytes.fromhex('48 89 5c 24 20')
         while len(body)%16:body.append(0xcc)
         entry=start+len(body);entries[key]=entry
         body.extend(reset_code(base+entry,base+rva+len(expected),expected,base,clear_reader_arrows=True))
@@ -459,7 +492,7 @@ def patch_document_reader(data):
     if len(body)>0x1000:raise ValueError('Reader code exceeds reserved shared RX page')
     out=bytearray(data)
     for rva,expected,target in hooks:
-        expected=guard(expected,rva)
+        if not(current and rva==map_rva(HOOK_RVA)):expected=guard(expected,rva)
         pos=pe.get_offset_from_rva(rva)
         if out[pos:pos+len(expected)]!=expected:
             raise ValueError('Native reader instruction guard mismatch at '+hex(rva))

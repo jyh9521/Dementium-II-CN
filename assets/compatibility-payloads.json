@@ -14,6 +14,13 @@
       "sha256": "88609ec63054b938c8d3cd7a58c48dcdcd091245f80c465241f50583b1a3729b",
       "exe_sha256": "1cc03e74444d956acdde25852209b85f9166d068a2468fafb2c002746ccaf1df",
       "origin": "Rebuilt guarded native context getter and fixed-capacity 48-row resources; actual loader-to-getter replay verified"
+    },
+    {
+      "buildid": "26152271",
+      "path": "build/installer/compatibility-26152271/resource-patches.gz",
+      "sha256": "2cd34d0ec3ddd74587306ca61b7db7ce2edc924438a599d88748e708f5f5aab3",
+      "exe_sha256": "1d1024c52dbe73ab2d449bb677bbea58ba9a102addd2e6b97393dc7f66b3f93d",
+      "origin": "Exact resource bundle extracted read-only from hash-verified published v1.1.2; fixed-capacity native head-bob getter; nested variants deduplicated by source digest"
     }
   ]
 }

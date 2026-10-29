@@ -29,12 +29,15 @@ def native_f1_previous_rva(data):
 
 def patch_menu_input(data):
     from native_profile import active_build
-    if active_build()=='26152271':
+    if active_build() in ('26152271','26260428'):
         source_pe=pefile.PE(data=data)
         # Bind native held-key state and the independent key callback to their
         # actual 1.0.3 consumers, rather than assuming adjacent global shifts.
         sources=[(0x2dfd5a,bytes.fromhex('41 80 bc 09 b0 5d a3 00 00')),
                  (0x1a8a55,bytes.fromhex('48 8b 0d 5c 90 88 00'))]
+        if active_build()=='26260428':
+            sources=[(0x2f6b5a,bytes.fromhex('41 80 bc 09 20 f6 b5 00 00')),
+                     (0x1b8245,bytes.fromhex('48 8b 0d ec 30 9a 00'))]
         for address,expected in sources:
             if source_pe.get_data(address,len(expected))!=expected:
                 raise ValueError('Native held-key/input provenance guard mismatch')
@@ -186,10 +189,11 @@ def patch_menu_input(data):
     # before the common message translator and the inner dispatch fixed above.
     # Releasing capture for the menu made every click take that return path.
     # Skip only recapture while visible; rejoin BEFORE native focus checks.
+    capture_compare='cmp byte ptr [rbx+0x19],0' if active_build()=='26260428' else 'cmp byte ptr [rbx+0x19],r14b'
     window_click=put(0xa00,f"""
         cmp byte ptr [rip + @VISIBLE],0
         jne {BASE+map_rva(0x2f39e3)}
-        cmp byte ptr [rbx+0x19],r14b
+        {capture_compare}
         jne {BASE+map_rva(0x2f39e3)}
         jmp {BASE+map_rva(0x2f39d2)}
     """)
@@ -351,6 +355,8 @@ def patch_menu_input(data):
     # another application. Release the native Win32 repeat-suppression latches
     # through the SAME translator/up callback as WM_KEYUP, before forwarding
     # the focus message. A later frame-only reset would miss immediate refocus.
+    message_register='r15d' if active_build()=='26260428' else 'r13d'
+    forward=('mov rax,qword ptr [rbx]\nmov r9,rdi\nmov r8d,r15d' if active_build()=='26260428' else 'mov rdi,qword ptr [rbp+0x1e0]')
     focus_release=put(0xb00,f"""
         pushfq
         push rax
@@ -362,9 +368,9 @@ def patch_menu_input(data):
         push r11
         sub rsp,0xc0
         {save}
-        cmp r13d,8
+        cmp {message_register},8
         je check_lost_focus
-        cmp r13d,0x1c
+        cmp {message_register},0x1c
         jne release_done
     check_lost_focus:
         cmp byte ptr [rbx+0x79],0
@@ -407,7 +413,7 @@ def patch_menu_input(data):
         pop rcx
         pop rax
         popfq
-        mov rdi,qword ptr [rbp+0x1e0]
+        {forward}
         jmp {BASE+map_rva(0x2f3a45)}
     """)
     # After a lost-focus release, an OS auto-repeat is still not a fresh press.
@@ -437,6 +443,10 @@ def patch_menu_input(data):
            (map_rva(0x2f4ad),bytes.fromhex('88 1d f2 fc 46 00'),capture),
            (map_rva(0x15587b),bytes.fromhex('40 38 3d 9b d6 34 00'),reader_actions),
            (map_rva(0x4fa66),bytes.fromhex('66 0f 6e 05 ea 4f 45 00'),focus)]
+    if active_build()=='26260428':
+        overrides={map_rva(0x2f39cc):bytes.fromhex('80 7b 19 00 75 11'),
+                   map_rva(0x2f3a3e):bytes.fromhex('48 8b 03 4c 8b cf 45 8b c7')}
+        hooks=[(address,overrides.get(address,expected),target) for address,expected,target in hooks]
     for rva,expected,target in hooks:guarded_write(out,pe,rva,expected,jump(BASE+rva,target,len(expected)))
     report.update(blocks=blocks,key_hook=hex(key),wheel_hook=hex(wheel),raw_wheel_hook=hex(raw_wheel),reader_actions_hook=hex(reader_actions),focus_hook=hex(focus),
                   cursor_hook=hex(cursor),capture_hook=hex(capture),pointer_dispatch_hook=hex(pointer),pointer_poll_hook=hex(pointer_poll),window_click_hook=hex(window_click),focus_release_hook=hex(focus_release),key_repeat_hook=hex(key_repeat),state=hex(BASE+map_rva(MENU_STATE)),

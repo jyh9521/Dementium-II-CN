@@ -4,7 +4,7 @@ Only font lookup/color and final glyph submission are controlled callbacks. The
 field/collection branch, row measurements, font renderer and native draw-enable
 flag are actual supplied EXE instructions. No window, game or save is accessed.
 """
-from native_profile import rva as map_rva
+from native_profile import rva as map_rva, active_build
 import io
 import json
 import struct
@@ -16,12 +16,14 @@ from unicorn.x86_const import *
 from localize import Zar,extract
 
 BASE=0x140000000
-OBJECT=BASE+0xc00000
-NODE=BASE+0xc01000
-FONT=BASE+0xc02000
-MANAGER=BASE+0xc03000
-GLYPH=BASE+0xc04000
-STACK=BASE+0xd00000
+# Build 1.0.4 extends into the former 0xc00000 fixture region. Keep all replay
+# objects and stack outside every supplied image, including localization code.
+OBJECT=BASE+0xe00000
+NODE=BASE+0xe01000
+FONT=BASE+0xe02000
+MANAGER=BASE+0xe03000
+GLYPH=BASE+0xe04000
+STACK=BASE+0xf00000
 FLAG_RVA=0x4c21ff
 SENTINEL_RVA=0x4c2200
 SENTINEL=b'p0_000\0'
@@ -38,7 +40,9 @@ def _archive_text_and_metrics(path,size,modified_ns):
 def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events=()):
     pe=pefile.PE(data=Path(executable).read_bytes())
     machine=Uc(UC_ARCH_X86,UC_MODE_64)
-    machine.mem_map(BASE,0xe00000)
+    if pe.OPTIONAL_HEADER.SizeOfImage > OBJECT-BASE:
+        raise ValueError('Native image overlaps replay fixture objects')
+    machine.mem_map(BASE,0x1100000)
     machine.mem_write(BASE,pe.get_memory_mapped_image())
     archive=Path(archive).resolve();stat=archive.stat()
     texts,meta=_archive_text_and_metrics(str(archive),stat.st_size,stat.st_mtime_ns)
@@ -56,9 +60,13 @@ def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events
     rsp=STACK+0x80000
     machine.reg_write(UC_X86_REG_RSP,rsp)
     machine.reg_write(UC_X86_REG_RBP,rsp+0x91)
-    machine.reg_write(UC_X86_REG_RDI,OBJECT)
-    machine.reg_write(UC_X86_REG_RSI,0)
+    current = active_build() == '26260428'
+    # 1.0.4 owns both views through RSI. The actual prologue below populates
+    # RDI/RBX itself; passing former-build register values would bypass it.
+    machine.reg_write(UC_X86_REG_RDI,0 if current else OBJECT)
+    machine.reg_write(UC_X86_REG_RSI,OBJECT if current else 0)
     machine.reg_write(UC_X86_REG_R12,0)
+    machine.reg_write(UC_X86_REG_R15,0)
     if collection:
         q(OBJECT+0x1c8,NODE)
         write(OBJECT+0x1e0,text.encode('utf8')+b'\0')
@@ -70,7 +78,7 @@ def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events
         q(NODE+0x58,FONT);q(NODE+0x68,FONT);d(NODE+0x60,1);d(NODE+0x64,0)
         for off,val in [(0xa0,0),(0xa4,104),(0xa8,256),(0xac,72)]:d(NODE+off,val)
         start,stop=BASE+map_rva(0x11b450),BASE+map_rva(0x11b536)
-    drawn=[];lookup=[];calls=[]
+    drawn=[];lookup=[];calls=[];measure_calls=[]
     def return_stub(uc,result=0):
         sp=uc.reg_read(UC_X86_REG_RSP)
         ret=struct.unpack('<Q',uc.mem_read(sp,8))[0]
@@ -78,6 +86,9 @@ def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events
         uc.reg_write(UC_X86_REG_RSP,sp+8);uc.reg_write(UC_X86_REG_RIP,ret)
     def hook(uc,address,size,_):
         if address==stop:uc.emu_stop();return
+        if current and address==BASE+0xb6320:
+            # Observe but do not replace the new native UTF-8 measurement helper.
+            measure_calls.append(uc.reg_read(UC_X86_REG_R8))
         if address==BASE+map_rva(0x111800):
             code=uc.reg_read(UC_X86_REG_EDX)&0xffff
             g=glyphs.get(str(code),glyphs.get('0',{'logw':12}))
@@ -119,13 +130,14 @@ def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events
         if machine.reg_read(UC_X86_REG_RIP)!=stop:
             raise RuntimeError('Native document input did not return to the expected boundary')
         machine.context_restore(initial_context)
-        drawn.clear();lookup.clear();calls.clear()
+        drawn.clear();lookup.clear();calls.clear();measure_calls.clear()
         machine.emu_start(start,stop,count=1000000)
         if machine.reg_read(UC_X86_REG_RIP)!=stop:
             raise RuntimeError('Native document redraw did not reach its expected exit')
     return dict(resource=resource,path='collection' if collection else 'field',
                 text=text,glyph_count=len(drawn),drawn=drawn,renderer_calls=calls,
-                lookup_count=len(lookup),draw_flag_after=machine.mem_read(BASE+map_rva(FLAG_RVA),1)[0],
+                lookup_count=len(lookup),native_measure_calls=len(measure_calls),
+                draw_flag_after=machine.mem_read(BASE+map_rva(FLAG_RVA),1)[0],
                 sentinel_before=SENTINEL.hex(),sentinel_after=bytes(machine.mem_read(BASE+map_rva(SENTINEL_RVA),len(SENTINEL))).hex(),
                 reader_active=struct.unpack('<I',machine.mem_read(BASE+map_rva(0xa68980),4))[0],
                 scroll_line=struct.unpack('<I',machine.mem_read(BASE+map_rva(0xa68990),4))[0],
@@ -134,10 +146,10 @@ def _replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events
 
 def replay(executable,archive,resource='EN/EXAMINE.041',collection=False,events=(),native_profile='26099941'):
     from native_profile import _ACTIVE,restore
-    if native_profile not in ('26099941','26123896','26152271'):raise ValueError('Unknown native replay profile')
+    if native_profile not in ('26099941','26123896','26152271','26260428'):raise ValueError('Unknown native replay profile')
     pe=pefile.PE(str(executable),fast_load=True)
     data_section=next(s for s in pe.sections if s.Name.rstrip(b'\0')==b'.data')
-    expected={'26099941':0x49f000,'26123896':0x4a1000,'26152271':0x4a4000}[native_profile]
+    expected={'26099941':0x49f000,'26123896':0x4a1000,'26152271':0x4a4000,'26260428':0x4cd000}[native_profile]
     if data_section.VirtualAddress!=expected:raise ValueError('Native replay fixture/profile mismatch')
     token=_ACTIVE.set(native_profile)
     try:return _replay(executable,archive,resource,collection,events)

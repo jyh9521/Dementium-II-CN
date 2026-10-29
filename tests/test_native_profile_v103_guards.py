@@ -23,7 +23,7 @@ class ShippedNativeGuardTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.original=SOURCE.read_bytes()
-        cls.recipe=json.loads((ROOT/'locales/zh-CN/executable-text.json').read_text(encoding='utf8'))
+        cls.recipe=json.loads((ROOT/'locales/zh-CN/builds/26152271-executable-text.json').read_text(encoding='utf8'))
         cls.localized,_=build_executable(cls.original,cls.recipe)
     def test_unknown_full_source_hash_rejected(self):
         damaged=bytearray(self.original);damaged[-1]^=1

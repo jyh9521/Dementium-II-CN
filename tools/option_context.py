@@ -9,6 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 _PROFILES={
  '26123896':(0x1252ca,0x1252d2,0x41aa90),
  '26152271':(0x12566a,0x125672,0x41cd00),
+ '26260428':(0x12b6fa,0x12b702,0x440a80),
 }
 
 def configured_literals():

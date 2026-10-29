@@ -23,9 +23,12 @@ def main():
     modified = {name: filehash(build/name) for name in original}
     assert original == {'rom.zar': identity['rom_sha256'], 'Dementium II.exe': identity['exe_sha256']}
     rollback = out/'ROLLBACK.sh'
-    rollback.write_text('#!/bin/sh\nset -eu\nexec python -X utf8 "'+
-        (root/'tools/rollback_locale.py').as_posix()+'" "'+build.as_posix()+
-        '" "'+(out/'rollback-copy').as_posix()+'"\n', encoding='utf-8', newline='\n')
+    relative_root = Path(os.path.relpath(root, out)).as_posix()
+    relative_build = Path(os.path.relpath(build, root)).as_posix()
+    rollback.write_text('#!/bin/sh\nset -eu\nHERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)\n'
+        'ROOT=$(CDPATH= cd -- "$HERE/'+relative_root+'" && pwd)\n'
+        'exec python -B -X utf8 "$ROOT/tools/rollback_locale.py" "$ROOT/'+relative_build+
+        '" "$HERE/rollback-copy"\n', encoding='utf-8', newline='\n')
     os.chmod(rollback, 0o755)
     stages = [
         ('BASELINE', [sys.executable, '-X', 'utf8', root/'tools/verify_locale.py', 'baseline', '--game', game, '--build', build], game),

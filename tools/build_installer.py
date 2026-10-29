@@ -7,6 +7,7 @@ import os
 import re
 from pathlib import Path
 import subprocess
+import struct
 from build_resource_payload import write_payload
 
 
@@ -57,9 +58,20 @@ def main():
     subprocess.run([str(compiler),str(work/'tests/net10.0-windows10.0.17763.0/InstallerTests.dll'),str(work/'build-smoke-fixtures')],check=True,cwd=root,env=env)
     import shutil
     shutil.copyfile(publish/'Dementium-II-zh-CN-Setup.exe',a.output)
+    # Preserve the separately validated startup compatibility in source builds.
+    # This only changes this installer apphost, never system or game settings.
+    import pefile
+    pe=pefile.PE(str(a.output))
+    cet=[entry.struct for entry in pe.DIRECTORY_ENTRY_DEBUG if entry.struct.Type==20]
+    if len(cet)!=1 or cet[0].SizeOfData<4:
+        raise ValueError('Installer extended DLL characteristics missing or ambiguous')
+    cet_flags=struct.unpack_from('<I',a.output.read_bytes(),cet[0].PointerToRawData)[0]
+    if cet_flags & 1:
+        raise ValueError('Installer CET compatibility setting was not applied by SDK')
+    pe.close()
     info=dict(installer=str(a.output),installer_version=version,size=a.output.stat().st_size,sha256=hashlib.sha256(a.output.read_bytes()).hexdigest(),
               input_hashes=inputs,contains_full_game_files=False,requires_python=False,architecture='Windows x64',
-              framework='.NET 10 self-contained WPF; no separately installed runtime required',material_design='MaterialDesignThemes 5.3.2 / Material Design 3',compiler=str(compiler),game_launch='NEVER')
+              framework='.NET 10 self-contained WPF; no separately installed runtime required',material_design='MaterialDesignThemes 5.3.2 / Material Design 3',compiler=str(compiler),game_launch='NEVER',cet_compat=False)
     (work/'build-report.json').write_text(json.dumps(info,indent=2)+'\n',encoding='utf-8')
     print('MATERIAL_INSTALLER bytes=%d sha256=%s full_game_files=NONE python=NOT_REQUIRED result=PASS'%(info['size'],info['sha256']))
 

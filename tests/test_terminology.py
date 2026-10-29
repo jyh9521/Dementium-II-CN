@@ -18,14 +18,14 @@ class TerminologyTests(unittest.TestCase):
    self.assertIn(target,text)
    self.assertIn(f'| {source} | {target} |',glossary)
   for stale in ['万能钥匙','熏蒸器']:self.assertNotIn(stale,text+''.join(labels.values()))
- def test_version_is_112_in_metadata_and_visible_ui(self):
+ def test_version_is_113_in_metadata_and_visible_ui(self):
   policy=json.loads((ROOT/'assets/release-policy.json').read_text('utf8'))
-  self.assertEqual(policy['installer_version'],'1.1.2')
-  release=json.loads((ROOT/'assets/releases/v1.1.2.json').read_text('utf8'))
+  self.assertEqual(policy['installer_version'],'1.1.3')
+  release=json.loads((ROOT/'assets/releases/v1.1.3.json').read_text('utf8'))
   self.assertEqual(release['installer_version'],policy['installer_version'])
-  self.assertIn('26152271',release['supported_builds'])
+  self.assertIn('26260428',release['supported_builds'])
   for name in ['installer/MaterialWindow.xaml','installer/MaterialWindow.xaml.cs']:
-   self.assertIn('v1.1.2',(ROOT/name).read_text('utf8'))
+   self.assertIn('v1.1.3',(ROOT/name).read_text('utf8'))
  def test_compatibility_rebuild_rejects_unknown_source_without_output(self):
   with tempfile.TemporaryDirectory() as temp:
    source=Path(temp)/'source.exe';source.write_bytes(b'MZ INVALID FIXTURE')

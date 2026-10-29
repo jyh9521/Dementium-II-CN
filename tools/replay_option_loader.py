@@ -14,14 +14,19 @@ def replay_bytes(exe,rom,image_base=None):
     pe=pefile.PE(data=exe);base=pe.OPTIONAL_HEADER.ImageBase
     data_rva=next(s.VirtualAddress for s in pe.sections if s.Name.rstrip(b'\0')==b'.data')
     profiles={
+      0x4cd000:{'build':'26260428','loader':0x12e870,'loader_size':0x399,
+        'getter':0x12b5d0,'getter_size':0x328,'hook':0x12b6fa,'indices':0x440a80,
+        'open':0x1d1f40,'alloc':0x1b3980,'free':0x1b4000,'memset':0x392d02,
+        'loader_hash':'25294ff3102a5f5e6c9aa551ce785cf92cf0323a35c9a890c4920a914b9f958a',
+        'getter_hash':'73fc6f1b9cb95931f3e7b5508c705ad4a70235fd7fa3e15a6ac9230d72e683a0'},
       0x4a4000:{'build':'26152271','loader':0x128600,'getter':0x125540,'hook':0x12566a,'indices':0x41cd00,'open':0x1c0f10,'alloc':0x1a4490,'free':0x1a4b10,'memset':0x36cf72,'loader_hash':'776a395358e6297b62e41ff38f7d3fc2aa0181ddfc943caf63d9c5f49942254f','getter_hash':'b29dabb264178d83330e4f184f46d57ab668375d9805c5bab4ff617c908806d7'},
       0x4a1000:{'build':'26123896','loader':0x128260,'getter':0x1251a0,'hook':0x1252ca,'indices':0x41aa90,'open':0x1c08c0,'alloc':0x1a3e40,'free':0x1a44c0,'memset':0x36b592,'loader_hash':'675c972cd94791c321b1785117064a6c200b33d0dab85628b6d6addc3718b579','getter_hash':'27a0fca24e08105af75b2b86e48e9b74860c089466866a214257fc960bbd1337'},
     }
     if data_rva not in profiles:raise ValueError('Unknown native option loader profile')
     profile=profiles[data_rva]
-    if hashlib.sha256(pe.get_data(profile['loader'],0x1f5)).hexdigest()!=profile['loader_hash']:
+    if hashlib.sha256(pe.get_data(profile['loader'],profile.get('loader_size',0x1f5))).hexdigest()!=profile['loader_hash']:
         raise ValueError('Native option loader source guard mismatch')
-    getter_code=bytearray(pe.get_data(profile['getter'],0x1e0))
+    getter_code=bytearray(pe.get_data(profile['getter'],profile.get('getter_size',0x1e0)))
     source=bytes.fromhex('49 63 8c 83')+struct.pack('<I',profile['indices'])
     hook_bytes=pe.get_data(profile['hook'],8)
     if hook_bytes!=source:

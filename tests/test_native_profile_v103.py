@@ -312,6 +312,10 @@ NewReaderGamepadTests.__unittest_skip__=not SOURCE.is_file()
 
 import test_pause_layout as pause_tests
 class NewPauseLayoutTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from native_replay import require_native_fixture
+        require_native_fixture(SOURCE,'26152271')
     def test_native_immediates_match_real_label_and_status_glyph_ink(self):
         import pefile
         from localize import Zar

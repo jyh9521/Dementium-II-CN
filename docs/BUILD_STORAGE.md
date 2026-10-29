@@ -1,5 +1,9 @@
 # 本地目录与生成物保留
 
+## 2026-10-29 增量交付
+
+新增归档按20261024归档逐文件比对，只打包新增或变更的源码、当前安装器、必要配方与验证证据；新版原版两文件以约2.01MiB的差分保存，不再重复装入完整游戏。旧归档保持原样，恢复步骤见[增量归档](ARCHIVE_INCREMENT_20261029.md)。本轮生成的SDK、编译缓存、下载输入与安装/回滚测试副本在验证后清理，删除清单记录长度、哈希和恢复依据。
+
 ## 保留
 
 - 源码、译文、补丁配方、字体现有身份及许可、品牌输入。
@@ -22,7 +26,7 @@ powershell -ExecutionPolicy Bypass -File tools/clean_generated.ps1
 powershell -ExecutionPolicy Bypass -File tools/clean_generated.ps1 -Apply
 ```
 
-清理器拒绝重解析点，核对目标始终位于build内，排除Git文件、原版/当前构建ROM、归档输入和维护证据；SDK可以重新安装，不保留在项目内。不触碰实际游戏安装、存档、Release、dist或源码。
+清理器拒绝重解析点，核对目标位于build内或tools/tests的明确Python缓存目录，排除Git文件、原版/当前构建EXE和ROM、归档输入和维护证据；SDK可以重新安装，不保留在项目内。不触碰实际游戏安装、存档、Release、dist或源码。
 旧Python预览分发包已退出默认入口，工具仍保留作开发/差分回归；可按需重新生成，不保留过时成品冒充当前Release。
 
 ## 2026-10-24 精简归档
