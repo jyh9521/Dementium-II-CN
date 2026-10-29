@@ -20,6 +20,14 @@ def verify_version(root):
         match=re.search(r'\b'+field+r'\("([^"]+)"\)',source)
         if not match or match.group(1)!=value:
             raise ValueError('Installer version differs from explicit release policy: '+field)
+    window=(root/'installer/MaterialWindow.xaml').read_text(encoding='utf-8')
+    title=re.search(r'\bTitle="([^"]+)"',window)
+    if not title or not title.group(1).endswith(' v'+version):
+        raise ValueError('Installer version differs from visible window title')
+    code=(root/'installer/MaterialWindow.xaml.cs').read_text(encoding='utf-8')
+    footer=re.search(r'BuildLabel\.Text\s*=([^;]+);',code)
+    if not footer or (' · v'+version+'"') not in footer.group(1):
+        raise ValueError('Installer version differs from visible build footer')
     return version
 
 

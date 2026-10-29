@@ -55,14 +55,14 @@ python -X utf8 tools/verify_installer.py --game "D:/Games/Dementium II Original"
 ```
 
 默认安装器为 `dist/Dementium-II-zh-CN-Setup.exe`，ZIP为 `dist/Dementium-II-zh-CN-Installer.zip`。
-本次交付附件名为 `Dementium-II-CN-v1.1.3-build26286386.exe`，通过发布页手动上传；旧发布身份保留于 `assets/releases/v1.0.json`。
+本次交付附件名为 `Dementium-II-CN-v1.1.4.exe`，通过发布页手动上传；旧发布身份保留于 `assets/releases/v1.0.json`。
 验证脚本显式绑定当前EXE/ROM，检查真实文件副本安装、幂等、升级、恢复、Steam只读检测、自包含界面与隔离回滚，不启动游戏、不改存档。
 合成测试不需要游戏资产；完整PE/ROM回放还需本地原版与构建输出。历史专项的小型EXE夹具见[保留策略](docs/BUILD_STORAGE.md)。
 
 ## 重现与发布
 
 文本和JSON固定LF，ZIP成员顺序及时间戳固定。`source-inputs.json`与`release-manifest.json`记录输入及生成物身份；资源/差分复现与不同SDK下安装器PE复现分别判断。
-版本由 `assets/release-policy.json`约束，本次保持1.1.3，以build26286386附件后缀区分；`current_release`绑定当前交付身份，不覆盖历史v1.1.3记录。
+版本由 `assets/release-policy.json`约束，本次为1.1.4，编译前校验程序集版本、窗口标题与界面页脚一致；`current_release`绑定当前交付身份，不覆盖历史v1.1.3记录。
 源码不含完整游戏、字体、品牌输入及SDK。当前通关结论属于[已发布产物](docs/STATUS.md)，新改动须按实际范围验证。
 
 ## 本地清理

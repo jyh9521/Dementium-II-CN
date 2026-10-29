@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "status": "prepared_for_manual_release",
+  "release_id": "v1.1.4",
+  "installer_version": "1.1.4",
+  "filename": "Dementium-II-CN-v1.1.4.exe",
+  "size": 78519833,
+  "sha256": "b2950cb9053c9803661f4ec59f626b717da08c7fc89483266ed1f30aa7bc57c2",
+  "supported_appid": 5342930,
+  "reference_build": "26286386",
+  "supported_builds": [
+    "26099941",
+    "26123896",
+    "26152271",
+    "26260428",
+    "26286386"
+  ],
+  "player_acceptance": {
+    "status": "new_build_gameplay_not_tested",
+    "game_launch": "NEVER"
+  },
+  "compatibility": "Exact build 26286386 native profile and 49-row option capacity; four historical native recipes retained; source/code/data/member guards run before writes.",
+  "changes": [
+    "Increment patch release to 1.1.4 for Steam build 26286386; rebuild from source with aligned assembly metadata, window title, footer and filename",
+    "Keep all three embedded patch payloads byte-identical to the verified build 26286386 installer, including five supported build recipes",
+    "Reject stale visible version labels before compilation and retain previous release identities"
+  ],
+  "previous_release": "v1.1.3-build26286386",
+  "unchanged_payload_sha256": {
+    "patch.rom.gz": "c23cae6ad667f61e73f30bb043114598f64a7633b919e17d69815534ec8036d4",
+    "patch.exe.gz": "125b4efe8a0896bbe64d5a40cb81264d093c30ad486cd4881128bc42c8d29a2d",
+    "resource-patches.gz": "1d459d6514534e58f7ad3e8c56f39a7d0e5d608ba4da89c54dd0abe16f118591"
+  }
+}
