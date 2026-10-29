@@ -1,5 +1,11 @@
 # 2026-10-30 独立统一归档
 
+## 本次最终归档
+
+当前统一包包含最终v1.1.4安装器、CET兼容标记关闭的既有编译结果、全部源码历史及1.1.4验证记录；不另做CET变体。安装器SHA-256为`b2950cb9053c9803661f4ec59f626b717da08c7fc89483266ed1f30aa7bc57c2`，下载目录另留同一安装器便于直接使用。
+
+此前1.1.3-build26286386中间交付、20261024及20261029安装器均通过当前安装器的精确差分保留；历史非Git文件的旧内容收录于`build/archive/history/pre-114/`，源码旧内容通过完整Git历史保留。归档复核通过后替换同名统一ZIP，清理旧解压副本和临时恢复目录。
+
 ## 单包恢复，不再依赖两份归档
 
 统一包采用 `standalone-engineering-archive` 格式，包含当前已提交源码、完整 Git 历史、构建输入、兼容配方和验证证据。恢复不再要求20261024精简包与20261029增量包同时存在。
@@ -16,7 +22,7 @@
 - `build/archive/font-inputs/`、`installer/branding/`、独立兼容配方及必要的小型原生EXE夹具保留；重复原件和可以按哈希精确还原的大文件不重复装入。
 - 当前`patch.json`、`exe-patch.json`、资源稀疏配方与构建报告保留。当前中文完整输出留在活动工程中，统一归档通过输入和配方重建，不再保存另一份大ROM副本。
 - `source-history.bundle`是所有可达引用的完整历史，不是增量Git包。归档不复制`.git`缓存、hooks或工作区索引；恢复时从bundle生成干净仓库。
-- `build/archive/history/`保留同路径被后续构建覆盖的历史非Git证据和两份原归档的原始清单；`preservation-ledger.json`逐项记录Git提交、保留别名或精确差分。两个旧安装器以当前安装器为基线保存压缩COPY/ADD差分，不再保留两份重复运行时。
+- `build/archive/history/`保留同路径被后续构建覆盖的历史非Git证据和两份原归档的原始清单；`preservation-ledger.json`逐项记录Git提交、保留别名或精确差分。三个历史安装器以当前安装器为基线保存压缩COPY/ADD差分，不再保留三份重复运行时。
 - SDK、依赖目录、编译缓存、重复安装器、安装器ZIP与临时安装/回滚游戏副本不归档。工具链重装与游戏文件恢复分别处理。
 
 ## 验证和提取
@@ -69,7 +75,7 @@ python -B -X utf8 tools/archive_full.py restore-sources --repository . --manifes
 {
   "schema": 1,
   "baseline_directory": "build/original",
-  "installer": "dist/Dementium-II-CN-v1.1.3-build26286386.exe",
+  "installer": "dist/Dementium-II-CN-v1.1.4.exe",
   "source_manifests": [
     "build/update-26260428/source-deltas/manifest.json",
     "build/update-26286386/source-deltas/manifest.json"
@@ -77,7 +83,7 @@ python -B -X utf8 tools/archive_full.py restore-sources --repository . --manifes
   "files": [
     {"path": "build/original/rom.zar", "role": "baseline-input"},
     {"path": "build/original/Dementium II.exe", "role": "baseline-input"},
-    {"path": "dist/Dementium-II-CN-v1.1.3-build26286386.exe", "role": "installer"}
+    {"path": "dist/Dementium-II-CN-v1.1.4.exe", "role": "installer"}
   ]
 }
 ```
@@ -86,7 +92,13 @@ python -B -X utf8 tools/archive_full.py restore-sources --repository . --manifes
 
 ```powershell
 python -B -X utf8 -m unittest discover -s tests -p test_archive_full.py -v
-python -B -X utf8 tools/archive_full.py pack --plan build/update-26286386/archive-plan.json --output "D:/Archives/Dementium-II-CN-统一归档-20261030.zip"
+python -B -X utf8 tools/archive_full.py pack --plan build/archive-closeout-1.1.4/archive-plan.json --output "D:/Archives/Dementium-II-CN-统一归档-20261030.zip"
 ```
 
 打包要求已跟踪源码无未提交修改。生成过程核对所有输入身份，重新打开最终ZIP逐成员验证；旧包的清理是独立步骤，只在统一包、Git恢复和实际源文件恢复全部验证后执行。
+
+## 旧ZIP的精确回滚
+
+`tools/archive_zip_rollback.py`按ZIP成员的压缩字节生成COPY/ADD回滚配方，保留旧ZIP头、成员顺序和中央目录；不需要再保存另一份完整旧ZIP。恢复先校验源ZIP完整SHA-256，写入新的独立输出，再校验旧ZIP完整SHA-256；已有输出保持原样。收尾目录中的`ROLLBACK.sh`调用此工具，不覆盖当前交付。
+
+安装器版本验证脚本会从包内差分恢复其旧版对照文件，不再依赖此前的解压目录。日志中的历史绝对路径只记录原验收现场，不构成当前恢复依赖。
