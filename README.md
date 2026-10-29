@@ -16,7 +16,7 @@ v1.0已有完整通关记录；本次1.0.4适配尚无新版完整通关记录�
 
 ## 下载 / 安装
 
-**[发布列表](https://github.com/jyh9521/Dementium-II-CN/releases)**：发布后下载附件 `Dementium-II-CN-v1.1.4.exe`。旧版补丁不支持本次build 26286386；新安装器已完成离线验证，待手动上传。
+**[发布列表](https://github.com/jyh9521/Dementium-II-CN/releases)**
 
 1. 准备Steam版游戏并退出运行。
 2. 运行 `Dementium-II-CN-v1.1.4.exe`，使用自动检测到的游戏路径；未检测到时，手动选择游戏目录中的 `rom.zar`。
