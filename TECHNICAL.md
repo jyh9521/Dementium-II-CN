@@ -1,5 +1,7 @@
 # 技术说明
 
+> 新增研究记录按[研究与格式规范](docs/RESEARCH_STANDARD.md)组织；本页既有技术事实、版本身份、置信度及历史结果保留。规范迁移不提升现有验证层级。
+
 本项目针对 Steam 2026 版《病房2》（AppID 5342930，当前参考 build 26286386；兼容配方build 26099941、26123896、26152271、26260428），不是2013年的HD版。
 原版输入身份记录在 `assets/supported-build.json`；旧构建身份保留在 `assets/supported-builds/`。
 

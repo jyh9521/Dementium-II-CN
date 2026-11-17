@@ -1,7 +1,3 @@
-# Local project instructions
-AGENTS.md
-docs/LOCALIZATION_STANDARD.md
-
 # Build output
 build/
 dist/
@@ -133,3 +129,7 @@ assets/fonts/*.ttf
 installer/branding/
 installer/obj/
 installer/bin/
+
+# Shared localization requirements are versioned with project documentation.
+!/AGENTS.md
+!/docs/LOCALIZATION_STANDARD.md

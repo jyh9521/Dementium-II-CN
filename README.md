@@ -66,3 +66,8 @@ python -X utf8 tools/build_locale.py --game "D:/Games/Dementium II Original"
 感谢原游戏开发与发行团队，以及Fusion Pixel、ChillBitmap、Pillow、fontTools和MaterialDesignInXamlToolkit等项目的作者与贡献者。
 
 项目自编工具采用MIT，原创译文采用CC BY-SA 4.0；字体及第三方组件各遵循自身许可。游戏原文和商业资源仍归原权利人所有。详见[许可与来源](LICENSING.md)及[制作与致谢](CREDITS.md)。
+
+
+## 维护规范
+
+本项目已接入汉化基准 **2.1**；本次仅更新工程文档，不改变上述补丁版本、发布内容或验证状态。维护前读取 [AGENTS](AGENTS.md) 与[迁移说明](docs/MIGRATION.md)，再按任务查阅[工程规范](docs/LOCALIZATION_STANDARD.md)、[验收标准](docs/ACCEPTANCE.md)、[README写作规范](docs/README_STANDARD.md)和[中文风格](locales/zh-CN/STYLE.md)。

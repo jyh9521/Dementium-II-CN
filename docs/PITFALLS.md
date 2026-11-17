@@ -1,5 +1,7 @@
 # 本次已遇到的问题（2026-10-21）
 
+> 新增失败路径按[研究记录规范](RESEARCH_STANDARD.md)记录；以下历史经验保留。现行规则以[主规范](LOCALIZATION_STANDARD.md)及其分项文档为准。
+
 ## ZAR TOC 与 VFS ~INDEX 必须同步（Verified）
 
 实验版启动时主字体 PNG 报 STB 加载失败。原因是外层成员已变长，VFS 仍按 ~INDEX 的旧长度分配读取缓冲区。

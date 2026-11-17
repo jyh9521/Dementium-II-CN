@@ -7,7 +7,7 @@
 - 当前默认全文入口为build/full-zh-CN，当前包为dist/Dementium-II-zh-CN-preview.zip。
 - 旧最小实验、原中文副本和明信片修复版按可回滚依据保留。
 - 历史资料为可恢复归档，不声称已物理删除或释放同等磁盘空间。移动清单位于build/cleanup-archive.json。
-- 不提交build、dist、游戏二进制/PNG、字体缓存、AGENTS.md或内部LOCALIZATION_STANDARD.md。
+- 当时未提交build、dist、游戏二进制/PNG、字体缓存、AGENTS.md或内部LOCALIZATION_STANDARD.md。2026-11-17规范迁移后，共享AGENTS与标准纳入版本管理；其他忽略边界保留。
 - 完成后把旧technical-probe.zip与空src目录移至build/archive/final-cleanup；dist仅保留当前全文差分包，最终移动明细为build/final-cleanup.json。
 
 ## 2026-10-22 发布后整理

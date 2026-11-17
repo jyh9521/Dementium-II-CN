@@ -1,5 +1,8 @@
 # 全文独立文本 QA
 
+> 标点迁移说明（2026-11-17）：以下保留原阶段的范围、命令和测试结果；其中旧句号判定不再用于后续编辑。现行规则见[中文风格](../locales/zh-CN/STYLE.md)，旧检查器尚待补充新版回归。此次只更新文档，原译文、工具和历史结果不变。
+
+
 2026-10-21，输入为 `build/full-zh-CN/text.json`、`locales/zh-CN/image-text.json` 和 `locales/zh-CN/executable-text.json`。本轮未启动游戏，文本审校与游戏内排版验收分别记录。
 
 ## 资源文本

@@ -1,5 +1,7 @@
 # 从源码重建
 
+> 共享构建要求见[构建规范](docs/BUILD_STANDARD.md)、[安装与恢复](docs/INSTALLATION_STANDARD.md)和[验收标准](docs/ACCEPTANCE.md)。本页保留本作实际输入、命令与历史结果；规范迁移未重建游戏产物。
+
 当前构建入口统一维护于本页，历史红/绿/回滚命令见[专项记录](docs/history/BUILD_REGRESSIONS.md)。
 
 ## 输入与依赖
