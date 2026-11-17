@@ -7,7 +7,7 @@ The README is the shortest reliable entry point for its audience, not a developm
 Inspect the actual repository, release artifacts, build entry points, dependency files and test evidence.
 Identify whether this is a template, research project, playable patch or supported release.
 Separate observed facts, untested behavior and planned work. State the target reader: player first for a released patch, developer first for a template/tool.
-Use the user's chosen language. Preserve locale-neutral architecture even when the README is written in Chinese.
+Use the requested language. Preserve locale-neutral architecture even when the README is written in Chinese.
 Do not infer completion from a directory name, a previous chat, a translated-string count or a successful unit test.
 
 ## 2. Recommended order
@@ -82,5 +82,5 @@ Describe translation, review and runtime coverage separately with known scope.
 Include tested installation, upgrade/recovery and developer entry points as applicable.
 Preserve locale-neutral engineering and actual license/credit boundaries.
 Check the README acceptance list, then report the changed sections, checks run,
-literal results and remaining unknowns. Preserve unrelated user work.
+literal results and remaining unknowns. Preserve unrelated existing work.
 ```

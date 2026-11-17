@@ -30,8 +30,8 @@ Unknown conflicts stop with a report; they are not silently replaced.
 An upgrade checks the installed-version manifest and supports documented source versions only. Recognized patched hashes belong to that installed-state manifest, not to the clean-original input manifest. A listed donor-file set is allowed only as declared in the build profile.
 Verify compatibility of saves, custom glyph mappings and resource IDs across versions/locales.
 Uninstall removes only owned added files and restores only owned replacements with valid backups.
-If a user or another mod changed a file after installation, report the conflict and preserve it for explicit resolution.
-Preserve unrelated files, saves and settings. Restore settings individually rather than replacing an entire user config blindly.
+If a file was edited manually or by another mod after installation, report the conflict and preserve it for explicit resolution.
+Preserve unrelated files, saves and settings. Restore settings individually rather than replacing an entire local configuration blindly.
 Record hashes before install, after install and after recovery; original behavior also needs a smoke test, not only matching bytes.
 
 ## 4. Required tests
@@ -46,7 +46,7 @@ Record hashes before install, after install and after recovery; original behavio
 | Missing/corrupt payload or backup | Preflight failure, no partial changes |
 | Disk-full/permission failure | Failed state reported; journal supports recovery |
 | Interrupt after each commit step | Restart recovery restores consistent old or new state |
-| Uninstall | Owned changes reversed; unrelated/user files preserved |
+| Uninstall | Owned changes reversed; unrelated/local files preserved |
 | Changed file before uninstall | Conflict detected without destructive overwrite |
 
 Inject failures at each multi-file write boundary in a disposable copy. Record the exact restored hashes and baseline behavior.

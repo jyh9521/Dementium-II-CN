@@ -9,7 +9,7 @@ Track code, fonts, tools, documentation, translation, image layers and generated
 For mixed translation files, identify source text versus contributor translation; a project license grants no rights over the underlying game content.
 For generated outputs, inspect their contents and input terms; generation alone creates no blanket redistribution permission.
 
-Prefer transformations and locally generated payloads when original game assets must remain user-supplied.
+Prefer transformations and locally generated payloads when original game assets must be supplied locally.
 Do not commit complete proprietary executables, archives, media or fonts without explicit permission.
 Apply the same inventory to releases and CI artifacts, not just the Git repository.
 Keep attribution in a shipped notice file where required. Document uncertain components rather than marking them redistributable by default.
